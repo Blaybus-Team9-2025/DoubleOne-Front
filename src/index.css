@@ -2,6 +2,26 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: NotoSans;
+}
+
+@font-face {
+  font-family: NotoSans;
+  src: url('/NotoSansKR-Regular.otf');
+}
+
+:root {
+  --green: #c1e678;
+  --blue: #3093f0;
+  --shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+#root {
+  width: calc(100% - 40px);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 ul,
