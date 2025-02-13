@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import chevron from '../assets/chevron-right.png';
 import Card from '../components/_common/Card';
+import Header from '../components/_common/Header';
 
 const Contact = () => {
   const params = useParams();
@@ -19,7 +20,8 @@ const Contact = () => {
   };
 
   return (
-    <div>
+    <div style={{ marginTop: '100px' }}>
+      <Header title="GrowCare" />
       <Card bg="green">
         <p>김ㅇㅇ 어르신</p>
         <p>서울시 관악구 대학동</p>
@@ -94,7 +96,6 @@ const Contact = () => {
               <img src={chevron} />
             </TextDiv>
           </Item>
-          <button>더보기</button>
         </ItemWrapper>
       </ListDiv>
       <MsgBtn>메시지 보내기</MsgBtn>
@@ -119,12 +120,6 @@ const ItemWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 14px;
-  button {
-    font-size: 14px;
-    text-decoration-line: underline;
-    cursor: pointer;
-    margin: 30px 0;
-  }
 `;
 
 const Item = styled.div`
@@ -182,7 +177,7 @@ const TextDiv = styled.div`
 
 const MsgBtn = styled.button`
   width: 100%;
-  margin-bottom: 35px;
+  margin: 35px 0;
   background-color: var(--blue);
   font-size: 18px;
   font-weight: 700;
