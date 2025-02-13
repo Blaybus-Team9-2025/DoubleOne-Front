@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import chevron from '../../assets/chevron-right.png';
 
-const Card = ({ bg, children }) => {
+const Card = ({ bg, children, onClick }) => {
   return (
-    <Div bg={bg}>
+    <Div bg={bg} onClick={onClick}>
       <ImgDiv>
         <img />
       </ImgDiv>
