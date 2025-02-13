@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import chevron from '../assets/chevron-right.png';
 import Card from '../components/_common/Card';
+import Header from '../components/_common/Header';
 
 const Contact = () => {
   const params = useParams();
@@ -19,7 +20,8 @@ const Contact = () => {
   };
 
   return (
-    <div>
+    <div style={{ marginTop: '100px' }}>
+      <Header title="GrowCare" />
       <Card bg="green">
         <p>김ㅇㅇ 어르신</p>
         <p>서울시 관악구 대학동</p>
