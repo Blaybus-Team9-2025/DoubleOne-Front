@@ -1,8 +1,11 @@
 import styled from 'styled-components';
 import Card from '../_common/Card';
 import bell from '../../assets/bell.png';
+import { useNavigate } from 'react-router-dom';
 
 const MatchingList = () => {
+  const nav = useNavigate();
+
   return (
     <Div>
       <TitleDiv>
@@ -10,17 +13,17 @@ const MatchingList = () => {
         <img src={bell} />
       </TitleDiv>
       <CardDiv>
-        <Card bg="green">
+        <Card bg="green" onClick={() => nav(`/contact/${1}`)}>
           <p>김ㅇㅇ 어르신</p>
           <p>서울시 관악구 대학동</p>
           <p>현재 3명 매칭중</p>
         </Card>
-        <Card bg="green">
+        <Card bg="green" onClick={() => nav(`/contact/${2}`)}>
           <p>김ㅇㅇ 어르신</p>
           <p>서울시 관악구 대학동</p>
           <p>현재 3명 매칭중</p>
         </Card>
-        <Card bg="green">
+        <Card bg="green" onClick={() => nav(`/contact/${3}`)}>
           <p>김ㅇㅇ 어르신</p>
           <p>서울시 관악구 대학동</p>
           <p>현재 3명 매칭중</p>
