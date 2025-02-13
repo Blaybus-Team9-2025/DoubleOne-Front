@@ -96,7 +96,6 @@ const Contact = () => {
               <img src={chevron} />
             </TextDiv>
           </Item>
-          <button>더보기</button>
         </ItemWrapper>
       </ListDiv>
       <MsgBtn>메시지 보내기</MsgBtn>
@@ -121,12 +120,6 @@ const ItemWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 14px;
-  button {
-    font-size: 14px;
-    text-decoration-line: underline;
-    cursor: pointer;
-    margin: 30px 0;
-  }
 `;
 
 const Item = styled.div`
@@ -184,7 +177,7 @@ const TextDiv = styled.div`
 
 const MsgBtn = styled.button`
   width: 100%;
-  margin-bottom: 35px;
+  margin: 35px 0;
   background-color: var(--blue);
   font-size: 18px;
   font-weight: 700;
