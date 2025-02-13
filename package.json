@@ -15,8 +15,10 @@
     "react-daum-postcode": "^3.2.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.1.5",
+    "react-slick": "^0.30.3",
     "recoil": "^0.7.7",
     "recoil-persist": "^5.1.0",
+    "slick-carousel": "^1.8.1",
     "styled-components": "^6.1.15"
   },
   "devDependencies": {
