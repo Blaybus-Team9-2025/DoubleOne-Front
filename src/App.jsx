@@ -6,6 +6,7 @@ import MyPage from './pages/MyPage';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import SignUpSelect from './pages/SignUpSelect';
+import Contact from './pages/Contact';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signupselect/:type" element={<SignUpSelect />} />
         <Route path="/signup/:type/:target" element={<SignUp />} />
+        <Route path="/contact/:id" element={<Contact />} />
       </Routes>
     </>
   );
