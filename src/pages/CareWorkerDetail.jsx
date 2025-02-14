@@ -10,7 +10,7 @@ const CareWorkerDetail = () => {
       <Header title="(프로필/약속잡기)" />
       <Profile />
       <Slick />
-      <SquareButton marginBottom={35} color="blue">
+      <SquareButton mb={35} color="blue">
         메시지 보내기
       </SquareButton>
     </Div>

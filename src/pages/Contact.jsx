@@ -99,7 +99,7 @@ const Contact = () => {
           </Item>
         </ItemWrapper>
       </ListDiv>
-      <SquareButton marginBottom={35} marginTop={35} color="blue">
+      <SquareButton mb={35} mt={35} color="blue">
         메시지 보내기
       </SquareButton>
     </div>
