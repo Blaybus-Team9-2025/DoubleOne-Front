@@ -6,19 +6,13 @@ const Profile = () => {
       <ImgDiv>
         <img />
       </ImgDiv>
-      <Name>김어스, 요양보호사 1급</Name>
       <ItemDiv>
         <div>
-          <p>83%</p>
-          <p>매칭률</p>
+          <img />
         </div>
         <div>
-          <p>83%</p>
-          <p>매칭률</p>
-        </div>
-        <div>
-          <p>83%</p>
-          <p>매칭률</p>
+          <p>김어스, 요양보호사 1급</p>
+          <p>매칭률 83%</p>
         </div>
       </ItemDiv>
     </Div>
@@ -50,27 +44,33 @@ const Name = styled.p`
 
 const ItemDiv = styled.div`
   width: 100%;
+  height: 100px;
+  background-color: var(--green);
+  border-radius: 15px;
   display: flex;
-  justify-content: space-between;
-  div {
-    width: 100px;
-    height: 100px;
-    background-color: var(--green);
-    border-radius: 15px;
+  align-items: center;
+  padding: 13px;
+  gap: 13px;
+
+  div:first-child {
+    width: 75px;
+    height: 75px;
+    border-radius: 10px;
+    background-color: white;
+  }
+  div:last-child {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    position: relative;
+    gap: 3px;
   }
+
   p:first-child {
-    font-size: 24px;
+    font-size: 18px;
     font-weight: 700;
   }
   p:last-child {
-    position: absolute;
-    bottom: 10px;
-    font-size: 12px;
+    font-size: 16px;
+    font-weight: 700;
     opacity: 50%;
   }
 `;
