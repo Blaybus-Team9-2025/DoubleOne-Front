@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
 import Title from '../components/_common/Title';
+import Header from '../components/_common/Header';
 import { getTypeKr } from '../util/get-kr-word';
 
 // 개인 회원인지 기업 회원인지 고르는 페이지
@@ -12,7 +13,8 @@ const SignUpSelect = () => {
   const nav = useNavigate(); // 회원가입 기업 or 개인 페이지로 이동
 
   return (
-    <div>
+    <Container>
+      <Header /> 
       <Title mb="100">
         <p>{getTypeKr(type)}로</p>
         <p>회원가입 하기</p>
@@ -24,15 +26,22 @@ const SignUpSelect = () => {
         >
           개인 회원
         </Button>
-        <Button className="group" onClick={() => nav(`/signup/${type}/group`)}>
+        <Button
+          className="center"
+          onClick={() => nav(`/signup/${type}/center`)}
+        >
           기업 회원
         </Button>
       </ButtonWrapper>
-    </div>
+    </Container>
   );
 };
 
 export default SignUpSelect;
+
+const Container = styled.div`
+  margin-top: 100px;
+`;
 
 const ButtonWrapper = styled.div`
   display: flex;
@@ -51,7 +60,7 @@ const Button = styled.button`
     background-color: var(--green);
   }
 
-  &.group {
+  &.center {
     background-color: var(--blue);
   }
 `;
