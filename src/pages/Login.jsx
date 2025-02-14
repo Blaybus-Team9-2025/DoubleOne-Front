@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
@@ -7,6 +6,15 @@ import Title from '../components/_common/Title';
 import Header from '../components/_common/Header';
 import RoundButton from '../components/_common/RoundButton';
 import chatBubble from '../assets/chat_bubble.png';
+import Modal from '../components/_common/Modal';
+import { KAKAO_AUTH_URI } from '../api/user';
+
+const ModalInfo = {
+  type: 'alert',
+  text: '등록되지 않은 아이디거나, 아이디 또는 비밀번호를 잘못 입력했습니다. 다시 확인해주세요.',
+  btnText1: '확인',
+  // btnText2: '아니오',
+};
 
 const Login = () => {
   const nav = useNavigate();
@@ -15,13 +23,21 @@ const Login = () => {
     id: '',
     pw: '',
   });
+  const [modalYn, setModalYn] = useState(false);
+
+  const onClose = () => {
+    setModalYn(false);
+  };
 
   const onKakaoClick = () => {
     // 카카오로 이동
+    window.location.href = KAKAO_AUTH_URI;
   };
 
   const onLoginClick = () => {
     // 로그인 api 사용
+    // 로그인 실패한 경우
+    setModalYn(true);
   };
 
   const onChangeInput = (e) => {
@@ -78,6 +94,7 @@ const Login = () => {
           이메일로 회원가입하기
         </RoundButton>
       </ButtonSection>
+      <Modal isOpen={modalYn} onClose={onClose} {...ModalInfo} />
     </Container>
   );
 };

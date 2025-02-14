@@ -1,7 +1,11 @@
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import { sendCode } from '../api/user';
 
 const KakaoAuthPage = () => {
+  const nav = useNavigate();
+
   useEffect(() => {
     const params = new URL(document.location.toString()).searchParams;
     const code = params.get('code') || '';
@@ -15,15 +19,15 @@ const KakaoAuthPage = () => {
 
         // 회원이면 사용자 정보를 다 받아서 recoil에 저장
         // setLogin({
-        //   nickname: data.nickname,
+        //   name: data.name,
         //   email: data.email,
         //   accessToken: data.accessToken,
         //   refreshToken: data.refreshToken,
-        //   isfirst: data.isfirst,
         // });
 
         // 로그인 처리 & 메인 페이지로 이동
         window.localStorage.setItem('accessToken', data.accessToken);
+        window.localStorage.setItem('refreshToken', data.refreshToken);
         window.location.href = '/';
 
         // 회원이 아니면 사용자 정보를 일부 받기(이름, 연락처 등) -> 카카오로 회원가입하기 (개인 or 기업) 페이지로 연결

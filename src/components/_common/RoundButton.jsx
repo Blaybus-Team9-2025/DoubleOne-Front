@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
-const RoundButton = ({ text, color, mt, onClick }) => {
+const RoundButton = ({ text, color, mt, mb, onClick }) => {
   return (
-    <Button onClick={onClick} className={color} mt={mt}>
+    <Button onClick={onClick} className={color} mt={mt} mb={mb}>
       {text}
     </Button>
   );
@@ -18,6 +18,7 @@ const Button = styled.button`
   box-shadow: var(--shadow);
   align-items: center;
   margin-top: ${(prop) => prop.mt || 0}px;
+  margin-bottom: ${(prop) => prop.mb || 0}px;
   cursor: pointer;
 
   &.green {
