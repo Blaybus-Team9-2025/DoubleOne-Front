@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import chevron from '../assets/chevron-right.png';
 import Card from '../components/_common/Card';
 import Header from '../components/_common/Header';
+import SquareButton from '../components/_common/SquareButton';
 
 const Contact = () => {
   const params = useParams();
@@ -32,7 +33,7 @@ const Contact = () => {
         <ItemWrapper>
           <Item
             bg={select.includes(1) ? 'blue' : undefined}
-            onClick={() => nav(`/care/${1}`)}
+            onClick={() => nav(`/contact/${id}/${1}`)}
           >
             <CheckBox
               bg={select.includes(1) ? 'blue' : undefined}
@@ -54,7 +55,7 @@ const Contact = () => {
           </Item>
           <Item
             bg={select.includes(2) ? 'blue' : undefined}
-            onClick={() => nav(`/care/${2}`)}
+            onClick={() => nav(`/contact/${id}/${2}`)}
           >
             <CheckBox
               bg={select.includes(2) ? 'blue' : undefined}
@@ -76,7 +77,7 @@ const Contact = () => {
           </Item>
           <Item
             bg={select.includes(3) ? 'blue' : undefined}
-            onClick={() => nav(`/care/${3}`)}
+            onClick={() => nav(`/contact/${id}/${3}`)}
           >
             <CheckBox
               bg={select.includes(3) ? 'blue' : undefined}
@@ -98,7 +99,9 @@ const Contact = () => {
           </Item>
         </ItemWrapper>
       </ListDiv>
-      <MsgBtn>메시지 보내기</MsgBtn>
+      <SquareButton mb={35} mt={35} color="blue">
+        메시지 보내기
+      </SquareButton>
     </div>
   );
 };
@@ -173,18 +176,6 @@ const TextDiv = styled.div`
     width: 24px;
     height: 24px;
   }
-`;
-
-const MsgBtn = styled.button`
-  width: 100%;
-  margin: 35px 0;
-  background-color: var(--blue);
-  font-size: 18px;
-  font-weight: 700;
-  padding: 18px 0;
-  border-radius: 15px;
-  box-shadow: var(--shadow);
-  cursor: pointer;
 `;
 
 export default Contact;
