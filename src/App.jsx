@@ -8,6 +8,7 @@ import SignUp from './pages/SignUp';
 import SignUpSelect from './pages/SignUpSelect';
 import Contact from './pages/Contact';
 import CareWorkerDetail from './pages/CareWorkerDetail';
+import Chat from './pages/Chat';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           path="/contact/:seniorId/:workerId"
           element={<CareWorkerDetail />}
         />
+        <Route path="/chat/:id" element={<Chat />} />
       </Routes>
     </>
   );
