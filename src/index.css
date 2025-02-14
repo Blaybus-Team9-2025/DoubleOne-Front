@@ -14,6 +14,7 @@
   --green: #c1e678;
   --blue: #3093f0;
   --red: #ff0000;
+  --white: #ffffff;
   --shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
@@ -22,7 +23,6 @@
   min-width: 300px;
   max-width: 600px;
   padding: 0 20px;
-  padding-bottom: 20px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
