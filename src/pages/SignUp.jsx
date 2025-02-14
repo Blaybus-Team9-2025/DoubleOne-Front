@@ -1,6 +1,5 @@
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { RecoilRoot } from 'recoil';
 
 import { getTargetKr, getTypeKr } from '../util/get-kr-word';
 import Header from '../components/_common/Header';
@@ -12,7 +11,6 @@ import Center from '../components/signup/Center';
 import Email from '../components/signup/Email';
 import Password from '../components/signup/Password';
 import RoundButton from '../components/_common/RoundButton';
-import { useRecoilState } from 'recoil';
 
 const SignUp = () => {
   const params = useParams();
@@ -21,33 +19,32 @@ const SignUp = () => {
   const onSubmit = () => {};
 
   return (
-    <RecoilRoot>
-      <Container>
-        <div>
-          <Header />
-          <Title mb={type === 'kakao' && target === 'individual' ? '70' : '20'}>
-            <p>{getTypeKr(type)}로</p>
-            <p>회원가입 하기({getTargetKr(target)})</p>
-          </Title>
-          {type === 'email' && (
-            <>
-              <Email />
-              <Password />
-            </>
-          )}
-          <Default />
-          {target === 'center' && <CenterName />}
-          <AddressInput />
-          {target === 'center' && <Center />}
-        </div>
-        <RoundButton
-          text="회원가입 완료"
-          color="green"
-          onClick={onSubmit}
-          mt={type === 'kakao' && target === 'individual' ? '60' : '20'}
-        />
-      </Container>
-    </RecoilRoot>
+    <Container>
+      <div>
+        <Header />
+        <Title mb={type === 'kakao' && target === 'individual' ? '70' : '20'}>
+          <p>{getTypeKr(type)}로</p>
+          <p>회원가입 하기({getTargetKr(target)})</p>
+        </Title>
+        {type === 'email' && (
+          <>
+            <Email />
+            <Password />
+          </>
+        )}
+        <Default />
+        {target === 'center' && <CenterName />}
+        <AddressInput />
+        {target === 'center' && <Center />}
+      </div>
+      <RoundButton
+        text="회원가입 완료"
+        color="green"
+        onClick={onSubmit}
+        mt={type === 'kakao' && target === 'individual' ? '60' : '20'}
+        mb="20"
+      />
+    </Container>
   );
 };
 
