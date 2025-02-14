@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
 import Title from '../components/_common/Title';
+import Header from '../components/_common/Header';
+import RoundButton from '../components/_common/RoundButton';
 import chatBubble from '../assets/chat_bubble.png';
 
 const Login = () => {
@@ -30,7 +32,8 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <Container>
+      <Header />
       <Title mb="60">
         <p>로그인/회원가입</p>
       </Title>
@@ -64,18 +67,26 @@ const Login = () => {
         </PwWrapper>
       </LoginSection>
       <ButtonSection>
-        <Button className="login" onClick={onLoginClick}>
+        <RoundButton color="green" text="로그인" onClick={onLoginClick}>
           로그인
-        </Button>
-        <Button className="signUp" onClick={() => nav(`/signupselect/email`)}>
+        </RoundButton>
+        <RoundButton
+          color="blue"
+          text="이메일로 회원가입하기"
+          onClick={() => nav(`/signupselect/email`)}
+        >
           이메일로 회원가입하기
-        </Button>
+        </RoundButton>
       </ButtonSection>
-    </div>
+    </Container>
   );
 };
 
 export default Login;
+
+const Container = styled.div`
+  margin-top: 100px;
+`;
 
 const KakaoButton = styled.button`
   width: 100%;
@@ -136,29 +147,12 @@ const PwWrapper = styled.div`
 
   span {
     font-size: 12px;
+    cursor: pointer;
   }
 `;
 
 const ButtonSection = styled.div`
   display: flex;
   flex-direction: column;
-`;
-
-const Button = styled.button`
-  width: 100%;
-  height: 45px;
-
-  border-radius: 30px;
-  box-shadow: var(--shadow);
-  font-size: 16px;
-  cursor: pointer;
-
-  &.login {
-    background-color: var(--green);
-    margin-bottom: 5px;
-  }
-
-  &.signUp {
-    background-color: var(--blue);
-  }
+  gap: 5px;
 `;

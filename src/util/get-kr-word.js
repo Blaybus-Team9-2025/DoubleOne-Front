@@ -13,7 +13,7 @@ export const getTargetKr = (target) => {
   switch (target) {
     case 'individual':
       return '개인';
-    case 'group':
+    case 'center':
       return '기업';
   }
 };
