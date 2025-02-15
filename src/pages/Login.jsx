@@ -78,7 +78,7 @@ const Login = () => {
               value={input.pw}
               onChange={onChangeInput}
             />
-            <span>비밀번호 찾기</span>
+            <span onClick={() => nav('/find-pw/auth')}>비밀번호 찾기</span>
           </div>
         </PwWrapper>
       </LoginSection>

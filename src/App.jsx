@@ -12,6 +12,12 @@ import Chat from './pages/Chat';
 import SeniorList from './pages/SeniorList';
 import JobList from './pages/JobList';
 import Menu from './pages/Menu';
+import WorkerHistory from './pages/WorkerHistory';
+import WorkerCalendar from './pages/WorkerCalendar';
+import FindPw from './pages/FindPw';
+import PwAuth from './components/findpw/PwAuth';
+import PwReset from './components/findpw/PwReset';
+import PwFinish from './components/findpw/PwFinish';
 
 function App() {
   return (
@@ -31,6 +37,13 @@ function App() {
         <Route path="/list/senior" element={<SeniorList />} />
         <Route path="/list/job" element={<JobList />} />
         <Route path="/menu" element={<Menu />} />
+        <Route path="/history" element={<WorkerHistory />} />
+        <Route path="/calendar" element={<WorkerCalendar />} />
+        <Route path="/find-pw" element={<FindPw />}>
+          <Route path="auth" element={<PwAuth />} />
+          <Route path="reset" element={<PwReset />} />
+          <Route path="finish" element={<PwFinish />} />
+        </Route>
       </Routes>
     </>
   );
