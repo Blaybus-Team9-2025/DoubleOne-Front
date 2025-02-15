@@ -76,7 +76,7 @@ const ItemWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 14px;
+  gap: 8px;
 `;
 
 const Item = styled.div`
