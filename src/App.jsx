@@ -11,6 +11,7 @@ import CareWorkerDetail from './pages/CareWorkerDetail';
 import Chat from './pages/Chat';
 import SeniorList from './pages/SeniorList';
 import JobList from './pages/JobList';
+import Menu from './pages/Menu';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path="/chat/:id" element={<Chat />} />
         <Route path="/list/senior" element={<SeniorList />} />
         <Route path="/list/job" element={<JobList />} />
+        <Route path="/menu" element={<Menu />} />
       </Routes>
     </>
   );
