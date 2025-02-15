@@ -1,11 +1,14 @@
 import styled from 'styled-components';
 import menu from '../../assets/menu.png';
+import { useNavigate } from 'react-router-dom';
 
 const Header = ({ title }) => {
+  const nav = useNavigate();
+
   return (
     <Div>
       <p>{title}</p>
-      <img src={menu} />
+      <img src={menu} onClick={() => nav('/menu')} />
     </Div>
   );
 };
