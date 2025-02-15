@@ -1,6 +1,6 @@
-import DaumPostcode from 'react-daum-postcode';
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import DaumPostcode from 'react-daum-postcode';
 
 import Required from '../_common/Required';
 
@@ -10,16 +10,26 @@ const AddressInput = () => {
   const [detailedAddress, setDetailedAddress] = useState('');
   const [isOpen, setIsOpen] = useState(false);
 
+  // 우편번호 찾기 팝업 시 뒷 배경 스크롤 방지
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    }
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isOpen]);
+
   const themeObj = {
     bgColor: '#FFFFFF',
     pageBgColor: '#FFFFFF',
-    postcodeTextColor: '#C05850',
+    postcodeTextColor: '#3093F0',
     emphTextColor: '#222222',
   };
 
   const postCodeStyle = {
-    width: '360px',
-    height: '480px',
+    width: '100%',
+    height: '100%',
   };
 
   const toggleHandler = () => {
@@ -69,14 +79,17 @@ const AddressInput = () => {
         />
       </Wrapper>
       {isOpen && (
-        <div>
-          <DaumPostcode
-            theme={themeObj}
-            style={postCodeStyle}
-            onComplete={handleComplete}
-            onClose={closeHandler}
-          />
-        </div>
+        <ModalWrapper>
+          <Modal>
+            <DaumPostcode
+              theme={themeObj}
+              style={postCodeStyle}
+              onComplete={handleComplete}
+              onClose={closeHandler}
+            />
+          </Modal>
+          <Overlay onClick={() => setIsOpen(false)} />
+        </ModalWrapper>
       )}
     </Container>
   );
@@ -95,6 +108,42 @@ const Wrapper = styled.div`
 
   label {
     font-size: 16px;
+  }
+`;
+
+const ModalWrapper = styled.div`
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 2000;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+`;
+
+const Modal = styled.div`
+  width: calc(100% - 40px);
+  max-width: 500px;
+  height: 600px;
+  z-index: 2500;
+`;
+
+const Overlay = styled.div`
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  animation: modal-bg-show 0.3s;
+  @keyframes modal-bg-show {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
 `;
 
