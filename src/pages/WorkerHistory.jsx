@@ -3,6 +3,8 @@ import Header from '../components/_common/Header';
 import Title from '../components/_common/Title';
 import HistoryList from '../components/workerhistory/HistoryList';
 
+import plus from '../assets/plus-nocircle.png';
+
 const WorkerHistory = () => {
   return (
     <Div>
@@ -11,7 +13,9 @@ const WorkerHistory = () => {
         <Title>000요양보호사님</Title>
         <p className="text">모든 근무 기록을 확인하실 수 있습니다.</p>
         <BtnDiv>
-          <button>업무 불러오기</button>
+          <button>
+            <img src={plus} /> 근무 불러오기
+          </button>
         </BtnDiv>
       </TitleDiv>
       <HistoryList />
@@ -29,7 +33,6 @@ const TitleDiv = styled.div`
   flex-direction: column;
   .text {
     font-size: 16px;
-    color: #666666;
     margin-top: 6px;
   }
 `;
@@ -40,10 +43,18 @@ const BtnDiv = styled.div`
   justify-content: end;
   margin-top: 18px;
   button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 30px;
     font-size: 14px;
     padding: 2px 13px;
-    border-radius: 5px;
-    background-color: #e6e6e6;
+    border-radius: 20px;
+    background-color: #e2e2e2;
+  }
+  img {
+    width: 14px;
+    height: 14px;
   }
 `;
 

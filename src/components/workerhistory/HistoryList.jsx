@@ -43,13 +43,14 @@ const HistoryList = ({ data }) => {
 const Div = styled.div`
   display: flex;
   width: 100%;
-  margin-top: 50px;
+  margin-top: 37px;
 `;
 
 const Line = styled.div`
   width: 1px;
-  border-left: 1px solid black;
+  border-right: 1px solid black;
   margin-top: 8px;
+  margin-bottom: 50px;
 `;
 
 const ItemListDiv = styled.div`
@@ -82,9 +83,9 @@ const Timeline = styled.div`
   &::before {
     content: '●';
     position: absolute;
-    left: -23px;
-    top: 5px;
-    font-size: 5px;
+    left: -25px;
+    top: 4px;
+    font-size: 9px;
   }
 `;
 
