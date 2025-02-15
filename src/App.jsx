@@ -9,8 +9,6 @@ import SignUpSelect from './pages/SignUpSelect';
 import Contact from './pages/Contact';
 import CareWorkerDetail from './pages/CareWorkerDetail';
 import Chat from './pages/Chat';
-import SeniorRegister from './pages/SeniorRegister';
-import Recruiting from './pages/Recruiting';
 
 function App() {
   return (
@@ -27,9 +25,6 @@ function App() {
           element={<CareWorkerDetail />}
         />
         <Route path="/chat/:id" element={<Chat />} />
-        <Route path="/SeniorRegister/:id" element={<SeniorRegister />} />
-        <Route path="/Recruiting/:id" element={<Recruiting />} />
-
       </Routes>
     </>
   );
