@@ -28,4 +28,8 @@ const Button = styled.button`
   &.blue {
     background-color: var(--blue);
   }
+
+  &.white {
+    background-color: var(--white);
+  }
 `;

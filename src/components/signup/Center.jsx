@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 
+import { InputStyle } from '../../util/common-style';
+
 const Center = () => {
   const [carYn, setCarYn] = useState(false);
 
@@ -83,11 +85,7 @@ const Label = styled.label`
 `;
 
 const Input = styled.input`
-  height: 40px;
-  border: 1px solid #909090;
-  border-radius: 5px;
-  padding: 10px 15px;
-  font-size: 14px;
+  ${InputStyle}
 `;
 
 const RadioWrapper = styled.div`

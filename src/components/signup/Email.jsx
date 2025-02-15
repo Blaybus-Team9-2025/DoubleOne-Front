@@ -3,6 +3,7 @@ import { useState } from 'react';
 
 import Required from '../_common/Required';
 import Alert from './Alert';
+import { InputStyle } from '../../util/common-style';
 
 const Email = () => {
   const [matchYn, setMatchYn] = useState(true);
@@ -66,23 +67,21 @@ const Container = styled.section`
     font-size: 16px;
   }
 `;
+
 const InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
 `;
+
 const Wrapper = styled.div`
   display: flex;
   gap: 10px;
 `;
 
 const Input = styled.input`
-  height: 40px;
-  border: 1px solid #909090;
-  border-radius: 5px;
-  padding: 10px 15px;
-  font-size: 14px;
   flex: 0.7;
+  ${InputStyle}
 `;
 
 const Button = styled.button`
