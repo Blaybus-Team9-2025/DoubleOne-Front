@@ -5,7 +5,9 @@ const DetailModal = ({ setIsOpen, children }) => {
   return (
     <Overlay>
       <ModalWrapper>
-        <Button onClick={() => setIsOpen(false)}>X</Button>
+        <Button>
+          <button onClick={() => setIsOpen(false)}>X</button>
+        </Button>
         <Content>{children}</Content>
       </ModalWrapper>
     </Overlay>
@@ -44,8 +46,16 @@ const ModalWrapper = styled.div`
 
 const Button = styled.button`
   position: fixed;
-  transform: translate(-140px, 0px);
-  font-size: 24px;
+  min-width: 300px;
+  max-width: 400px;
+  width: calc(100% - 40px);
+  padding-left: 20px;
+  display: flex;
+  justify-content: start;
+  button {
+    font-size: 24px;
+    cursor: pointer;
+  }
 `;
 
 const Content = styled.div`
