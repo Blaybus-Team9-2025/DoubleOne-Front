@@ -1,17 +1,20 @@
 import styled from 'styled-components';
 import { useState } from 'react';
+import { useAtom } from 'jotai';
 
 import Required from '../_common/Required';
 import Alert from './Alert';
+import { SignupAtom } from '../../jotai/Signup';
+import { InputStyle } from '../../util/common-style';
 
 const CenterName = () => {
-  const [center, setCenter] = useState('');
   const [validYn, setValidYn] = useState(true);
+  const [signup, setSignup] = useAtom(SignupAtom);
 
   const isValidCenter = () => {
     const centerList = []; // 백에서 가져오기
 
-    if (centerList.includes(center)) {
+    if (centerList.includes(signup.centerName)) {
       setValidYn(true);
     } else {
       setValidYn(false);
@@ -28,8 +31,12 @@ const CenterName = () => {
         <input
           type="text"
           placeholder="센터이름을 입력하세요."
-          value={center}
-          onChange={(e) => setCenter(e.target.value)}
+          value={signup.centerName}
+          onChange={(e) =>
+            setSignup({
+              centerName: e.target.value,
+            })
+          }
         />
         <button onClick={isValidCenter}>센터 확인</button>
       </Wrapper>
@@ -57,12 +64,8 @@ const Wrapper = styled.div`
   gap: 8px;
 
   input {
-    height: 40px;
-    border: 1px solid #909090;
-    border-radius: 5px;
-    padding: 10px 15px;
-    font-size: 14px;
     flex: 0.6;
+    ${InputStyle}
   }
 
   button {

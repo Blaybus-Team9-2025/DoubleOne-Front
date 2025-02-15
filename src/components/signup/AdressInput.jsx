@@ -1,13 +1,14 @@
-import styled from 'styled-components';
 import { useState, useEffect } from 'react';
+import { useAtom } from 'jotai';
+import styled from 'styled-components';
 import DaumPostcode from 'react-daum-postcode';
 
 import Required from '../_common/Required';
+import { SignupAtom } from '../../jotai/Signup';
+import { InputStyle } from '../../util/common-style';
 
 const AddressInput = () => {
-  const [zonecode, setZonecode] = useState('');
-  const [address, setAddress] = useState('');
-  const [detailedAddress, setDetailedAddress] = useState('');
+  const [signup, setSignup] = useAtom(SignupAtom);
   const [isOpen, setIsOpen] = useState(false);
 
   // 우편번호 찾기 팝업 시 뒷 배경 스크롤 방지
@@ -38,8 +39,12 @@ const AddressInput = () => {
 
   const handleComplete = (data) => {
     const { address, zonecode } = data;
-    setZonecode(zonecode);
-    setAddress(address);
+
+    setSignup({
+      ...signup,
+      address,
+      zonecode,
+    });
   };
 
   const closeHandler = (state) => {
@@ -50,8 +55,11 @@ const AddressInput = () => {
     }
   };
 
-  const onInputChange = (e) => {
-    setDetailedAddress(e.target.value);
+  const onChangeInput = (e) => {
+    setSignup({
+      ...signup,
+      [e.target.name]: e.target.value,
+    });
   };
 
   return (
@@ -63,18 +71,31 @@ const AddressInput = () => {
             <Required />
           </label>
           <ZoneCodeWrapper>
-            <Input className="zoneCode" type="text" value={zonecode} />
+            <Input
+              className="zoneCode"
+              type="text"
+              value={signup.zonecode}
+              name="zondcode"
+              onChange={onChangeInput}
+            />
             <button type="button" onClick={toggleHandler}>
               우편번호 찾기
             </button>
           </ZoneCodeWrapper>
         </div>
-        <Input className="address" type="text" value={address} />
+        <Input
+          className="address"
+          type="text"
+          value={signup.address}
+          name="address"
+          onChange={onChangeInput}
+        />
         <Input
           className="detailedAddress"
           type="text"
-          value={detailedAddress}
-          onChange={onInputChange}
+          value={signup.detailedAddress}
+          onChange={onChangeInput}
+          name="detailedAddress"
           placeholder="상세주소를 입력해주세요"
         />
       </Wrapper>
@@ -161,11 +182,7 @@ const ZoneCodeWrapper = styled.div`
 `;
 
 const Input = styled.input`
-  height: 40px;
-  border: 1px solid #909090;
-  border-radius: 5px;
-  padding: 10px 15px;
-  font-size: 14px;
+  ${InputStyle}
 
   &.zoneCode {
     flex: 0.4;

@@ -1,16 +1,24 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useAtom } from 'jotai';
 
 import Dropdown from './Dropdown';
 import Required from '../_common/Required';
+import { SignupAtom } from '../../jotai/Signup';
+import { InputStyle } from '../../util/common-style';
 
 const years = Array.from({ length: 2025 - 1930 + 1 }, (_, i) => 2025 - i);
 const months = Array.from({ length: 12 - 1 + 1 }, (_, i) => 1 + i);
 const days = Array.from({ length: 31 - 1 + 1 }, (_, i) => 1 + i);
 
 const Default = () => {
-  const [selected, setSelected] = useState('female');
-  const onChangeInput = () => {};
+  const [signup, setSignup] = useAtom(SignupAtom);
+
+  const onChangeInput = (e) => {
+    setSignup({
+      ...signup,
+      [e.target.name]: e.target.value,
+    });
+  };
 
   return (
     <Container>
@@ -25,7 +33,7 @@ const Default = () => {
             id="name"
             name="name"
             placeholder="이름을 입력하세요."
-            value={name}
+            value={signup.name}
             maxLength="4"
             onChange={onChangeInput}
           />
@@ -37,14 +45,26 @@ const Default = () => {
           </label>
           <ButtonContainer>
             <button
-              className={selected === 'male' ? 'active' : ''}
-              onClick={() => setSelected('male')}
+              className={signup.gender === 'male' ? 'active' : ''}
+              onClick={() =>
+                setSignup({
+                  ...signup,
+                  gender: 'male',
+                })
+              }
             >
               남
             </button>
             <button
-              className={selected === 'female' ? 'active' : ''}
-              onClick={() => setSelected('female')}
+              className={
+                !signup.gender || signup.gender === 'female' ? 'active' : ''
+              }
+              onClick={() =>
+                setSignup({
+                  ...signup,
+                  gender: 'female',
+                })
+              }
             >
               여
             </button>
@@ -58,7 +78,15 @@ const Default = () => {
             <Required />
           </label>
           <DropdownWrapper>
-            <Dropdown options={years} width="40%" className="year" />
+            <Dropdown
+              options={years}
+              width="40%"
+              className="year"
+              setData={setSignup}
+              data={signup}
+              target="year"
+              init="2000"
+            />
             <Dropdown options={months} width="30%" className="month" />
             <Dropdown options={days} width="30%" className="day" />
           </DropdownWrapper>
@@ -116,6 +144,7 @@ const Section = styled.section`
     justify-content: space-between;
   }
 `;
+
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -126,11 +155,7 @@ const Wrapper = styled.div`
   }
 
   input {
-    height: 40px;
-    border: 1px solid #909090;
-    border-radius: 5px;
-    padding: 10px 15px;
-    font-size: 14px;
+    ${InputStyle}
   }
 
   &.dateOfBirth,

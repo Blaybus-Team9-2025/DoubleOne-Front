@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Required from '../_common/Required';
 import Alert from './Alert';
 import { isValidPassword } from '../../util/isValidPassword';
+import { InputStyle } from '../../util/common-style';
 
 const Password = () => {
   const [pw, setPw] = useState('');
@@ -92,10 +93,5 @@ const Wrapper = styled.div`
 `;
 
 const Input = styled.input`
-  height: 40px;
-  border: 1px solid #909090;
-  border-radius: 5px;
-  padding: 10px 15px;
-  font-size: 14px;
-  flex: 1;
+  ${InputStyle}
 `;
