@@ -31,8 +31,8 @@ const SeniorProfile = () => {
         <img src={arrow} />
       </MiddleBoxDiv>
       <BtnDiv>
-        <RoundButton text={'거절'} />
-        <RoundButton text={'수락'} />
+        <button>거절</button>
+        <button>수락</button>
       </BtnDiv>
     </Div>
   );
@@ -59,7 +59,6 @@ const MiddleBoxDiv = styled.div`
 `;
 
 const BoxDiv = styled.div`
-  border-radius: 10px;
   padding: 10px;
   display: flex;
   justify-content: space-between;
@@ -89,13 +88,18 @@ const Content = styled.div`
 `;
 
 const BtnDiv = styled.div`
+  width: 265px;
   display: flex;
   gap: 10px;
   margin-bottom: 30px;
   margin-top: 10px;
   button {
     border: 1px solid black;
-    box-shadow: none;
+    padding: 3px 0;
+    width: 100%;
+    border-radius: 15px;
+    font-size: 16px;
+    font-weight: 700;
   }
 `;
 

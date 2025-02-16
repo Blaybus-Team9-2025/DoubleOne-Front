@@ -19,6 +19,7 @@ const Chat = () => {
 
 const Div = styled.div`
   width: 100%;
+  margin-bottom: 180px;
 `;
 
 const ChatWrapper = styled.div`
