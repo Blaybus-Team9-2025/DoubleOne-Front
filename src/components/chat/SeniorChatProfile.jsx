@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import arrow from '../../assets/arrow-right.png';
 
-const SeniorChatProfile = () => {
+const SeniorChatProfile = ({ isAccepted }) => {
   return (
     <Div>
       <Title>어르신 상세정보 보기</Title>
@@ -30,10 +30,13 @@ const SeniorChatProfile = () => {
           <img src={arrow} />
         </div>
       </BoxDiv>
-      <BtnDiv>
-        <button>거절</button>
-        <button>수락</button>
-      </BtnDiv>
+      {isAccepted ?? (
+        <BtnDiv>
+          <button>거절</button>
+          <button>수락</button>
+        </BtnDiv>
+      )}
+      <div className="margin" />
     </Div>
   );
 };
@@ -41,6 +44,9 @@ const SeniorChatProfile = () => {
 const Div = styled.div`
   display: flex;
   flex-direction: column;
+  .margin {
+    margin-bottom: 30px;
+  }
 `;
 
 const Title = styled.div`
@@ -93,7 +99,6 @@ const BtnDiv = styled.div`
   width: 100%px;
   display: flex;
   gap: 10px;
-  margin-bottom: 30px;
   margin-top: 10px;
   button {
     border: 1px solid black;

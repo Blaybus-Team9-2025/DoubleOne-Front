@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { MIN_Y } from '../components/mypage/bottomsheet/BottomSheetOption';
+import { MIN_Y } from '../components/chat/BottomSheet/BottomSheetOption';
 
 const useBottomSheet = () => {
   const defaultMetrics = {

@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 
+import BottomSheet from '../../chat/BottomSheet/BottomSheet';
+
 import msg from '../../../assets/msg-alarm.png';
+import { useState } from 'react';
 
 const mock = [
   {
@@ -42,6 +45,7 @@ const mock = [
 ];
 
 const MatchingAlarms = () => {
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <Div>
       <p className="title">매칭 요청 알림</p>
@@ -49,7 +53,7 @@ const MatchingAlarms = () => {
         <Line />
         {mock.map((item, index) => {
           return (
-            <ItemWrapper key={index}>
+            <ItemWrapper key={index} onClick={() => setIsOpen(true)}>
               <img src={msg} />
               <div>
                 <p>{item.from}에서 온 매칭 요청입니다.</p>
@@ -63,6 +67,13 @@ const MatchingAlarms = () => {
         })}
         <div></div>
       </List>
+      {isOpen && (
+        <BottomSheet
+          setIsOpen={setIsOpen}
+          seniorProfile={true}
+          isAccepted={true}
+        />
+      )}
     </Div>
   );
 };
