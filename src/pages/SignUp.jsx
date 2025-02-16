@@ -9,7 +9,7 @@ import NameAndGender from '../components/registration/NameAndGender';
 import PhoneNum from '../components/registration/PhoneNum';
 import BirthDate from '../components/registration/BirthDate';
 
-import AddressInput from '../components/registration/AdressInput';
+import AddressInput from '../components/registration/AddressInput';
 import CenterName from '../components/signup/CenterName';
 import Center from '../components/signup/Center';
 import Email from '../components/signup/Email';
@@ -29,24 +29,26 @@ const SignUp = () => {
           <p>{getTypeKr(type)}로</p>
           <p>회원가입 하기({getTargetKr(target)})</p>
         </Title>
-        {type === 'email' && (
-          <>
-            <Email />
-            <Password />
-          </>
-        )}
-        <NameAndGender />
-        <PhoneNum />
-        <BirthDate />
-        {target === 'center' && <CenterName />}
-        <AddressInput />
-        {target === 'center' && <Center />}
+        <Div>
+          {type === 'email' && (
+            <>
+              <Email />
+              <Password />
+            </>
+          )}
+          <NameAndGender />
+          <PhoneNum />
+          <BirthDate />
+          {target === 'center' && <CenterName />}
+          <AddressInput />
+          {target === 'center' && <Center />}
+        </Div>
       </div>
       <RoundButton
         text="회원가입 완료"
         color="green"
         onClick={onSubmit}
-        mt={type === 'kakao' && target === 'individual' ? '60' : '20'}
+        mt={type === 'kakao' && target === 'individual' ? '60' : '40'}
         mb="20"
       />
     </Container>
@@ -59,4 +61,10 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 100px;
+`;
+
+const Div = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 `;

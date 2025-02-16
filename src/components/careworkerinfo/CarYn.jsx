@@ -2,13 +2,14 @@ import styled from 'styled-components';
 import { useAtom } from 'jotai';
 
 import { CareworkerInfoAtom } from '../../jotai/CareworkerInfo';
+import { LabelStyle } from '../../util/common-style';
 
 const CarYn = () => {
   const [info, setInfo] = useAtom(CareworkerInfoAtom);
 
   return (
     <Container>
-      <Label className="car">목욕 차량 소유 여부</Label>
+      <Label>목욕 차량 소유 여부</Label>
       <Wrapper>
         <div>
           <label htmlFor="yes">예</label>
@@ -54,7 +55,10 @@ const Container = styled.section`
   margin-bottom: 8px;
 `;
 
-const Label = styled.p``;
+const Label = styled.p`
+  font-size: 16px;
+  user-select: none;
+`;
 
 const Wrapper = styled.div`
   display: flex;

@@ -5,7 +5,7 @@ import RoundButton from '../components/_common/RoundButton';
 import ImgUpload from '../components/registration/ImgUpload';
 import NameAndGender from '../components/registration/NameAndGender';
 import PhoneNum from '../components/registration/PhoneNum';
-import AddressInput from '../components/registration/AdressInput';
+import AddressInput from '../components/registration/AddressInput';
 import Wage from '../components/registration/Wage';
 import Schedule from '../components/registration/Schedule';
 
@@ -39,12 +39,15 @@ const CareWorkerInfo = () => {
           <PhoneNum />
           <AddressInput />
           <License />
-          <CarYn />
-          <CourseYn />
+          <div>
+            <CarYn />
+            <CourseYn />
+          </div>
           <RoundButton
             text="저장하고 다음으로"
             color="green"
             mb="20"
+            mt="20"
             onClick={() => nav('/careworkerinfo/2')}
           />
         </>
@@ -57,18 +60,19 @@ const CareWorkerInfo = () => {
           <Schedule />
           <Wage />
           <Location />
-          <RoundButton
-            text="이전으로"
-            color="white"
-            mb="10"
-            onClick={() => nav('/careworkerinfo/1')}
-          />
-          <RoundButton
-            text="저장하고 다음으로"
-            color="green"
-            mb="20"
-            onClick={() => nav('/careworkerinfo/3')}
-          />
+          <ButtonWrapper>
+            <RoundButton
+              text="이전으로"
+              color="white"
+              mt="20"
+              onClick={() => nav('/careworkerinfo/1')}
+            />
+            <RoundButton
+              text="저장하고 다음으로"
+              color="green"
+              onClick={() => nav('/careworkerinfo/3')}
+            />
+          </ButtonWrapper>
         </>
       )}
       {order === '3' && (
@@ -78,18 +82,20 @@ const CareWorkerInfo = () => {
           </Title>
           <Experience />
           <Introduction />
-          <RoundButton
-            text="이전으로"
-            color="white"
-            mb="10"
-            onClick={() => nav('/careworkerinfo/2')}
-          />
-          <RoundButton
-            text="등록하기"
-            color="green"
-            mb="20"
-            onClick={onSubmit}
-          />
+          <ButtonWrapper>
+            <RoundButton
+              text="이전으로"
+              color="white"
+              mt="20"
+              onClick={() => nav('/careworkerinfo/2')}
+            />
+            <RoundButton
+              text="등록하기"
+              color="green"
+              mb="20"
+              onClick={onSubmit}
+            />
+          </ButtonWrapper>
         </>
       )}
     </Container>
@@ -100,4 +106,13 @@ export default CareWorkerInfo;
 
 const Container = styled.div`
   margin-top: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 `;
