@@ -1,21 +1,14 @@
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+
 import styled from 'styled-components';
-import { useEffect, useState } from 'react';
+
 import InfoCard from './InfoCard';
 import CareerCard from './CareerCard';
 import IntroCard from './IntroCard';
-import DetailModal from './DetailModal';
 
-const Slick = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [modalIndex, setModalIndex] = useState(0);
-  const modalList = [
-    <InfoCard key="1" modal="modal" />,
-    <CareerCard key="2" modal="modal" />,
-    <IntroCard key="3" modal="modal" />,
-  ];
+const Slick = ({ data }) => {
   const settings = {
     dots: true,
     infinite: true,
@@ -30,49 +23,35 @@ const Slick = () => {
     ),
   };
 
-  const handleClick = (index) => {
-    setModalIndex(index);
-    setIsOpen(true);
-  };
-
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'auto';
-    }
-  }, [isOpen]);
-
   return (
     <Div>
       <Slider {...settings}>
         <ContentDiv>
           <Shadow>
-            <Content onClick={() => handleClick(0)}>
-              <InfoCard />
+            <Content>
+              <InfoCard
+                regions={data.worker_regions}
+                schedules={data.worker_schedules}
+                wage={data.wage}
+              />
             </Content>
           </Shadow>
         </ContentDiv>
         <ContentDiv>
           <Shadow>
-            <Content onClick={() => handleClick(1)}>
-              <CareerCard />
+            <Content>
+              <CareerCard experiences={data.workPeriods} />
             </Content>
           </Shadow>
         </ContentDiv>
         <ContentDiv>
           <Shadow>
-            <Content onClick={() => handleClick(2)}>
-              <IntroCard />
+            <Content>
+              <IntroCard text={data.introduction} />
             </Content>
           </Shadow>
         </ContentDiv>
       </Slider>
-      {isOpen && (
-        <DetailModal isOpen={isOpen} setIsOpen={setIsOpen}>
-          {<Content className="modal">{modalList[modalIndex]}</Content>}
-        </DetailModal>
-      )}
     </Div>
   );
 };
@@ -98,15 +77,9 @@ const Shadow = styled.div`
 `;
 
 const Content = styled.div`
-  &:not(.modal) {
-    height: 300px;
-    font-size: 16px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 11;
-    -webkit-box-orient: vertical;
-  }
+  height: 300px;
+  font-size: 16px;
+  overflow: auto;
   word-break: keep-all;
   .title {
     font-size: 24px;
