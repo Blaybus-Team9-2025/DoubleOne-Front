@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Card from '../_common/Card';
+import Card from '../../_common/Card';
 import { useNavigate } from 'react-router-dom';
 
 const MatchingList = () => {

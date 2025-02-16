@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import chevron from '../../assets/chevron-right.png';
+import chevron from '../../../assets/chevron-right.png';
 
-const ButtonBox = () => {
+const ManagerButtonBox = () => {
   return (
     <Div>
       <div>
@@ -47,4 +47,4 @@ const Div = styled.div`
   }
 `;
 
-export default ButtonBox;
+export default ManagerButtonBox;

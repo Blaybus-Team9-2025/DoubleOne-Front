@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const Profile = () => {
+const ManagerProfile = () => {
   return (
     <Div>
       <ImgDiv>
@@ -45,4 +45,4 @@ const NameDiv = styled.div`
   }
 `;
 
-export default Profile;
+export default ManagerProfile;
