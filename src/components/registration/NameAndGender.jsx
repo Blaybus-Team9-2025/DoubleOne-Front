@@ -1,16 +1,11 @@
 import styled from 'styled-components';
 import { useAtom } from 'jotai';
 
-import Dropdown from './Dropdown';
 import Required from '../_common/Required';
 import { SignupAtom } from '../../jotai/Signup';
 import { InputStyle } from '../../util/common-style';
 
-const years = Array.from({ length: 2025 - 1930 + 1 }, (_, i) => 2025 - i);
-const months = Array.from({ length: 12 - 1 + 1 }, (_, i) => 1 + i);
-const days = Array.from({ length: 31 - 1 + 1 }, (_, i) => 1 + i);
-
-const Default = () => {
+const NameAndGender = () => {
   const [signup, setSignup] = useAtom(SignupAtom);
 
   const onChangeInput = (e) => {
@@ -71,63 +66,11 @@ const Default = () => {
           </ButtonContainer>
         </Wrapper>
       </Section>
-      <Section className="dateOfBirth">
-        <Wrapper className="dateOfBirth">
-          <label htmlFor="dob">
-            생년월일
-            <Required />
-          </label>
-          <DropdownWrapper>
-            <Dropdown
-              options={years}
-              width="40%"
-              className="year"
-              setData={setSignup}
-              data={signup}
-              target="year"
-              init="2000"
-            />
-            <Dropdown options={months} width="30%" className="month" />
-            <Dropdown options={days} width="30%" className="day" />
-          </DropdownWrapper>
-        </Wrapper>
-      </Section>
-      <Section className="tel">
-        <Wrapper className="tel">
-          <label htmlFor="tel">
-            휴대폰 번호
-            <Required />
-          </label>
-          <TelWrapper>
-            <input
-              type="text"
-              id="tel"
-              className="first"
-              placeholder="010"
-              name="tel1"
-            />
-            <input
-              type="text"
-              id="tel"
-              className="second"
-              placeholder="0000"
-              name="tel2"
-            />
-            <input
-              type="text"
-              id="tel"
-              className="third"
-              placeholder="0000"
-              name="tel3"
-            />
-          </TelWrapper>
-        </Wrapper>
-      </Section>
     </Container>
   );
 };
 
-export default Default;
+export default NameAndGender;
 
 const Container = styled.div`
   display: flex;
@@ -156,28 +99,6 @@ const Wrapper = styled.div`
 
   input {
     ${InputStyle}
-  }
-
-  &.dateOfBirth,
-  &.tel {
-    width: 100%;
-  }
-`;
-
-const DropdownWrapper = styled.div`
-  display: flex;
-  width: 100%;
-  gap: 8px;
-`;
-
-const TelWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  gap: 10px;
-
-  input {
-    flex: 1;
-    min-width: 0;
   }
 `;
 

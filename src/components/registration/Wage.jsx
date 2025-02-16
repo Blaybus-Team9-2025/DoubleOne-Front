@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 import Required from '../_common/Required';
-import Dropdown from '../signup/Dropdown';
+import Dropdown from './Dropdown';
 import { InputStyle } from '../../util/common-style';
 
 const unit = ['시급', '일급', '월급', '연봉', '건당'];

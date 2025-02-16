@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useState } from 'react';
 
 import Required from '../_common/Required';
-import Dropdown from '../signup/Dropdown';
+import Dropdown from './Dropdown';
 import AddInput from './AddInput';
 import check from '../../assets/check.png';
 import darkCheck from '../../assets/darkCheck.png';
