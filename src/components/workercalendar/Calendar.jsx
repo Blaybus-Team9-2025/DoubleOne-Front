@@ -6,7 +6,7 @@ import ScheduleList from './ScheduleList';
 
 import plus from '../../assets/plus-nocircle.png';
 
-const CalendarMain = () => {
+const CalendarMain = ({ home }) => {
   const [date, setDate] = useState(new Date());
   const [activeStartDate, setActiveStartDate] = useState(new Date());
 
@@ -54,6 +54,7 @@ const CalendarMain = () => {
                 className="month"
                 value={date.getMonth()}
                 onChange={handleMonthChange}
+                disabled={home}
               >
                 {months.map((month) => (
                   <option key={month} value={month - 1}>
@@ -61,7 +62,11 @@ const CalendarMain = () => {
                   </option>
                 ))}
               </Select>
-              <Select value={date.getFullYear()} onChange={handleYearChange}>
+              <Select
+                value={date.getFullYear()}
+                onChange={handleYearChange}
+                disabled={home}
+              >
                 {years.map((year) => (
                   <option key={year} value={year}>
                     {year}
@@ -69,11 +74,13 @@ const CalendarMain = () => {
                 ))}
               </Select>
             </div>
-            <BtnDiv>
-              <div>
-                <img src={plus} /> 일정 추가하기
-              </div>
-            </BtnDiv>
+            {!home && (
+              <BtnDiv>
+                <div>
+                  <img src={plus} /> 일정 추가하기
+                </div>
+              </BtnDiv>
+            )}
           </NavWrapper>
         )}
         next2Label={null}
@@ -82,7 +89,7 @@ const CalendarMain = () => {
         prevLabel={null}
         onClickMonthYear={(e) => e.stopPropagation()}
       />
-      <ScheduleList date={date.toString()} />
+      {!home && <ScheduleList date={date.toString()} />}
     </Div>
   );
 };
