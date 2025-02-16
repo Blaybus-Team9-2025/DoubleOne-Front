@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { InputStyle } from '../../util/common-style';
 import infoCircle from '../../assets/info-circle.png';
 import calendar from '../../assets/calendar.png';
-import AddInput from './AddInput';
+import AddInput from '../registration/AddInput';
 
 const Experience = () => {
   const [experiences, setExperiences] = useState([0]);

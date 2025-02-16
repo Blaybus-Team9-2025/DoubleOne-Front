@@ -10,7 +10,7 @@ export const SignupAtom = atom({
   tel1: '010',
   tel2: '',
   tel3: '',
-  zonecode: 0,
+  zonecode: '',
   address: '',
   detailAdress: '',
 });

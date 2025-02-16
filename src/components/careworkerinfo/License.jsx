@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useAtom } from 'jotai';
 
-import Dropdown from '../signup/Dropdown';
+import Dropdown from '../registration/Dropdown';
 import Required from '../_common/Required';
 import { CareworkerInfoAtom } from '../../jotai/CareworkerInfo';
 import { InputStyle } from '../../util/common-style';
