@@ -4,6 +4,7 @@ import { useAtom } from 'jotai';
 import Required from '../_common/Required';
 import { SignupAtom } from '../../jotai/Signup';
 import { InputStyle } from '../../util/common-style';
+import { LabelStyle } from '../../util/common-style';
 
 const NameAndGender = () => {
   const [signup, setSignup] = useAtom(SignupAtom);
@@ -17,12 +18,12 @@ const NameAndGender = () => {
 
   return (
     <Container>
-      <Section className="name">
-        <Wrapper>
-          <label htmlFor="name">
-            이름
+      <Wrapper>
+        <Div>
+          <div>
+            <Label htmlFor="name">이름</Label>
             <Required />
-          </label>
+          </div>
           <input
             type="text"
             id="name"
@@ -32,12 +33,12 @@ const NameAndGender = () => {
             maxLength="4"
             onChange={onChangeInput}
           />
-        </Wrapper>
-        <Wrapper>
-          <label>
-            성별
+        </Div>
+        <Div>
+          <div>
+            <Label>성별</Label>
             <Required />
-          </label>
+          </div>
           <ButtonContainer>
             <button
               className={signup.gender === 'male' ? 'active' : ''}
@@ -64,42 +65,41 @@ const NameAndGender = () => {
               여
             </button>
           </ButtonContainer>
-        </Wrapper>
-      </Section>
+        </Div>
+      </Wrapper>
     </Container>
   );
 };
 
 export default NameAndGender;
 
-const Container = styled.div`
+const Container = styled.section`
+  display: flex;
+  flex-direction: column;
+`;
+
+const Wrapper = styled.section`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const Div = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
-  margin-bottom: 8px;
-`;
-
-const Section = styled.section`
-  width: 100%;
-  display: flex;
-
-  &.name {
-    justify-content: space-between;
-  }
-`;
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
 
   label {
     font-size: 16px;
-    margin-bottom: 4px;
   }
 
   input {
     ${InputStyle}
   }
+`;
+
+const Label = styled.label`
+  ${LabelStyle}
 `;
 
 const ButtonContainer = styled.div`
