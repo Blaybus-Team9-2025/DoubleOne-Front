@@ -1,17 +1,18 @@
 import Title from '../components/_common/Title';
 import Header from '../components/_common/Header';
-import Default from '../components/signup/Default';
-import AddressInput from '../components/signup/AdressInput';
+import RoundButton from '../components/_common/RoundButton';
+
+import ImgUpload from '../components/registration/ImgUpload';
+import NameAndGender from '../components/registration/NameAndGender';
+import PhoneNum from '../components/registration/PhoneNum';
+import AddressInput from '../components/registration/AddressInput';
+import Wage from '../components/registration/Wage';
+import Schedule from '../components/registration/Schedule';
+
 import License from '../components/careworkerinfo/License';
 import CarYn from '../components/careworkerinfo/CarYn';
 import CourseYn from '../components/careworkerinfo/CourseYn';
-import RoundButton from '../components/_common/RoundButton';
-import ImgUpload from '../components/careworkerinfo/ImgUpload';
-
-import Pay from '../components/careworkerinfo/Pay';
 import Location from '../components/careworkerinfo/Location';
-import Schedule from '../components/careworkerinfo/Schedule';
-
 import Experience from '../components/careworkerinfo/Experience';
 import Introduction from '../components/careworkerinfo/Introduction';
 
@@ -34,15 +35,19 @@ const CareWorkerInfo = () => {
             <p>개인정보 입력</p>
           </Title>
           <ImgUpload />
-          <Default />
+          <NameAndGender />
+          <PhoneNum />
           <AddressInput />
           <License />
-          <CarYn />
-          <CourseYn />
+          <div>
+            <CarYn />
+            <CourseYn />
+          </div>
           <RoundButton
             text="저장하고 다음으로"
             color="green"
             mb="20"
+            mt="20"
             onClick={() => nav('/careworkerinfo/2')}
           />
         </>
@@ -53,20 +58,21 @@ const CareWorkerInfo = () => {
             <p>근무 요건 등록</p>
           </Title>
           <Schedule />
-          <Pay />
+          <Wage />
           <Location />
-          <RoundButton
-            text="이전으로"
-            color="white"
-            mb="10"
-            onClick={() => nav('/careworkerinfo/1')}
-          />
-          <RoundButton
-            text="저장하고 다음으로"
-            color="green"
-            mb="20"
-            onClick={() => nav('/careworkerinfo/3')}
-          />
+          <ButtonWrapper>
+            <RoundButton
+              text="이전으로"
+              color="white"
+              mt="20"
+              onClick={() => nav('/careworkerinfo/1')}
+            />
+            <RoundButton
+              text="저장하고 다음으로"
+              color="green"
+              onClick={() => nav('/careworkerinfo/3')}
+            />
+          </ButtonWrapper>
         </>
       )}
       {order === '3' && (
@@ -76,18 +82,20 @@ const CareWorkerInfo = () => {
           </Title>
           <Experience />
           <Introduction />
-          <RoundButton
-            text="이전으로"
-            color="white"
-            mb="10"
-            onClick={() => nav('/careworkerinfo/2')}
-          />
-          <RoundButton
-            text="등록하기"
-            color="green"
-            mb="20"
-            onClick={onSubmit}
-          />
+          <ButtonWrapper>
+            <RoundButton
+              text="이전으로"
+              color="white"
+              mt="20"
+              onClick={() => nav('/careworkerinfo/2')}
+            />
+            <RoundButton
+              text="등록하기"
+              color="green"
+              mb="20"
+              onClick={onSubmit}
+            />
+          </ButtonWrapper>
         </>
       )}
     </Container>
@@ -98,4 +106,13 @@ export default CareWorkerInfo;
 
 const Container = styled.div`
   margin-top: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 `;

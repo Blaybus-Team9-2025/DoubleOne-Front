@@ -1,10 +1,11 @@
 import styled from 'styled-components';
 import { useAtom } from 'jotai';
 
-import Dropdown from '../signup/Dropdown';
+import Dropdown from '../registration/Dropdown';
 import Required from '../_common/Required';
 import { CareworkerInfoAtom } from '../../jotai/CareworkerInfo';
 import { InputStyle } from '../../util/common-style';
+import { LabelStyle } from '../../util/common-style';
 
 const options = ['1', '2', '3'];
 
@@ -37,16 +38,18 @@ export default License;
 const Container = styled.section`
   display: flex;
   flex-direction: column;
-  margin-bottom: 8px;
+  gap: 8px;
 `;
 
-const Label = styled.label``;
+const Label = styled.label`
+  ${LabelStyle}
+`;
 
 const Wrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 8px;
 `;
 
 const Input = styled.input`

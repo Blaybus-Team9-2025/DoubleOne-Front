@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 
-import Dropdown from '../signup/Dropdown';
+import Dropdown from '../registration/Dropdown';
 import Required from '../_common/Required';
-import AddInput from './AddInput';
+import AddInput from '../registration/AddInput';
 
 const License = () => {
   const [dropdowns, setDropdowns] = useState([0]);
@@ -12,7 +12,7 @@ const License = () => {
     if (dropdowns.length < 5) {
       setDropdowns((prev) => [...prev, prev.length]);
     }
-  }; 
+  };
 
   return (
     <Container>

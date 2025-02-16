@@ -19,6 +19,8 @@ import FindPw from './pages/FindPw';
 import PwAuth from './components/findpw/PwAuth';
 import PwReset from './components/findpw/PwReset';
 import PwFinish from './components/findpw/PwFinish';
+import SeniorInfo from './pages/SeniorInfo';
+import Recruiting from './pages/Recruiting';
 
 function App() {
   return (
@@ -46,6 +48,8 @@ function App() {
           <Route path="reset" element={<PwReset />} />
           <Route path="finish" element={<PwFinish />} />
         </Route>
+        <Route path="/seniorinfo/:type" element={<SeniorInfo />} />
+        <Route path="/recruiting/:order" element={<Recruiting />} />
       </Routes>
     </>
   );

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Required from '../_common/Required';
 import Alert from './Alert';
 import { InputStyle } from '../../util/common-style';
+import { LabelStyle } from '../../util/common-style';
 
 const Email = () => {
   const [matchYn, setMatchYn] = useState(true);
@@ -25,7 +26,7 @@ const Email = () => {
   return (
     <Container>
       <div>
-        <label htmlFor="email">아이디(이메일)</label>
+        <Label htmlFor="email">아이디(이메일)</Label>
         <Required />
       </div>
       <InputWrapper>
@@ -61,22 +62,21 @@ const Container = styled.section`
   display: flex;
   flex-direction: column;
   gap: 5px;
-  margin-bottom: 8px;
+`;
 
-  label {
-    font-size: 16px;
-  }
+const Label = styled.label`
+  ${LabelStyle}
 `;
 
 const InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
 `;
 
 const Wrapper = styled.div`
   display: flex;
-  gap: 10px;
+  gap: 8px;
 `;
 
 const Input = styled.input`
