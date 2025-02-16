@@ -11,6 +11,7 @@ const Mark = styled.span`
   font-weight: bold;
   color: var(--red);
   margin-left: 3px;
+  user-select: none;
 
   position: relative;
   top: 3px;

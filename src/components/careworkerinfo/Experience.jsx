@@ -7,12 +7,19 @@ import calendar from '../../assets/calendar.png';
 import AddInput from '../registration/AddInput';
 
 const Experience = () => {
-  const [experiences, setExperiences] = useState([0]);
-  const [currentYn, setCurrentYn] = useState(false);
+  const [experiences, setExperiences] = useState([{ id: 0, currentYn: false }]);
   const [infoYn, setInfoYn] = useState(false);
 
   const addInput = () => {
     setExperiences((prev) => [...prev, prev.length]);
+  };
+
+  const toggleCheckbox = (id) => {
+    setExperiences((prev) =>
+      prev.map((exp) =>
+        exp.id === id ? { ...exp, currentYn: !exp.currentYn } : exp
+      )
+    );
   };
 
   return (
@@ -24,15 +31,15 @@ const Experience = () => {
           <span className="info">매칭에 필수적으로 활용되는 정보입니다.</span>
         )}
       </LabelWrapper>
-      {experiences.map((key) => (
-        <Wrapper key={key}>
+      {experiences.map(({ id, currentYn }) => (
+        <Wrapper key={id}>
           <Input placeholder="직함" />
           <Input placeholder="기관 또는 단체" />
           <Check>
             <input
               type="checkbox"
               checked={currentYn}
-              onChange={() => setCurrentYn(!currentYn)}
+              onChange={() => toggleCheckbox(id)}
             />
             <p>현재 이 업무로 근무중</p>
           </Check>
@@ -87,6 +94,7 @@ const Wrapper = styled.div`
 const Label = styled.label`
   margin-right: 5px;
   cursor: pointer;
+  font-size: 16px;
 `;
 
 const Input = styled.input`

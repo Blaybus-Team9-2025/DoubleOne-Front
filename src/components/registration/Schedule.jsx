@@ -4,12 +4,14 @@ import { useState } from 'react';
 import Required from '../_common/Required';
 import Dropdown from './Dropdown';
 import AddInput from './AddInput';
-import check from '../../assets/check.png';
-import darkCheck from '../../assets/darkCheck.png';
+import lightCheck from '../../assets/lightCheck.svg';
+import darkCheck from '../../assets/checkCircle.svg';
+import { LabelStyle } from '../../util/common-style';
 
-const days = ['월', '화', '수', '목', '금'];
+const days = ['월', '화', '수', '목', '금', '토', '일'];
+const times = Array.from({ length: 13 }, (_, i) => `${9 + i}:00`);
 
-const Schedule = () => {
+const Schedule = ({ recruiting }) => {
   const [dropdowns, setDropdowns] = useState([0]);
   const [negoYn, setNegoYn] = useState(false);
 
@@ -23,18 +25,18 @@ const Schedule = () => {
     <Container>
       <Wrapper>
         <Label>근무 일정</Label>
-        <Required />
+        {!recruiting && <Required />}
         <Exp onClick={() => setNegoYn(!negoYn)}>
-          <img src={negoYn ? darkCheck : check} />
+          <img src={negoYn ? darkCheck : lightCheck} />
           <span className={negoYn && 'nego'}>협의가능</span>
         </Exp>
       </Wrapper>
       {dropdowns.map((key) => (
         <DropdownWrapper key={key}>
           <Dropdown exp="요일" width="30%" green options={days} />
-          <Dropdown exp="시작시간" width="40%" green />
+          <Dropdown exp="시작시간" width="40%" green options={times} />
           <span>~</span>
-          <Dropdown exp="종료시간" width="40%" green />
+          <Dropdown exp="종료시간" width="40%" green options={times} />
         </DropdownWrapper>
       ))}
       <AddInput onClick={addDropdown} />
@@ -56,7 +58,7 @@ const Wrapper = styled.div`
 `;
 
 const Label = styled.label`
-  font-size: 16px;
+  ${LabelStyle}
 `;
 
 const Exp = styled.div`
@@ -66,6 +68,9 @@ const Exp = styled.div`
   font-size: 12px;
   color: var(--grey);
   cursor: pointer;
+
+  position: relative;
+  bottom: 4px;
 
   img {
     position: relative;

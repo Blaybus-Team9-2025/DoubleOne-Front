@@ -1,25 +1,33 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 
+// 선택 옵션, 색상(종류), 너비, 초기값, placeholder
+// Jotai에 바로 저장하지 않는 임시 state를 변경하기 위한 함수
+// Jotai에 바로 저장하는 함수, Jotai에 저장하고자 하는 state의 키 값
 export const Dropdown = ({
   options = [],
   green,
   width,
-  target,
-  setData,
-  data,
   init,
   exp,
+  onChange,
+  setData,
+  target,
+  data,
 }) => {
   const [currentValue, setCurrentValue] = useState(exp || init || options[0]);
   const [showOptions, setShowOptions] = useState(false);
 
   const onClick = (e) => {
     const selectedValue = e.target.textContent;
+    setCurrentValue(selectedValue);
 
-    if (selectedValue !== currentValue) {
-      setCurrentValue(selectedValue);
+    if (setData) {
       setData((prev) => ({ ...prev, [target]: selectedValue }));
+    }
+
+    if (onChange) {
+      onChange(selectedValue);
     }
   };
 

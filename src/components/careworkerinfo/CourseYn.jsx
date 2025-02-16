@@ -51,10 +51,12 @@ const Container = styled.section`
   width: 100%;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 8px;
 `;
 
-const Label = styled.p``;
+const Label = styled.p`
+  font-size: 16px;
+  user-select: none;
+`;
 
 const Wrapper = styled.div`
   display: flex;

@@ -5,6 +5,7 @@ import Required from '../_common/Required';
 import Alert from './Alert';
 import { isValidPassword } from '../../util/isValidPassword';
 import { InputStyle } from '../../util/common-style';
+import { LabelStyle } from '../../util/common-style';
 
 const Password = () => {
   const [pw, setPw] = useState('');
@@ -38,7 +39,7 @@ const Password = () => {
   return (
     <Container>
       <div>
-        <label htmlFor="pw">비밀번호</label>
+        <Label htmlFor="pw">비밀번호</Label>
         <Required />
       </div>
       <Wrapper>
@@ -75,11 +76,14 @@ const Container = styled.section`
   display: flex;
   flex-direction: column;
   gap: 5px;
-  margin-bottom: 8px;
 `;
 
 const Blank = styled.div`
-  height: 10px;
+  height: 8px;
+`;
+
+const Label = styled.label`
+  ${LabelStyle}
 `;
 
 const Wrapper = styled.div`

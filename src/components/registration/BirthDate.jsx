@@ -5,6 +5,7 @@ import Required from '../_common/Required';
 import Dropdown from './Dropdown';
 import { SignupAtom } from '../../jotai/Signup';
 import { InputStyle } from '../../util/common-style';
+import { LabelStyle } from '../../util/common-style';
 
 const years = Array.from({ length: 2025 - 1930 + 1 }, (_, i) => 2025 - i);
 const months = Array.from({ length: 12 - 1 + 1 }, (_, i) => 1 + i);
@@ -23,10 +24,10 @@ const BirthDate = () => {
   return (
     <Container>
       <Wrapper>
-        <label htmlFor="dob">
-          생년월일
+        <div>
+          <Label>생년월일</Label>
           <Required />
-        </label>
+        </div>
         <DropdownWrapper>
           <Dropdown
             options={years}
@@ -47,7 +48,11 @@ const BirthDate = () => {
 
 export default BirthDate;
 
-const Container = styled.div``;
+const Container = styled.section``;
+
+const Label = styled.label`
+  ${LabelStyle}
+`;
 
 const DropdownWrapper = styled.div`
   display: flex;
@@ -58,6 +63,7 @@ const DropdownWrapper = styled.div`
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 8px;
 
   label {
     font-size: 16px;

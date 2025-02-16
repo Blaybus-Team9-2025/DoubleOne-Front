@@ -2,14 +2,15 @@ import styled from 'styled-components';
 
 import Required from '../_common/Required';
 import { InputStyle } from '../../util/common-style';
+import { LabelStyle } from '../../util/common-style';
 
 const PhoneNum = () => {
   return (
     <Container>
-      <label htmlFor="tel">
-        휴대폰 번호
+      <div>
+        <Label htmlFor="tel">휴대폰 번호</Label>
         <Required />
-      </label>
+      </div>
       <TelWrapper>
         <Input
           type="text"
@@ -42,11 +43,19 @@ const PhoneNum = () => {
 
 export default PhoneNum;
 
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+`;
+
 const Input = styled.input`
   ${InputStyle}
 `;
 
-const Container = styled.div``;
+const Label = styled.label`
+  ${LabelStyle}
+`;
 
 const TelWrapper = styled.div`
   width: 100%;

@@ -6,6 +6,7 @@ import DaumPostcode from 'react-daum-postcode';
 import Required from '../_common/Required';
 import { SignupAtom } from '../../jotai/Signup';
 import { InputStyle } from '../../util/common-style';
+import { LabelStyle } from '../../util/common-style';
 
 const AddressInput = () => {
   const [signup, setSignup] = useAtom(SignupAtom);
@@ -66,10 +67,10 @@ const AddressInput = () => {
     <Container>
       <Wrapper>
         <div>
-          <label htmlFor="address">
-            주소
+          <Div>
+            <Label htmlFor="address">주소</Label>
             <Required />
-          </label>
+          </Div>
           <ZoneCodeWrapper>
             <Input
               className="zoneCode"
@@ -119,17 +120,23 @@ const AddressInput = () => {
 export default AddressInput;
 
 const Container = styled.div`
-  margin-bottom: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+`;
+
+const Label = styled.label`
+  ${LabelStyle}
 `;
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
+`;
 
-  label {
-    font-size: 16px;
-  }
+const Div = styled.div`
+  margin-bottom: 8px;
 `;
 
 const ModalWrapper = styled.div`

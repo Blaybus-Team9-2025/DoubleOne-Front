@@ -15,5 +15,6 @@ const Div = styled.div`
     font-weight: bold;
     margin: 0px 0px 0px 0px;
     line-height: 120%;
+    user-select: none;
   }
 `;
