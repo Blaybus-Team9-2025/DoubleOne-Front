@@ -1,8 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import styled from 'styled-components';
 import ScheduleList from './ScheduleList';
+
+import plus from '../../assets/plus-nocircle.png';
 
 const CalendarMain = () => {
   const [date, setDate] = useState(new Date());
@@ -47,24 +49,31 @@ const CalendarMain = () => {
         }
         navigationLabel={({ date }) => (
           <NavWrapper onClick={(e) => e.stopPropagation()}>
-            <Select
-              className="month"
-              value={date.getMonth()}
-              onChange={handleMonthChange}
-            >
-              {months.map((month) => (
-                <option key={month} value={month - 1}>
-                  {month}월
-                </option>
-              ))}
-            </Select>
-            <Select value={date.getFullYear()} onChange={handleYearChange}>
-              {years.map((year) => (
-                <option key={year} value={year}>
-                  {year}
-                </option>
-              ))}
-            </Select>
+            <div className="nav">
+              <Select
+                className="month"
+                value={date.getMonth()}
+                onChange={handleMonthChange}
+              >
+                {months.map((month) => (
+                  <option key={month} value={month - 1}>
+                    {month}월
+                  </option>
+                ))}
+              </Select>
+              <Select value={date.getFullYear()} onChange={handleYearChange}>
+                {years.map((year) => (
+                  <option key={year} value={year}>
+                    {year}
+                  </option>
+                ))}
+              </Select>
+            </div>
+            <BtnDiv>
+              <div>
+                <img src={plus} /> 일정 추가하기
+              </div>
+            </BtnDiv>
           </NavWrapper>
         )}
         next2Label={null}
@@ -80,6 +89,7 @@ const CalendarMain = () => {
 
 const Div = styled.div`
   width: 100%;
+  position: relative;
   .react-calendar {
     width: 100%;
     border: none;
@@ -142,11 +152,11 @@ const Div = styled.div`
 
 const NavWrapper = styled.div`
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  p {
+  justify-content: space-between;
+  .nav {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    justify-content: center;
   }
 `;
 
@@ -163,6 +173,29 @@ const Select = styled.select`
     option {
       font-size: 16px;
     }
+  }
+`;
+
+// 일정 추가하기 버튼 css
+const BtnDiv = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  margin-top: 18px;
+  div {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 30px;
+    font-size: 14px;
+    padding: 2px 13px;
+    border-radius: 20px;
+    background-color: #e2e2e2;
+    cursor: pointer;
+  }
+  img {
+    width: 14px;
+    height: 14px;
   }
 `;
 
