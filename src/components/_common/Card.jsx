@@ -48,11 +48,15 @@ const TextDiv = styled.div`
   p:first-child {
     font-size: 18px;
     font-weight: 700;
-    margin-bottom: 4px;
   }
   img {
     width: 24px;
     height: 24px;
+  }
+  div {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
   }
 `;
 

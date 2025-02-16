@@ -14,9 +14,8 @@ const Div = styled.div`
   justify-content: center;
   margin-bottom: 20px;
   div {
-    width: 120px;
-    height: 25px;
-    background-color: #d6d6d6; // 임시 배경색
+    padding: 5px 20px;
+    background-color: #4d4d4d; // 임시 배경색
     color: #ffffff;
     font-size: 12px;
     display: flex;

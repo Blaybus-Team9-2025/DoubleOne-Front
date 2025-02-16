@@ -1,18 +1,20 @@
 import styled from 'styled-components';
 
-const Profile = () => {
+const Profile = ({ profile, logo, name, cert, percentage }) => {
   return (
     <Div>
       <ImgDiv>
-        <img />
+        <img src={profile} />
       </ImgDiv>
       <ItemDiv>
         <div>
-          <img />
+          <img src={logo} />
         </div>
         <div>
-          <p>김어스, 요양보호사 1급</p>
-          <p>매칭률 83%</p>
+          <p className="name">
+            {name}, {cert}
+          </p>
+          <p className="percentage">매칭률 {percentage}%</p>
         </div>
       </ItemDiv>
     </Div>
@@ -22,24 +24,19 @@ const Profile = () => {
 const Div = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 24px;
   align-items: center;
 `;
 
 const ImgDiv = styled.div`
-  width: 100px;
-  height: 100px;
+  width: 150px;
+  height: 150px;
   border-radius: 15px;
   background-color: #d9d9d9;
   img {
     width: 100%;
     object-fit: cover;
   }
-`;
-
-const Name = styled.p`
-  font-size: 24px;
-  font-weight: 700;
 `;
 
 const ItemDiv = styled.div`
@@ -64,11 +61,11 @@ const ItemDiv = styled.div`
     gap: 3px;
   }
 
-  p:first-child {
+  .name {
     font-size: 18px;
     font-weight: 700;
   }
-  p:last-child {
+  .percentage {
     font-size: 16px;
     font-weight: 700;
     opacity: 50%;

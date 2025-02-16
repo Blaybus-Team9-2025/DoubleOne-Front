@@ -1,6 +1,5 @@
 import styled from 'styled-components';
-import Card from '../_common/Card';
-import bell from '../../assets/bell.png';
+import Card from '../../_common/Card';
 import { useNavigate } from 'react-router-dom';
 
 const MatchingList = () => {
@@ -10,7 +9,6 @@ const MatchingList = () => {
     <Div>
       <TitleDiv>
         <p>현재 매칭중인 어르신</p>
-        <img src={bell} />
       </TitleDiv>
       <CardDiv>
         <Card bg="green" onClick={() => nav(`/contact/${1}`)}>

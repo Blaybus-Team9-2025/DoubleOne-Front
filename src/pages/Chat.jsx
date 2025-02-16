@@ -1,4 +1,4 @@
-import SeniorProfile from '../components/chat/SeniorProfile';
+import SeniorChatProfile from '../components/chat/SeniorChatProfile';
 import Header from '../components/_common/Header';
 import styled from 'styled-components';
 import Input from '../components/chat/Input';
@@ -9,7 +9,7 @@ const Chat = () => {
     <Div>
       <Header title={'채팅'} />
       <ChatWrapper>
-        <SeniorProfile />
+        <SeniorChatProfile />
         <ChatRoom />
         <Input />
       </ChatWrapper>
@@ -19,6 +19,7 @@ const Chat = () => {
 
 const Div = styled.div`
   width: 100%;
+  margin-bottom: 180px;
 `;
 
 const ChatWrapper = styled.div`

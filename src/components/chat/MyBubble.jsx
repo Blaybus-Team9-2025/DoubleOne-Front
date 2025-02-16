@@ -21,7 +21,7 @@ const Div = styled.div`
     max-width: 250px;
     padding: 10px;
     border-radius: 20px;
-    /* border-top-right-radius: 0; */
+    border-top-right-radius: 0;
     border: 1px solid black;
   }
 `;

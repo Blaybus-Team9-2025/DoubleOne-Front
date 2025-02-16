@@ -31,6 +31,7 @@ const ImgDiv = styled.div`
   width: 40px;
   height: 40px;
   flex-shrink: 0;
+  margin-top: 5px;
   div {
     width: 100%;
     height: 100%;
@@ -50,6 +51,7 @@ const ContentDiv = styled.div`
 
 const Name = styled.p`
   font-size: 16px;
+  margin-bottom: 7px;
 `;
 
 const BubbleDiv = styled.div`
@@ -62,6 +64,7 @@ const BubbleDiv = styled.div`
     max-width: 250px;
     padding: 10px;
     border-radius: 20px;
+    border-top-left-radius: 0;
     border: 1px solid black;
   }
 `;
