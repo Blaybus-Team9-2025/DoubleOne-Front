@@ -57,7 +57,7 @@ function App() {
         <Route path="/careworkerinfo/:order" element={<CareWorkerInfo />} />
         <Route path="/chat/:id" element={<Chat />} />
         <Route path="/list/senior" element={<SeniorList />} />
-        <Route path="/list/job" element={<JobList />} />
+        <Route path="/list/recruit" element={<JobList />} />
         <Route path="/menu" element={<Menu />} />
         <Route path="/history" element={<WorkerHistory />} />
         <Route path="/calendar" element={<WorkerCalendar />} />

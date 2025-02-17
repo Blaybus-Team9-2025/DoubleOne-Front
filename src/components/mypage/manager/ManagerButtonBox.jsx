@@ -1,22 +1,26 @@
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+
 import chevron from '../../../assets/chevron-right.png';
 
 const ManagerButtonBox = () => {
+  const nav = useNavigate();
+
   return (
     <Div>
-      <div>
+      <div onClick={() => nav('/seniorinfo/register')}>
         <p>어르신 정보 등록하기</p>
         <img src={chevron} />
       </div>
-      <div>
+      <div onClick={() => nav('/list/senior')}>
         <p>어르신 목록 확인하기</p>
         <img src={chevron} />
       </div>
-      <div>
+      <div onClick={() => nav('/seniorinfo/recruit')}>
         <p>구인 정보 등록하기</p>
         <img src={chevron} />
       </div>
-      <div>
+      <div onClick={() => nav('/list/recruit')}>
         <p>구인 공고 목록 확인하기</p>
         <img src={chevron} />
       </div>
