@@ -3,16 +3,7 @@ import styled from 'styled-components';
 import Required from '../_common/Required';
 import Dropdown from '../registration/Dropdown';
 import { LabelStyle } from '../../util/common-style';
-
-const options = [
-  '등급 없음',
-  '1급',
-  '2급',
-  '3급',
-  '4급',
-  '5급',
-  '인지지원등급',
-];
+import { getOptions } from '../../util/get-options';
 
 const CaringGrade = () => {
   return (
@@ -21,7 +12,7 @@ const CaringGrade = () => {
         <Label>장기요양등급</Label>
         <Required />
       </div>
-      <Dropdown width="100%" options={options} />
+      <Dropdown width="100%" options={getOptions('caringGrade')} />
     </Container>
   );
 };
