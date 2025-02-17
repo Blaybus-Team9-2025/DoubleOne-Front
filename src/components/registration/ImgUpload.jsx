@@ -1,13 +1,23 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 
+import logo from '../../assets/logo.png';
+import Modal from '../_common/Modal';
+
 const MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024; // 5MB
 
+const ModalInfo = {
+  type: 'alert',
+  text: '사진 사이즈가 맞지 않습니다. 다른 사진을 선택해주시길 바랍니다.',
+  btnText1: '확인',
+};
+
 const ImgUpload = ({ edit, url, setPostImg, setEditedImg }) => {
-  const [preview, setPreview] = useState(url); // 이미지 파일의 url -> 미리 보기용
+  const [preview, setPreview] = useState(url || logo); // 이미지 파일의 url -> 미리 보기용
+  const [modalYn, setModalYn] = useState(false);
 
   useEffect(() => {
-    setPreview(url); // url이 바뀌면 preview 업데이트
+    setPreview(url || logo); // url이 바뀌면 preview 업데이트
   }, [url]);
 
   const onImgUpload = (e) => {
@@ -16,7 +26,7 @@ const ImgUpload = ({ edit, url, setPostImg, setEditedImg }) => {
     if (!img) return;
 
     if (img && img.size > MAX_FILE_SIZE_BYTES) {
-      alert('사진 크기가 너무 큽니다. 5MB 이하의 사진을 선택해주세요.');
+      setModalYn(true);
       return;
     }
 
@@ -35,7 +45,11 @@ const ImgUpload = ({ edit, url, setPostImg, setEditedImg }) => {
 
   return (
     <Wrapper>
-      <ImgWrapper>{preview && <img src={preview} />}</ImgWrapper>
+      <ImgWrapper>
+        {preview && (
+          <img src={preview} className={preview === logo && 'logo'} />
+        )}
+      </ImgWrapper>
       <Label htmlFor="photo">{edit ? '사진 수정하기' : '사진 등록하기'}</Label>
       <Upload
         type="file"
@@ -43,6 +57,11 @@ const ImgUpload = ({ edit, url, setPostImg, setEditedImg }) => {
         name="photo"
         accept="image/*"
         onChange={onImgUpload}
+      />
+      <Modal
+        isOpen={modalYn}
+        onClose={() => setModalYn(false)}
+        {...ModalInfo}
       />
     </Wrapper>
   );
@@ -71,11 +90,18 @@ const ImgWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  user-select: none;
 
   img {
     display: block;
     width: 100%;
     height: 100%;
+    object-fit: cover;
+  }
+  .logo {
+    width: 20%;
+    max-width: 70px;
+    height: auto;
     object-fit: cover;
   }
 `;
