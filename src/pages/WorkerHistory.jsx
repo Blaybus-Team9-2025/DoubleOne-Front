@@ -50,7 +50,7 @@ const BtnDiv = styled.div`
     font-size: 14px;
     padding: 2px 13px;
     border-radius: 20px;
-    background-color: #e2e2e2;
+    background-color: var(--green);
   }
   img {
     width: 14px;

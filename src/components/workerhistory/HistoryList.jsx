@@ -50,7 +50,7 @@ const Line = styled.div`
   width: 1px;
   border-right: 1px solid black;
   margin-top: 8px;
-  margin-bottom: 50px;
+  margin-bottom: 70px;
 `;
 
 const ItemListDiv = styled.div`
@@ -61,20 +61,20 @@ const ItemListDiv = styled.div`
 const Item = styled.div`
   width: 100%;
   margin-left: 20px;
-  font-size: 12px;
+  font-size: 16px;
   &:not(:last-child) {
-    margin-bottom: 16px;
+    margin-bottom: 10px;
   }
 
   .name {
-    font-size: 14px;
+    font-size: 24px;
     cursor: pointer;
   }
 `;
 
 const Timeline = styled.div`
   display: flex;
-  gap: 12px;
+  gap: 15px;
   position: relative;
   p:last-child {
     color: var(--blue);
