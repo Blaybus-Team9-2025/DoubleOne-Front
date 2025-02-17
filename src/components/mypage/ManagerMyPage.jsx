@@ -12,6 +12,14 @@ const ManagerMyPage = () => {
   return (
     <div>
       <ManagerProfile />
+      <ButtonDiv>
+        <button onClick={() => nav(`/editmanagerinfo/${1}`)}>
+          개인정보 수정하기
+        </button>
+        <button onClick={() => nav(`/editcenterinfo/${1}`)}>
+          센터정보 수정하기
+        </button>
+      </ButtonDiv>
       <DashboardDiv onClick={() => nav('/dashboard')}>
         <p>대시보드 바로가기</p>
         <img src={chevron} />
@@ -21,6 +29,21 @@ const ManagerMyPage = () => {
     </div>
   );
 };
+
+const ButtonDiv = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  gap: 10px;
+  padding-top: 20px;
+  button {
+    width: 100%;
+    font-size: 16px;
+    padding: 2px 14px;
+    border-radius: 20px;
+    background-color: #e5e5e5;
+  }
+`;
 
 const DashboardDiv = styled.button`
   width: 100%;
@@ -33,7 +56,7 @@ const DashboardDiv = styled.button`
   background-color: var(--blue);
   box-shadow: var(--shadow);
   color: #ffffff;
-  margin-top: 40px;
+  margin-top: 20px;
   p {
     font-size: 24px;
     font-weight: 700;
