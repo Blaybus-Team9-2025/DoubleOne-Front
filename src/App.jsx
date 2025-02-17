@@ -4,6 +4,8 @@ import './App.css';
 import Splash from './pages/Splash';
 import Home from './pages/Home';
 import MyPage from './pages/MyPage';
+import ManagerMyPage from './components/mypage/ManagerMyPage';
+import WorkerMyPage from './components/mypage/WorkerMyPage';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import SignUpSelect from './pages/SignUpSelect';
@@ -39,7 +41,10 @@ function App() {
       <Routes>
         <Route path="/" element={<Splash />} />
         <Route path="/home/:type" element={<Home />} />
-        <Route path="/mypage" element={<MyPage />} />
+        <Route path="/mypage" element={<MyPage />}>
+          <Route path="manager" element={<ManagerMyPage />} />
+          <Route path="careworker" element={<WorkerMyPage />} />
+        </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/signupselect/:type" element={<SignUpSelect />} />
         <Route path="/signup/:type/:target" element={<SignUp />} />

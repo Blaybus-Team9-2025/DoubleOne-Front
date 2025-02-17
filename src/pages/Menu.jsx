@@ -13,9 +13,11 @@ const Menu = () => {
       <MenuBtnDiv>
         <button onClick={() => nav('/login')}>로그인/회원가입</button>
         <Line />
-        <button onClick={() => nav('/mypage')}>요양보호사 페이지</button>
+        <button onClick={() => nav('/mypage/careworker')}>
+          요양보호사 페이지
+        </button>
         <Line />
-        <button onClick={() => nav('/mypage')}>관리자 페이지</button>
+        <button onClick={() => nav('/mypage/manager')}>관리자 페이지</button>
         <Line />
         <button>FAQ/문의하기</button>
       </MenuBtnDiv>
