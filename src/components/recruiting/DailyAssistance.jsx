@@ -25,7 +25,6 @@ export default DailyAssistance;
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: 40px;
 `;
 
 const Label = styled.label`
