@@ -7,7 +7,7 @@ import { isValidPassword } from '../../util/isValidPassword';
 import { InputStyle } from '../../util/common-style';
 import { LabelStyle } from '../../util/common-style';
 
-const Password = () => {
+const Password = ({ required }) => {
   const [pw, setPw] = useState('');
   const [checkPw, setCheckPw] = useState('');
   const [errorType, setErrorType] = useState('none');
@@ -40,7 +40,7 @@ const Password = () => {
     <Container>
       <div>
         <Label htmlFor="pw">비밀번호</Label>
-        <Required />
+        {required && <Required />}
       </div>
       <Wrapper>
         <Input

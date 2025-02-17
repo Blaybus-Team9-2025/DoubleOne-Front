@@ -21,6 +21,9 @@ import PwReset from './components/findpw/PwReset';
 import PwFinish from './components/findpw/PwFinish';
 import SeniorInfo from './pages/SeniorInfo';
 import Recruiting from './pages/Recruiting';
+import EditCenterInfo from './pages/EditCenterInfo';
+import EditManagerInfo from './pages/EditManagerInfo';
+import EditCareWorkerInfo from './pages/EditCareWorkerInfo';
 
 function App() {
   return (
@@ -50,6 +53,12 @@ function App() {
         </Route>
         <Route path="/seniorinfo/:type" element={<SeniorInfo />} />
         <Route path="/recruiting/:order" element={<Recruiting />} />
+        <Route path="/editcenterinfo/:id" element={<EditCenterInfo />} />
+        <Route path="/editmanagerinfo/:id" element={<EditManagerInfo />} />
+        <Route
+          path="/editcareworkerinfo/:id"
+          element={<EditCareWorkerInfo />}
+        />
       </Routes>
     </>
   );

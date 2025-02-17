@@ -4,12 +4,12 @@ import Required from '../_common/Required';
 import { InputStyle } from '../../util/common-style';
 import { LabelStyle } from '../../util/common-style';
 
-const PhoneNum = () => {
+const PhoneNum = ({ required }) => {
   return (
     <Container>
       <div>
         <Label htmlFor="tel">휴대폰 번호</Label>
-        <Required />
+        {required && <Required />}
       </div>
       <TelWrapper>
         <Input

@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 
 const MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024; // 5MB
 
-const ImgUpload = ({ url, setPostImg, setEditedImg }) => {
+const ImgUpload = ({ edit, url, setPostImg, setEditedImg }) => {
   const [preview, setPreview] = useState(url); // 이미지 파일의 url -> 미리 보기용
 
   useEffect(() => {
@@ -36,7 +36,7 @@ const ImgUpload = ({ url, setPostImg, setEditedImg }) => {
   return (
     <Wrapper>
       <ImgWrapper>{preview && <img src={preview} />}</ImgWrapper>
-      <Label htmlFor="photo">사진등록하기</Label>
+      <Label htmlFor="photo">{edit ? '사진 수정하기' : '사진 등록하기'}</Label>
       <Upload
         type="file"
         id="photo"
@@ -55,7 +55,6 @@ const Wrapper = styled.section`
   display: flex;
   flex-direction: column;
   align-items: end;
-  margin-bottom: 20px;
 
   button {
     cursor: pointer;

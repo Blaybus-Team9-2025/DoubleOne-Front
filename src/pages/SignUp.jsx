@@ -33,14 +33,14 @@ const SignUp = () => {
           {type === 'email' && (
             <>
               <Email />
-              <Password />
+              <Password required />
             </>
           )}
           <NameAndGender />
-          <PhoneNum />
+          <PhoneNum required />
           <BirthDate />
           {target === 'center' && <CenterName />}
-          <AddressInput />
+          <AddressInput required />
           {target === 'center' && <Center />}
         </Div>
       </div>
