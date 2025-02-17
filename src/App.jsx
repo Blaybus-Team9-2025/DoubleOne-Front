@@ -30,10 +30,12 @@ import DashMain from './components/dashboard/main/DashMain';
 import DashStatus from './components/dashboard/status/DashStatus';
 import DashMatching from './components/dashboard/matching/DashMatching';
 import MatchingList from './pages/MatchingList';
+import ScrollToTop from './util/ScollToTop';
 
 function App() {
   return (
     <>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Splash />} />
         <Route path="/home/:type" element={<Home />} />
