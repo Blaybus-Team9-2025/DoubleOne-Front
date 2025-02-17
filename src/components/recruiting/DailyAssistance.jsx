@@ -2,22 +2,14 @@ import styled from 'styled-components';
 
 import { CheckboxStyle } from '../../util/common-style';
 import { LabelStyle } from '../../util/common-style';
-
-const options = [
-  '청소, 빨래 보조',
-  '산책, 간단한 운동',
-  '목욕 보조',
-  '말벗 등 정서지원',
-  '병원 동행',
-  '인지자극 활동',
-];
+import { getOptions } from '../../util/get-options';
 
 const DailyAssistance = () => {
   return (
     <Container>
       <Label>일상생활</Label>
       <Wrapper>
-        {options.map((val, idx) => (
+        {getOptions('daily').map((val, idx) => (
           <Col key={idx}>
             <input type="checkbox" id={val} />
             <label htmlFor={val}>{val}</label>

@@ -2,20 +2,14 @@ import styled from 'styled-components';
 
 import { CheckboxStyle } from '../../util/common-style';
 import { LabelStyle } from '../../util/common-style';
-
-const options = [
-  '스스로 거동 가능',
-  '휠체어 이동 보조',
-  '이동시 부축 도움',
-  '거동 불가',
-];
+import { getOptions } from '../../util/get-options';
 
 const MobilityAssistance = () => {
   return (
     <Container>
       <Label>이동 보조</Label>
       <Wrapper>
-        {options.map((val, idx) => (
+        {getOptions('mobility').map((val, idx) => (
           <Col key={idx}>
             <input type="checkbox" id={val} />
             <label htmlFor={val}>{val}</label>
