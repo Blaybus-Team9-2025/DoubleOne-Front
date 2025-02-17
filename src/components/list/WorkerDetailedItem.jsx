@@ -1,35 +1,44 @@
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 import chevron from '../../assets/chevron-right.png';
 import mail from '../../assets/mail.png';
+import { useState } from 'react';
+import DetailModal from '../detailmodal/DetailModal';
 
-const ContactItem = ({ isChatting, managerId, workerId, name, addr, desc }) => {
+const WorkerDetailedItem = ({ data, type }) => {
   const nav = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleClick = (e) => {
+    e.stopPropagation();
+
+    if (type === 'acceptance') {
+      setIsModalOpen(true);
+    }
+    if (type === 'inprogress') {
+      nav(`/chat/1`); // 채팅으로 이동 & 아이디 추가 예정
+    }
+  };
 
   return (
-    <Item
-      className={`${isChatting && 'blue'}`}
-      onClick={() => nav(`/contact/${managerId}/${workerId}`)}
-    >
-      <CheckBox className={`${isChatting && 'blue'}`}>
-        <Box className={`${isChatting && 'blue'}`} />
-      </CheckBox>
+    <Item onClick={handleClick}>
+      <CheckBox />
       <TextDiv>
         <div className="text-div">
-          <p>{name}</p>
-          <p>{addr}</p>
-          <p>{desc}</p>
+          <p>{data.name}</p>
+          <p>{data.addr}</p>
+          <p>{data.desc}</p>
         </div>
         <div className="icon">
-          <img src={chevron} />
-          {isChatting && (
-            <div className="msg">
-              <img src={mail} />
-            </div>
-          )}
+          <img src={type === 'acceptance' ? chevron : mail} />
         </div>
       </TextDiv>
+      <DetailModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        type={'careworker'}
+      />
     </Item>
   );
 };
@@ -60,19 +69,6 @@ const CheckBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  &.blue {
-    background-color: #ffffff;
-  }
-`;
-
-const Box = styled.div`
-  width: 20px;
-  height: 20px;
-  background-color: #d9d9d9;
-  border-radius: 2px;
-  &.blue {
-    background-color: var(--blue);
-  }
 `;
 
 const TextDiv = styled.div`
@@ -104,14 +100,7 @@ const TextDiv = styled.div`
     justify-content: center;
     align-items: center;
     gap: 10px;
-    .msg {
-      width: 34px;
-      height: 34px;
-      border-radius: 5px;
-      background-color: #ffffff;
-      padding: 5px;
-    }
   }
 `;
 
-export default ContactItem;
+export default WorkerDetailedItem;

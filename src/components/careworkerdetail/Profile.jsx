@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const Profile = ({ profile, logo, name, cert, percentage }) => {
+const Profile = ({ profile, logo, name, cert }) => {
   return (
     <Div>
       <ImgDiv>
@@ -14,7 +14,6 @@ const Profile = ({ profile, logo, name, cert, percentage }) => {
           <p className="name">
             {name}, {cert}
           </p>
-          <p className="percentage">매칭률 {percentage}%</p>
         </div>
       </ItemDiv>
     </Div>
@@ -41,34 +40,26 @@ const ImgDiv = styled.div`
 
 const ItemDiv = styled.div`
   width: 100%;
-  height: 100px;
-  background-color: var(--green);
+  height: 65px;
+  background-color: var(--blue);
   border-radius: 15px;
   display: flex;
   align-items: center;
   padding: 13px;
-  gap: 13px;
+  gap: 30px;
 
   div:first-child {
-    width: 75px;
-    height: 75px;
+    width: 40px;
+    height: 40px;
     border-radius: 10px;
     background-color: white;
-  }
-  div:last-child {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
+    flex-shrink: 0;
   }
 
   .name {
-    font-size: 18px;
-    font-weight: 700;
-  }
-  .percentage {
     font-size: 16px;
     font-weight: 700;
-    opacity: 50%;
+    color: white;
   }
 `;
 

@@ -26,6 +26,7 @@ const ImgDiv = styled.div`
   background-color: #d3d3d3;
   border-radius: 15px;
   flex-shrink: 0;
+  box-shadow: var(--shadow);
   img {
     width: 100%;
     object-fit: cover;

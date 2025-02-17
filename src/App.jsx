@@ -25,6 +25,11 @@ import Recruiting from './pages/Recruiting';
 import EditCenterInfo from './pages/EditCenterInfo';
 import EditManagerInfo from './pages/EditManagerInfo';
 import EditCareWorkerInfo from './pages/EditCareWorkerInfo';
+import Dashboard from './pages/Dashboard';
+import DashMain from './components/dashboard/main/DashMain';
+import DashStatus from './components/dashboard/status/DashStatus';
+import DashMatching from './components/dashboard/matching/DashMatching';
+import MatchingList from './pages/MatchingList';
 
 function App() {
   return (
@@ -61,6 +66,12 @@ function App() {
           path="/editcareworkerinfo/:id"
           element={<EditCareWorkerInfo />}
         />
+        <Route path="/dashboard" element={<Dashboard />}>
+          <Route path="" element={<DashMain />} />
+          <Route path="status" element={<DashStatus />} />
+          <Route path="matching" element={<DashMatching />} />
+        </Route>
+        <Route path="/list/:type" element={<MatchingList />} />
       </Routes>
     </>
   );

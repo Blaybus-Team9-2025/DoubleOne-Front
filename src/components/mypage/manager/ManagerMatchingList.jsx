@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import Card from '../../_common/Card';
 import { useNavigate } from 'react-router-dom';
 
-const MatchingList = () => {
+const ManagerMatchingList = () => {
   const nav = useNavigate();
 
   return (
@@ -56,4 +56,4 @@ const CardDiv = styled.div`
   gap: 15px;
 `;
 
-export default MatchingList;
+export default ManagerMatchingList;
