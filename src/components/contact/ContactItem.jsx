@@ -17,7 +17,7 @@ const ContactItem = ({ isChatting, managerId, workerId, name, addr, desc }) => {
       </CheckBox>
       <TextDiv>
         <div className="text-div">
-          <p>{name} 요양보호사님</p>
+          <p>{name}</p>
           <p>{addr}</p>
           <p>{desc}</p>
         </div>

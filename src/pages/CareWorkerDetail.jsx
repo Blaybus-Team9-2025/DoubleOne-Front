@@ -78,16 +78,15 @@ const mock = {
 const CareWorkerDetail = () => {
   return (
     <Div>
-      <Header title="(프로필/약속잡기)" />
+      <Header title="요양보호사 정보" />
       <Profile
         profile={null}
         logo={null}
         name={mock.name}
         cert={mock.worker_licenses[0].license_type}
-        percentage={83}
       />
       <Slick data={mock} />
-      <SquareButton mb={35} color="blue">
+      <SquareButton mb={35} color="green">
         근무 제안하기
       </SquareButton>
     </Div>

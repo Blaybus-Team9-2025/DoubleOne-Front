@@ -13,7 +13,7 @@ import MatchingAlarms from '../components/mypage/careworker/MatchingAlarms';
 const MyPage = () => {
   const nav = useNavigate(); // 대시보드 이동 추가 예정
 
-  const type = 'careworker'; // 로그인 상태 관리 정보로 변경 예정
+  const type = 'manager'; // 로그인 상태 관리 정보로 변경 예정
 
   return (
     <Div>
