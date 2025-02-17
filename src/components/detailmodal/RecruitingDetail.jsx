@@ -1,13 +1,11 @@
 import styled from 'styled-components';
 
-import Header from '../components/_common/Header';
-import { CheckboxStyle } from '../util/common-style';
-import { getOptions } from '../util/get-options';
+import { CheckboxStyle } from '../../util/common-style';
+import { getOptions } from '../../util/get-options';
 
-const RecruitingSpecifics = () => {
+const RecruitingDetail = () => {
   return (
     <Container>
-      <Header title="구인 정보" />
       <Wrapper>
         <Title>어르신 정보</Title>
         <ImgWrapper>
@@ -185,15 +183,9 @@ const RecruitingSpecifics = () => {
   );
 };
 
-export default RecruitingSpecifics;
-
-const CheckBoxRow = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
+export default RecruitingDetail;
 
 const Container = styled.div`
-  margin-top: 100px;
   display: flex;
   flex-direction: column;
   gap: 100px;
@@ -239,6 +231,11 @@ const Key = styled.p`
 const Val = styled.p`
   font-size: 24px;
   font-weight: bold;
+`;
+
+const CheckBoxRow = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;
 
 const CheckboxWrapper = styled.div`

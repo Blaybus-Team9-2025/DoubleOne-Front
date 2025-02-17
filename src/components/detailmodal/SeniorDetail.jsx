@@ -1,15 +1,16 @@
 import styled from 'styled-components';
 
-import Header from '../components/_common/Header';
-import { CheckboxStyle } from '../util/common-style';
-import { getOptions } from '../util/get-options';
+import { CheckboxStyle } from '../../util/common-style';
+import { getOptions } from '../../util/get-options';
 
-const SeniorSpecifics = () => {
+const SeniorDetail = ({ edit }) => {
   return (
     <Container>
-      <Header title="어르신 정보" />
       <Wrapper>
-        <Title>개인 정보</Title>
+        <div className="header">
+          <Title>개인 정보</Title>
+          {edit && <Edit>수정하기</Edit>}
+        </div>
         <ImgWrapper>
           <img src="" />
         </ImgWrapper>
@@ -66,10 +67,9 @@ const SeniorSpecifics = () => {
   );
 };
 
-export default SeniorSpecifics;
+export default SeniorDetail;
 
 const Container = styled.div`
-  margin-top: 100px;
   display: flex;
   flex-direction: column;
   user-select: none;
@@ -79,6 +79,12 @@ const Wrapper = styled.section`
   display: flex;
   flex-direction: column;
   gap: 20px;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 `;
 
 const ItemWrapper = styled.div`
@@ -129,4 +135,9 @@ const CheckboxWrapper = styled.div`
 
 const CheckBox = styled.input`
   ${CheckboxStyle}
+`;
+
+const Edit = styled.span`
+  text-decoration: underline;
+  cursor: pointer;
 `;
