@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
 import SquareButton from '../_common/SquareButton';
+import logo from '../../assets/logo.png';
 
 const MenuBoard = ({ type }) => {
   const nav = useNavigate();
@@ -11,7 +12,7 @@ const MenuBoard = ({ type }) => {
       <Header>
         <ProfileWrapper>
           <ProfileImg>
-            <img src="/" />
+            <img src={logo} />
           </ProfileImg>
           <p className="name">얼리 님</p>
         </ProfileWrapper>
@@ -153,6 +154,16 @@ const ProfileImg = styled.div`
   border-radius: 50%;
   background-color: white;
   margin-right: 15px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    width: 70%;
+    height: 70%;
+    object-fit: contain;
+  }
 `;
 
 const BoxWrapper = styled.section`
@@ -186,6 +197,7 @@ const Box = styled.div`
 
 const Label = styled.p`
   font-size: 16px;
+  white-space: nowrap;
   position: absolute;
   top: 25%;
   left: 50%;

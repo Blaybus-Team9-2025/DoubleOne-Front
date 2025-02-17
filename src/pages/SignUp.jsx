@@ -12,8 +12,10 @@ import BirthDate from '../components/registration/BirthDate';
 import AddressInput from '../components/registration/AddressInput';
 import CenterName from '../components/signup/CenterName';
 import Center from '../components/signup/Center';
+
 import Email from '../components/signup/Email';
 import Password from '../components/signup/Password';
+import CarYn from '../components/careworkerinfo/CarYn';
 
 const SignUp = () => {
   const params = useParams();
@@ -41,7 +43,12 @@ const SignUp = () => {
           <BirthDate />
           {target === 'center' && <CenterName />}
           <AddressInput required />
-          {target === 'center' && <Center />}
+          {target === 'center' && (
+            <>
+              <CarYn />
+              <Center />
+            </>
+          )}
         </Div>
       </div>
       <RoundButton
@@ -49,7 +56,7 @@ const SignUp = () => {
         color="green"
         onClick={onSubmit}
         mt={type === 'kakao' && target === 'individual' ? '60' : '40'}
-        mb="20"
+        mb="30"
       />
     </Container>
   );

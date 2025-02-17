@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 
 import arrow from '../../assets/arrow-right.png';
+import ContractModal from './contract/ContractModal';
 
 const WorkerChatProfile = () => {
   // 요양사 상세보기 모달
@@ -18,7 +19,7 @@ const WorkerChatProfile = () => {
   return (
     <Div>
       <Title>요양보호사 상세정보 보기</Title>
-      <BoxDiv>
+      <BoxDiv onClick={() => setIsOpen(true)}>
         <Content>
           <p className="dot">성별: 여</p>
           <p className="dot">나이: 78세</p>
@@ -42,6 +43,7 @@ const WorkerChatProfile = () => {
           <img src={arrow} />
         </div>
       </BoxDiv>
+      {isOpen && <ContractModal setIsOpen={setIsOpen} type="careWorker" />}
     </Div>
   );
 };

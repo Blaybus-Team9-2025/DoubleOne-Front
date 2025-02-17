@@ -111,6 +111,7 @@ const ButtonContainer = styled.div`
     height: 40px;
     padding: 10px 20px;
     border-radius: 5px;
+    font-size: 16px;
     cursor: pointer;
 
     &.active {

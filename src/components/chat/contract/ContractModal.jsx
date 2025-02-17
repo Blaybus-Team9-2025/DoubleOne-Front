@@ -2,10 +2,11 @@ import styled from 'styled-components';
 
 import SquareButton from '../../_common/SquareButton';
 import Contract from './Contract';
+import CareWorkerDetail from '../../detailmodal/CareWorkerDetail';
 
 import close from '../../../assets/close.png';
 
-const ContractModal = ({ setIsOpen }) => {
+const ContractModal = ({ setIsOpen, type }) => {
   return (
     <Overlay>
       <ModalWrapper>
@@ -13,12 +14,14 @@ const ContractModal = ({ setIsOpen }) => {
           <img src={close} onClick={() => setIsOpen(false)} />
         </CloseButton>
         <Content>
-          <Contract />
+          {type === 'senior' ? <Contract /> : <CareWorkerDetail />}
         </Content>
-        <ButtonWrapper>
-          <SquareButton color={'blue'}>거절</SquareButton>
-          <SquareButton color={'green'}>수락</SquareButton>
-        </ButtonWrapper>
+        {type === 'senior' && (
+          <ButtonWrapper>
+            <SquareButton color={'blue'}>거절</SquareButton>
+            <SquareButton color={'green'}>수락</SquareButton>
+          </ButtonWrapper>
+        )}
       </ModalWrapper>
     </Overlay>
   );

@@ -12,7 +12,7 @@ const Home = () => {
 
   return (
     <Container>
-      <Header title="GrowCare" />
+      <Header title="온림 溫林" />
       {type === 'manager' ? (
         <StaticsBoard />
       ) : (

@@ -27,6 +27,7 @@ const Button = styled.button`
 
   &.blue {
     background-color: var(--blue);
+    color: white;
   }
 
   &.white {

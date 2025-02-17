@@ -183,7 +183,7 @@ const ZoneCodeWrapper = styled.div`
     background-color: var(--green);
     box-shadow: var(--shadow);
     border-radius: 5px;
-    font-size: 14px;
+    font-size: 16px;
     flex: 0.6;
   }
 `;

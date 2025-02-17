@@ -1,14 +1,12 @@
 import styled from 'styled-components';
 
-import Header from '../components/_common/Header';
-import checkCircle from '../assets/checkCircle.svg';
-import { CheckboxStyle } from '../util/common-style';
-import { getOptions } from '../util/get-options';
+import checkCircle from '../../assets/checkCircle.svg';
+import { CheckboxStyle } from '../../util/common-style';
+import { getOptions } from '../../util/get-options';
 
-const CareWorkerSpecifics = () => {
+const CareWorkerDetail = () => {
   return (
     <Container>
-      <Header title="요양보호사 정보" />
       <Wrapper>
         <Title>개인 정보</Title>
         <ImgWrapper>
@@ -149,10 +147,9 @@ const CareWorkerSpecifics = () => {
   );
 };
 
-export default CareWorkerSpecifics;
+export default CareWorkerDetail;
 
 const Container = styled.div`
-  margin-top: 100px;
   gap: 100px;
   display: flex;
   flex-direction: column;

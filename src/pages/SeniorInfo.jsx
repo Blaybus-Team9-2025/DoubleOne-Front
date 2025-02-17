@@ -30,7 +30,7 @@ const SeniorInfo = () => {
         title={type === 'register' ? '어르신 정보 등록' : '구인 정보 등록'}
       />
       <Wrapper>
-        <Title mb="20">
+        <Title>
           <p>어르신 정보 등록</p>
         </Title>
         {type === 'recruit' && <GetInfo>정보 불러오기</GetInfo>}
@@ -50,6 +50,7 @@ const SeniorInfo = () => {
         text="저장하고 다음으로"
         color="green"
         mt="40"
+        mb="30"
         onClick={() => nav('/recruiting/1')}
       />
     </Container>
