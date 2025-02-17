@@ -33,7 +33,7 @@ const Div = styled.div`
   width: 100%;
   height: 90px;
   border-radius: 20px;
-  background-color: #e5e5e5;
+  background-color: var(--green);
   display: flex;
   align-items: center;
 `;
