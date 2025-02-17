@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 
 import './App.css';
+import Splash from './pages/Splash';
 import Home from './pages/Home';
 import MyPage from './pages/MyPage';
 import Login from './pages/Login';
@@ -21,11 +22,18 @@ import PwReset from './components/findpw/PwReset';
 import PwFinish from './components/findpw/PwFinish';
 import SeniorInfo from './pages/SeniorInfo';
 import Recruiting from './pages/Recruiting';
+import EditCenterInfo from './pages/EditCenterInfo';
+import EditManagerInfo from './pages/EditManagerInfo';
+import EditCareWorkerInfo from './pages/EditCareWorkerInfo';
+import SeniorSpecifics from './pages/SeniorSpecifics';
+import CareWorkerSpecifics from './pages/CareWorkerSpecifics';
+import RecruitingSpecifics from './pages/RecruitingSpecifics';
 
 function App() {
   return (
     <>
       <Routes>
+        <Route path="/" element={<Splash />} />
         <Route path="/home/:type" element={<Home />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/login" element={<Login />} />
@@ -50,6 +58,21 @@ function App() {
         </Route>
         <Route path="/seniorinfo/:type" element={<SeniorInfo />} />
         <Route path="/recruiting/:order" element={<Recruiting />} />
+        <Route path="/editcenterinfo/:id" element={<EditCenterInfo />} />
+        <Route path="/editmanagerinfo/:id" element={<EditManagerInfo />} />
+        <Route
+          path="/editcareworkerinfo/:id"
+          element={<EditCareWorkerInfo />}
+        />
+        <Route path="/seniorspecifics/:id" element={<SeniorSpecifics />} />
+        <Route
+          path="/careworkerspecifics/:id"
+          element={<CareWorkerSpecifics />}
+        />
+        <Route
+          path="/recruitingspecifics/:id"
+          element={<RecruitingSpecifics />}
+        />
       </Routes>
     </>
   );
