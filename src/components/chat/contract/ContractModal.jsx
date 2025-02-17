@@ -65,8 +65,8 @@ const CloseButton = styled.div`
   display: flex;
   justify-content: end;
   img {
-    width: 24px;
-    height: 24px;
+    width: 35px;
+    height: 35px;
     cursor: pointer;
   }
 `;
