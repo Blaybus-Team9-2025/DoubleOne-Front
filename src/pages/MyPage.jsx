@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import ManagerProfile from '../components/mypage/manager/ManagerProfile';
 import ManagerButtonBox from '../components/mypage/manager/ManagerButtonBox';
-import MatchingList from '../components/mypage/manager/MatchingList';
+import ManagerMatchingList from '../components/mypage/manager/ManagerMatchingList';
 import Header from '../components/_common/Header';
 
 import chevron from '../assets/chevron-right.png';
@@ -26,7 +26,7 @@ const MyPage = () => {
             <img src={chevron} />
           </button>
           <ManagerButtonBox />
-          <MatchingList />
+          <ManagerMatchingList />
         </div>
       )}
       {type === 'careworker' && (
