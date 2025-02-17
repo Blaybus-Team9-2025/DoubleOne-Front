@@ -1,12 +1,25 @@
 import styled from 'styled-components';
+import { useEffect, useState } from 'react';
 
 import arrow from '../../assets/arrow-right.png';
+import ContractModal from './contract/ContractModal';
 
 const SeniorChatProfile = ({ isAccepted }) => {
+  // 매칭 상세보기 모달
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  }, [isOpen]);
+
   return (
     <Div>
       <Title>어르신 상세정보 보기</Title>
-      <BoxDiv>
+      <BoxDiv onClick={() => setIsOpen(true)}>
         <Content>
           <p className="dot">성별: 여</p>
           <p className="dot">나이: 78세</p>
@@ -37,6 +50,7 @@ const SeniorChatProfile = ({ isAccepted }) => {
         </BtnDiv>
       )}
       <div className="margin" />
+      {isOpen && <ContractModal setIsOpen={setIsOpen} />}
     </Div>
   );
 };
