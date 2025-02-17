@@ -27,6 +27,7 @@ import Recruiting from './pages/Recruiting';
 import EditCenterInfo from './pages/EditCenterInfo';
 import EditManagerInfo from './pages/EditManagerInfo';
 import EditCareWorkerInfo from './pages/EditCareWorkerInfo';
+import EditSeniorInfo from './pages/EditSeniorInfo';
 import Dashboard from './pages/Dashboard';
 import DashMain from './components/dashboard/main/DashMain';
 import DashStatus from './components/dashboard/status/DashStatus';
@@ -73,6 +74,7 @@ function App() {
           path="/editcareworkerinfo/:id"
           element={<EditCareWorkerInfo />}
         />
+        <Route path="/editseniorinfo/:id" element={<EditSeniorInfo />} />
         <Route path="/dashboard" element={<Dashboard />}>
           <Route path="" element={<DashMain />} />
           <Route path="status" element={<DashStatus />} />
