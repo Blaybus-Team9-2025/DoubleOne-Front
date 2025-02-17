@@ -28,6 +28,8 @@ import EditCareWorkerInfo from './pages/EditCareWorkerInfo';
 import SeniorSpecifics from './pages/SeniorSpecifics';
 import CareWorkerSpecifics from './pages/CareWorkerSpecifics';
 import RecruitingSpecifics from './pages/RecruitingSpecifics';
+import Dashboard from './pages/Dashboard';
+import DashMain from './components/dashboard/main/DashMain';
 
 function App() {
   return (
@@ -73,6 +75,9 @@ function App() {
           path="/recruitingspecifics/:id"
           element={<RecruitingSpecifics />}
         />
+        <Route path="/dashboard" element={<Dashboard />}>
+          <Route path="" element={<DashMain />} />
+        </Route>
       </Routes>
     </>
   );
