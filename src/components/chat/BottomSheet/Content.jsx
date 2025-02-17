@@ -27,7 +27,7 @@ const Div = styled.div`
   flex-direction: column;
   padding: 0 20px;
   margin-top: 20px;
-  margin-bottom: 180px;
+  margin-bottom: 200px;
 `;
 
 const ChatWrapper = styled.div`

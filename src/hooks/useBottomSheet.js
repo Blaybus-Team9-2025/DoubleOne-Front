@@ -38,12 +38,12 @@ const useBottomSheet = () => {
         return true;
       }
 
-      if (sheet.current.getBoundingClientRect().y !== MIN_Y) {
+      if (sheet.current && sheet.current.getBoundingClientRect().y !== MIN_Y) {
         return true;
       }
 
-      if (touchMove.movingDirection === 'down') {
-        return content.current.scrollTop <= 0;
+      if (content.current && touchMove.movingDirection === 'down') {
+        return content.current.scrollTop <= MIN_Y;
       }
 
       return false;
@@ -65,7 +65,6 @@ const useBottomSheet = () => {
 
       if (canUserMoveBottomSheet(e)) {
         e.preventDefault();
-
         const touchOffset = currentTouch.clientY - touchStart.touchY;
         let nextSheetY = touchStart.sheetY + touchOffset;
 
@@ -76,10 +75,12 @@ const useBottomSheet = () => {
         }
 
         setCurrentY(nextSheetY);
-        sheet.current.style.setProperty(
-          'transform',
-          `translateY(${nextSheetY - window.innerHeight}px)`
-        );
+        if (sheet.current) {
+          sheet.current.style.setProperty(
+            'transform',
+            `translateY(${nextSheetY - window.innerHeight}px)`
+          );
+        }
       } else {
         document.body.style.overflowY = 'hidden';
       }
@@ -89,7 +90,8 @@ const useBottomSheet = () => {
       document.body.style.overflowY = 'auto';
       const { touchMove } = metrics.current;
 
-      const currentSheetY = sheet.current.getBoundingClientRect().y;
+      const currentSheetY =
+        sheet.current && sheet.current.getBoundingClientRect().y;
 
       let finalY;
       if (currentSheetY !== MIN_Y) {
