@@ -10,7 +10,7 @@ const CareWorkerDetail = () => {
       <Wrapper>
         <Title>개인 정보</Title>
         <ImgWrapper>
-          <img src="" />
+          <img src={null} />
         </ImgWrapper>
         <Div>
           <FixedWrapper>
@@ -36,10 +36,10 @@ const CareWorkerDetail = () => {
         </FixedWrapper>
         <FixedWrapper>
           <Key>자격증</Key>
-          <Val>
-            <p>요양보호사 1급</p>
-            <p>2014-0000</p>
-          </Val>
+          <div>
+            <Val>요양보호사 1급</Val>
+            <Val>2014-0000</Val>
+          </div>
         </FixedWrapper>
         <FixedWrapper className="row">
           <Key>차량소유 여부</Key>
@@ -61,10 +61,10 @@ const CareWorkerDetail = () => {
               <span>협의 가능</span>
             </div>
           </div>
-          <Val>
-            <p>목 12:00 ~ 14:00</p>
-            <p>금 12:00 ~ 14:00</p>
-          </Val>
+          <div>
+            <Val>목 12:00 ~ 14:00</Val>
+            <Val>금 12:00 ~ 14:00</Val>
+          </div>
         </FixedWrapper>
         <FixedWrapper>
           <Key>희망 시급</Key>
@@ -72,10 +72,10 @@ const CareWorkerDetail = () => {
         </FixedWrapper>
         <FixedWrapper>
           <Key>희망 근무지역</Key>
-          <Val>
-            <p>서울 특별시 마포구 합정동</p>
-            <p>서울 특별시 서대문구 대현동</p>
-          </Val>
+          <div>
+            <Val>서울 특별시 마포구 합정동</Val>
+            <Val>서울 특별시 서대문구 대현동</Val>
+          </div>
         </FixedWrapper>
 
         <FixedWrapper className="list">
