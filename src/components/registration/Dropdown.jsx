@@ -88,7 +88,7 @@ const SelectBox = styled.div`
 `;
 
 const Label = styled.p`
-  font-size: 14px;
+  font-size: 16px;
   display: inline-block;
   color: ${({ isExp, className }) =>
     className === 'green' && isExp ? '#000' : isExp ? '#aaa' : '#000'};
@@ -133,7 +133,7 @@ const SelectOptions = styled.ul`
 `;
 
 const Option = styled.li`
-  font-size: 14px;
+  font-size: 16px;
   padding: 12px 18px;
   height: 40px;
   transition: background-color 0.2s ease-in;

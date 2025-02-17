@@ -54,7 +54,6 @@ const Container = styled.div`
   margin-bottom: 8px;
 
   label {
-    font-weight: bold;
     font-size: 16px;
   }
 `;
@@ -72,6 +71,7 @@ const Wrapper = styled.div`
     background-color: var(--green);
     box-shadow: var(--shadow);
     border-radius: 5px;
+    font-size: 16px;
     flex: 0.4;
     cursor: pointer;
   }

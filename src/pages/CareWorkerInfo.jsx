@@ -51,7 +51,7 @@ const CareWorkerInfo = () => {
           <RoundButton
             text="저장하고 다음으로"
             color="green"
-            mb="20"
+            mb="30"
             mt="20"
             onClick={() => nav('/careworkerinfo/2')}
           />
@@ -83,6 +83,7 @@ const CareWorkerInfo = () => {
             <RoundButton
               text="저장하고 다음으로"
               color="green"
+              mb="30"
               onClick={() => nav('/careworkerinfo/3')}
             />
           </ButtonWrapper>
@@ -105,7 +106,7 @@ const CareWorkerInfo = () => {
             <RoundButton
               text="등록하기"
               color="green"
-              mb="20"
+              mb="30"
               onClick={onSubmit}
             />
           </ButtonWrapper>
