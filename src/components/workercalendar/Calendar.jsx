@@ -49,38 +49,29 @@ const CalendarMain = ({ home }) => {
         }
         navigationLabel={({ date }) => (
           <NavWrapper onClick={(e) => e.stopPropagation()}>
-            <div className="nav">
-              <Select
-                className="month"
-                value={date.getMonth()}
-                onChange={handleMonthChange}
-                disabled={home}
-              >
-                {months.map((month) => (
-                  <option key={month} value={month - 1}>
-                    {month}월
-                  </option>
-                ))}
-              </Select>
-              <Select
-                value={date.getFullYear()}
-                onChange={handleYearChange}
-                disabled={home}
-              >
-                {years.map((year) => (
-                  <option key={year} value={year}>
-                    {year}
-                  </option>
-                ))}
-              </Select>
-            </div>
-            {!home && (
-              <BtnDiv>
-                <div>
-                  <img src={plus} /> 일정 추가하기
-                </div>
-              </BtnDiv>
-            )}
+            <Select
+              className="month"
+              value={date.getMonth()}
+              onChange={handleMonthChange}
+              disabled={home}
+            >
+              {months.map((month) => (
+                <option key={month} value={month - 1}>
+                  {month}월
+                </option>
+              ))}
+            </Select>
+            <Select
+              value={date.getFullYear()}
+              onChange={handleYearChange}
+              disabled={home}
+            >
+              {years.map((year) => (
+                <option key={year} value={year}>
+                  {year}
+                </option>
+              ))}
+            </Select>
           </NavWrapper>
         )}
         next2Label={null}
@@ -116,6 +107,7 @@ const Div = styled.div`
     justify-content: center;
     align-items: center;
     border-radius: 100%;
+    color: #000000;
   }
   .react-calendar__month-view__days__day--weekend {
     color: #000000;
@@ -127,44 +119,46 @@ const Div = styled.div`
   .react-calendar__tile--now {
     background-color: #ffffff;
     &:hover {
-      background-color: var(--green);
+      background-color: var(--blue);
     }
   }
   .react-calendar__tile--active {
     background-color: #ffffff;
     abbr {
-      background-color: #d9d9d9;
+      background-color: var(--blue);
+      box-shadow: var(--shadow);
     }
     &.react-calendar__month-view__days__day--weekend abbr {
-      color: #ffffff;
+      color: #000000;
     }
     &.react-calendar__tile--now abbr {
-      color: #000000; // 임시
+      color: #ffffff;
     }
   }
   .react-calendar__tile,
   .react-calendar__month-view__weekdays__weekday {
     width: 100%;
     max-width: unset;
+    height: 50px !important;
     flex: 1;
     padding: 3px;
     box-sizing: border-box;
     display: flex;
     justify-content: center;
+    align-items: center;
   }
   .react-calendar__tile:focus {
+    background-color: #ffffff;
+  }
+  .react-calendar__tile:hover {
     background-color: #ffffff;
   }
 `;
 
 const NavWrapper = styled.div`
   display: flex;
-  justify-content: space-between;
-  .nav {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
+  flex-direction: column;
+  justify-content: center;
 `;
 
 const Select = styled.select`
