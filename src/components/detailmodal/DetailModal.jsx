@@ -78,6 +78,8 @@ const ModalWrapper = styled.div`
 const Cross = styled.div`
   position: fixed;
   width: calc(100% - 40px);
+  min-width: 260px;
+  max-width: 560px;
   padding-right: 20px;
   display: flex;
   justify-content: end;
