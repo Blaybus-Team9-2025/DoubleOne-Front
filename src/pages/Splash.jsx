@@ -10,8 +10,8 @@ const Splash = () => {
   return (
     <Container>
       <Title>
-        <p>숲과 같이 편안한 돌봄 관리,</p>
-        <p>온림에서 바로 시작하세요</p>
+        <p>온(溫)기가 있는 숲(林),</p>
+        <p>돌봄의 따뜻한 연결이 시작됩니다.</p>
       </Title>
       <Logo>
         <img src={logo} />

@@ -7,9 +7,12 @@ import { SignupAtom } from '../../jotai/Signup';
 import { InputStyle } from '../../util/common-style';
 import { LabelStyle } from '../../util/common-style';
 
-const years = Array.from({ length: 2025 - 1930 + 1 }, (_, i) => 2025 - i);
-const months = Array.from({ length: 12 - 1 + 1 }, (_, i) => 1 + i);
-const days = Array.from({ length: 31 - 1 + 1 }, (_, i) => 1 + i);
+const years = Array.from(
+  { length: 2025 - 1930 + 1 },
+  (_, i) => `${2025 - i}년`
+);
+const months = Array.from({ length: 12 - 1 + 1 }, (_, i) => `${1 + i}월`);
+const days = Array.from({ length: 31 - 1 + 1 }, (_, i) => `${1 + i}일`);
 
 const BirthDate = () => {
   const [signup, setSignup] = useAtom(SignupAtom);
@@ -36,7 +39,7 @@ const BirthDate = () => {
             setData={setSignup}
             data={signup}
             target="year"
-            init="2000"
+            init="2000년"
           />
           <Dropdown options={months} width="30%" className="month" />
           <Dropdown options={days} width="30%" className="day" />
