@@ -31,6 +31,7 @@ import RecruitingSpecifics from './pages/RecruitingSpecifics';
 import Dashboard from './pages/Dashboard';
 import DashMain from './components/dashboard/main/DashMain';
 import DashStatus from './components/dashboard/status/DashStatus';
+import DashMatching from './components/dashboard/matching/DashMatching';
 
 function App() {
   return (
@@ -79,6 +80,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />}>
           <Route path="" element={<DashMain />} />
           <Route path="status" element={<DashStatus />} />
+          <Route path="matching" element={<DashMatching />} />
         </Route>
       </Routes>
     </>
