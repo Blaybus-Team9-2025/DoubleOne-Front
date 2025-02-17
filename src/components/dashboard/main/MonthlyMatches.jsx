@@ -2,10 +2,13 @@ import MonthlyGraph from './MonthlyGraph';
 
 import chevron from '../../../assets/chevron-right.png';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 const MonthlyMatches = ({ current, graph }) => {
+  const nav = useNavigate();
+
   return (
-    <Div>
+    <Div onClick={() => nav('/dashboard/status')}>
       <div className="text-box">
         <div>
           <p>이번달 매칭</p>

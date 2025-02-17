@@ -6,6 +6,7 @@ import Card from '../_common/Card';
 
 import chevron from '../../assets/chevron-right.png';
 import SquareButton from '../_common/SquareButton';
+import DetailModal from '../detailmodal/DetailModal';
 
 const MathcingListItem = ({ id, name, age, addr, profile, workers, type }) => {
   const [isCardOpen, setIsCardOpen] = useState(false);
@@ -14,7 +15,7 @@ const MathcingListItem = ({ id, name, age, addr, profile, workers, type }) => {
   return (
     <div>
       {isCardOpen ? (
-        <OpenedCardDiv>
+        <OpenedCardDiv onClick={() => setIsModalOpen(true)}>
           <CardDiv>
             <div className="img-box">
               <img src={profile} />
@@ -50,6 +51,11 @@ const MathcingListItem = ({ id, name, age, addr, profile, workers, type }) => {
           <p>{addr}</p>
         </Card>
       )}
+      <DetailModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        type={'senior'}
+      />
     </div>
   );
 };

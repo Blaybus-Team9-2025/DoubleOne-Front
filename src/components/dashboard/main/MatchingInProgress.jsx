@@ -1,9 +1,12 @@
 import styled from 'styled-components';
 import chevron from '../../../assets/chevron-right.png';
+import { useNavigate } from 'react-router-dom';
 
 const MatchingInprogress = ({ current }) => {
+  const nav = useNavigate();
+
   return (
-    <Div>
+    <Div onClick={() => nav('/dashboard/matching')}>
       <div className="square" />
       <div className="text-box">
         <p>매칭중</p>

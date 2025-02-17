@@ -1,11 +1,28 @@
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 import chevron from '../../assets/chevron-right.png';
 import mail from '../../assets/mail.png';
+import { useState } from 'react';
+import DetailModal from '../detailmodal/DetailModal';
 
 const WorkerDetailedItem = ({ data, type }) => {
+  const nav = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleClick = (e) => {
+    e.stopPropagation();
+
+    if (type === 'acceptance') {
+      setIsModalOpen(true);
+    }
+    if (type === 'inprogress') {
+      nav(`/chat/1`); // 채팅으로 이동 & 아이디 추가 예정
+    }
+  };
+
   return (
-    <Item>
+    <Item onClick={handleClick}>
       <CheckBox />
       <TextDiv>
         <div className="text-div">
@@ -17,6 +34,11 @@ const WorkerDetailedItem = ({ data, type }) => {
           <img src={type === 'acceptance' ? chevron : mail} />
         </div>
       </TextDiv>
+      <DetailModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        type={'careworker'}
+      />
     </Item>
   );
 };
