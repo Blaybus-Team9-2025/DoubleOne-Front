@@ -10,7 +10,7 @@ const WorkerDetailedItem = ({ data, type }) => {
   const nav = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleClick = (e) => {
+  const handleSeniorClick = (e) => {
     e.stopPropagation();
 
     if (type === 'acceptance') {
@@ -21,8 +21,13 @@ const WorkerDetailedItem = ({ data, type }) => {
     }
   };
 
+  const handleModalClick = (e) => {
+    e.stopPropagation();
+    setIsModalOpen(false);
+  };
+
   return (
-    <Item onClick={handleClick}>
+    <Item onClick={handleSeniorClick}>
       <CheckBox />
       <TextDiv>
         <div className="text-div">
@@ -36,7 +41,7 @@ const WorkerDetailedItem = ({ data, type }) => {
       </TextDiv>
       <DetailModal
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        onClose={handleModalClick}
         type={'careworker'}
       />
     </Item>
