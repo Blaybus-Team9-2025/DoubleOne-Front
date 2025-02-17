@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 
 import './App.css';
+import Splash from './pages/Splash';
 import Home from './pages/Home';
 import MyPage from './pages/MyPage';
 import Login from './pages/Login';
@@ -32,6 +33,7 @@ function App() {
   return (
     <>
       <Routes>
+        <Route path="/" element={<Splash />} />
         <Route path="/home/:type" element={<Home />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/login" element={<Login />} />
