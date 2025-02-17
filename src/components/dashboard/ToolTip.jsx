@@ -37,15 +37,15 @@ const Div = styled.div`
 const TipBox = styled.div`
   width: max-content;
   position: absolute;
-  top: -40px;
-  transform: translateX(-45%);
+  bottom: 20px;
+  z-index: 2000;
+  transform: translateX(-25%);
   border-radius: 10px;
   background-color: rgba(158, 158, 158, 0.2);
   padding: 2px;
   p {
     color: #4d4d4d;
     font-size: 12px;
-    font-weight: 600;
     white-space: pre-line;
   }
 `;
