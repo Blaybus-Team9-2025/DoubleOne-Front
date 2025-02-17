@@ -41,7 +41,7 @@ const Overlay = styled.div`
 `;
 
 const ModalWrapper = styled.div`
-  max-height: 90vh;
+  max-height: 90svh;
   min-width: 260px;
   max-width: 560px;
   width: calc(100% - 40px);
