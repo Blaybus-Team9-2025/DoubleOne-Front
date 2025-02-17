@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import cross from '../../assets/cross.png';
+import close from '../../assets/close.png';
 
 import CareWorkerDetail from './CareWorkerDetail';
 import SeniorDetails from './SeniorDetail';
@@ -21,8 +21,8 @@ const DetailModal = ({ type, isOpen, onClose }) => {
     <Container>
       <Overlay onClick={onClose} />
       <ModalWrapper>
-        <Cross onClick={onClose}>
-          <img src={cross} alt="Close" />
+        <Cross>
+          <img onClick={onClose} src={close} alt="Close" />
         </Cross>
         <ContentWrapper>{Content}</ContentWrapper>
       </ModalWrapper>
@@ -84,8 +84,8 @@ const Cross = styled.div`
   display: flex;
   justify-content: end;
   img {
-    width: 24px;
-    height: 24px;
+    width: 35px;
+    height: 35px;
     cursor: pointer;
   }
 `;
