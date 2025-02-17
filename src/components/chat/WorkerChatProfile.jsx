@@ -1,8 +1,20 @@
 import styled from 'styled-components';
+import { useEffect, useState } from 'react';
 
 import arrow from '../../assets/arrow-right.png';
 
 const WorkerChatProfile = () => {
+  // 요양사 상세보기 모달
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  }, [isOpen]);
+
   return (
     <Div>
       <Title>요양보호사 상세정보 보기</Title>
@@ -10,19 +22,19 @@ const WorkerChatProfile = () => {
         <Content>
           <p className="dot">성별: 여</p>
           <p className="dot">나이: 78세</p>
-          <p className="dot">요양등급: 2급</p>
+          <p className="dot">요양보호사 1급</p>
         </Content>
         <Content>
           <div>
-            <p className="dot bold">근무지역</p>
+            <p className="dot">근무지역</p>
             <p>서울특별시 관악구 대학동</p>
           </div>
           <div>
-            <p className="dot bold">근무시간</p>
+            <p className="dot">근무시간</p>
             <p>월 14:00-15:00</p>
           </div>
           <div>
-            <p className="dot bold">근무종류</p>
+            <p className="dot">근무종류</p>
             <p>방문요양</p>
           </div>
         </Content>
@@ -52,7 +64,7 @@ const BoxDiv = styled.div`
   display: flex;
   justify-content: space-between;
   gap: 10px;
-  background-color: var(--green);
+  background-color: var(--blue);
   border-radius: 10px;
   margin-bottom: 30px;
   .icon {
@@ -71,9 +83,11 @@ const Content = styled.div`
   flex-direction: column;
   gap: 5px;
   font-size: 14px;
+  color: #ffffff;
   p {
     padding-left: 20px;
     position: relative;
+    font-weight: 700;
   }
   .dot::before {
     content: '●';
@@ -81,9 +95,6 @@ const Content = styled.div`
     left: 8px;
     top: 5px;
     font-size: 5px;
-  }
-  .bold {
-    font-weight: 700;
   }
 `;
 
