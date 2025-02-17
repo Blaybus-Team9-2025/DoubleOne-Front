@@ -30,6 +30,7 @@ import CareWorkerSpecifics from './pages/CareWorkerSpecifics';
 import RecruitingSpecifics from './pages/RecruitingSpecifics';
 import Dashboard from './pages/Dashboard';
 import DashMain from './components/dashboard/main/DashMain';
+import DashStatus from './components/dashboard/status/DashStatus';
 
 function App() {
   return (
@@ -77,6 +78,7 @@ function App() {
         />
         <Route path="/dashboard" element={<Dashboard />}>
           <Route path="" element={<DashMain />} />
+          <Route path="status" element={<DashStatus />} />
         </Route>
       </Routes>
     </>
