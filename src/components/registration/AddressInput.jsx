@@ -8,7 +8,7 @@ import { SignupAtom } from '../../jotai/Signup';
 import { InputStyle } from '../../util/common-style';
 import { LabelStyle } from '../../util/common-style';
 
-const AddressInput = () => {
+const AddressInput = ({ required }) => {
   const [signup, setSignup] = useAtom(SignupAtom);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -69,7 +69,7 @@ const AddressInput = () => {
         <div>
           <Div>
             <Label htmlFor="address">주소</Label>
-            <Required />
+            {required && <Required />}
           </Div>
           <ZoneCodeWrapper>
             <Input

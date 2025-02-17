@@ -36,8 +36,8 @@ const CareWorkerInfo = () => {
           </Title>
           <ImgUpload />
           <NameAndGender />
-          <PhoneNum />
-          <AddressInput />
+          <PhoneNum required />
+          <AddressInput required />
           <License />
           <div>
             <CarYn />

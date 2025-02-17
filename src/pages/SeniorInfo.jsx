@@ -44,7 +44,7 @@ const SeniorInfo = () => {
       <Dementia />
       <EtcDisease />
       <GenderPreference />
-      <AddressInput />
+      <AddressInput required />
       <Cohabitation />
       <RoundButton
         text="저장하고 다음으로"

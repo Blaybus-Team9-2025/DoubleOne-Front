@@ -46,7 +46,7 @@ const Exp = styled.p`
 `;
 
 const InputText = styled.textarea`
-  padding: 12px 20px;
+  padding: 10px 15px;
   width: 100%;
   height: 100%;
   border: 1px solid var(--grey);

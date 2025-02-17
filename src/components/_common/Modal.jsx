@@ -18,7 +18,7 @@ const Modal = ({
       <Overlay />
       <ModalWrapper>
         <Cross>
-          {type === 'alert' && <img src={cross} onClick={onClose} />}
+          <img src={cross} onClick={onClose} />
         </Cross>
         <TextWrapper>
           <Text>{text}</Text>
@@ -111,7 +111,6 @@ const TextWrapper = styled.div`
 
 const Text = styled.p`
   font-size: 17px;
-  font-weight: bold;
   word-break: keep-all;
   text-align: center;
 `;
@@ -120,6 +119,7 @@ const BtnWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 30px;
 `;
 
 const Button = styled.button`
@@ -127,14 +127,15 @@ const Button = styled.button`
   padding: 12px 20px;
   border-radius: 10px;
   font-size: 14px;
-  font-weight: bold;
   cursor: pointer;
 
   &.btn1 {
+    color: white;
     background-color: var(--blue);
   }
 
   &.btn2 {
+    color: black;
     background-color: white;
   }
 `;
