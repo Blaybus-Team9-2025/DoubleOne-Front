@@ -2,12 +2,24 @@ import styled from 'styled-components';
 import Header from './Header';
 import Content from './Content';
 import useBottomSheet from '../../../hooks/useBottomSheet';
-import { BOTTOM_SHEET_HEIGHT } from './BottomSheetOption';
 import { useEffect, useState } from 'react';
 
 const BottomSheet = ({ setIsOpen, seniorProfile, isAccepted }) => {
   const { sheet, content, currentY } = useBottomSheet();
   const [position, setPosition] = useState('translateY(-50%)');
+  const [height, setHeight] = useState(window.innerHeight - 30);
+
+  useEffect(() => {
+    const current = window.innerHeight;
+    switch (current) {
+      case current > 700:
+        setHeight(window.innerHeight - 20);
+        break;
+      case current > 600:
+        setHeight(window.innerHeight - 30);
+        break;
+    }
+  }, [window.innerHeight]);
 
   useEffect(() => {
     if (currentY === window.innerHeight) {
@@ -19,7 +31,7 @@ const BottomSheet = ({ setIsOpen, seniorProfile, isAccepted }) => {
   }, [currentY]);
 
   return (
-    <Div ref={sheet} style={{ transform: position }}>
+    <Div ref={sheet} style={{ transform: position }} height={height}>
       <Header />
       <BottomSheetContent ref={content}>
         <Content seniorProfile={seniorProfile} isAccepted={isAccepted} />
@@ -46,7 +58,7 @@ const Div = styled.div`
   border-top-right-radius: 12px;
   border-top: 1px solid #000000;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.6);
-  height: ${BOTTOM_SHEET_HEIGHT}px;
+  height: ${(props) => props.height}px;
 
   background: #ffffff;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
