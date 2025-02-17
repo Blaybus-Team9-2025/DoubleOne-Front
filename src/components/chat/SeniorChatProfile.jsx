@@ -50,7 +50,7 @@ const SeniorChatProfile = ({ isAccepted }) => {
         </BtnDiv>
       )}
       <div className="margin" />
-      {isOpen && <ContractModal setIsOpen={setIsOpen} />}
+      {isOpen && <ContractModal setIsOpen={setIsOpen} type="senior" />}
     </Div>
   );
 };

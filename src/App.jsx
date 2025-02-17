@@ -25,9 +25,6 @@ import Recruiting from './pages/Recruiting';
 import EditCenterInfo from './pages/EditCenterInfo';
 import EditManagerInfo from './pages/EditManagerInfo';
 import EditCareWorkerInfo from './pages/EditCareWorkerInfo';
-import SeniorSpecifics from './pages/SeniorSpecifics';
-import CareWorkerSpecifics from './pages/CareWorkerSpecifics';
-import RecruitingSpecifics from './pages/RecruitingSpecifics';
 
 function App() {
   return (
@@ -63,15 +60,6 @@ function App() {
         <Route
           path="/editcareworkerinfo/:id"
           element={<EditCareWorkerInfo />}
-        />
-        <Route path="/seniorspecifics/:id" element={<SeniorSpecifics />} />
-        <Route
-          path="/careworkerspecifics/:id"
-          element={<CareWorkerSpecifics />}
-        />
-        <Route
-          path="/recruitingspecifics/:id"
-          element={<RecruitingSpecifics />}
         />
       </Routes>
     </>
