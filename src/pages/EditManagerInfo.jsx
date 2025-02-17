@@ -116,14 +116,19 @@ const Div = styled.div`
 
 const FixedWrapper = styled.section`
   display: flex;
-  justify-content: start;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const Key = styled.p`
+  font-size: 16px;
   margin-right: 30px;
 `;
 
-const Val = styled.p``;
+const Val = styled.p`
+  font-size: 24px;
+  font-weight: bold;
+`;
 
 const ButtonWrapper = styled.div`
   display: flex;
@@ -133,6 +138,7 @@ const ButtonWrapper = styled.div`
 
   p {
     text-decoration: underline;
+    margin-bottom: 30px;
     cursor: pointer;
   }
 `;

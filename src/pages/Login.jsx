@@ -13,7 +13,6 @@ const ModalInfo = {
   type: 'alert',
   text: '등록되지 않은 아이디거나, 아이디 또는 비밀번호를 잘못 입력했습니다. 다시 확인해주세요.',
   btnText1: '확인',
-  // btnText2: '아니오',
 };
 
 const Login = () => {

@@ -42,6 +42,8 @@ const Recruiting = () => {
           <RoundButton
             color="green"
             text="저장하고 다음으로"
+            mb="10"
+            mt="20"
             onClick={() => nav(`/recruiting/2`)}
           />
         </>

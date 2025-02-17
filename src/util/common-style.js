@@ -4,7 +4,7 @@ export const InputStyle = `
   border: 1px solid var(--grey);
   border-radius: 5px;
   padding: 10px 15px;
-  font-size: 14px;
+  font-size: 16px;
 `;
 
 import check from '../assets/checkbox.png';

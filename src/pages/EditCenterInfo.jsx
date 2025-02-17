@@ -61,7 +61,7 @@ const EditCenterInfo = () => {
       </Wrapper>
       <ButtonWrapper>
         <RoundButton text="취소" onClick={() => nav(-1)} />
-        <RoundButton text="저장하기" color="green" onClick={onSave} />
+        <RoundButton text="저장하기" color="green" mb="30" onClick={onSave} />
       </ButtonWrapper>
     </Container>
   );
@@ -88,6 +88,7 @@ const InputWrapper = styled.section`
 const Label = styled.label`
   ${LabelStyle}
 `;
+
 const Input = styled.input`
   ${InputStyle}
 `;
@@ -105,7 +106,8 @@ const Key = styled.p`
 `;
 
 const Val = styled.p`
-  font-size: 18px;
+  font-size: 24px;
+  font-weight: bold;
 `;
 
 const TextWrapper = styled.div`
