@@ -76,8 +76,8 @@ const EditManagerInfo = () => {
           <Key>생년월일</Key>
           <Val>1973년 3월 22일</Val>
         </FixedWrapper>
-        <PhoneNum />
-        <AddressInput />
+        <PhoneNum type={'email'} target={'manager'} />
+        <AddressInput type={'email'} target={'manager'} />
         <Password />
       </Wrapper>
       <ButtonWrapper>

@@ -12,6 +12,7 @@ import {
   KakaoManagerSignupAtom,
   KakaoWorkerSignupAtom,
 } from '../../jotai/Signup';
+import { SeniorInfoAtom } from '../../jotai/SeniorInfo';
 
 const AddressInput = ({ required, type, target }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,6 +26,10 @@ const AddressInput = ({ required, type, target }) => {
       return KakaoWorkerSignupAtom;
     } else if (type === 'kakao' && target === 'manager') {
       return KakaoManagerSignupAtom;
+    }
+
+    if (type === 'info' && target === 'senior') {
+      return SeniorInfoAtom;
     }
   })();
 
