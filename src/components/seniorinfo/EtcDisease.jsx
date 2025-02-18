@@ -3,11 +3,15 @@ import styled from 'styled-components';
 import { InputStyle } from '../../util/common-style';
 import { LabelStyle } from '../../util/common-style';
 
-const EtcDisease = ({ setEtcDisease }) => {
+const EtcDisease = ({ setEtcDisease, data }) => {
   return (
     <Container>
       <Label>기타 보유 질병/질환 및 상세 요구사항</Label>
-      <Input type="text" onChange={(e) => setEtcDisease(e.target.value)} />
+      <Input
+        type="text"
+        onChange={(e) => setEtcDisease(e.target.value)}
+        value={data}
+      />
     </Container>
   );
 };

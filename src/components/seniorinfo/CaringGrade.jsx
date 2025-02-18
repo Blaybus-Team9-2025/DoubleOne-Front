@@ -4,8 +4,9 @@ import Required from '../_common/Required';
 import Dropdown from '../registration/Dropdown';
 import { LabelStyle } from '../../util/common-style';
 import { getOptions } from '../../util/get-options';
+import { getKeyByValue } from '../../util/getKeyByValue';
 
-const CaringGrade = ({ setCaringGrade, error }) => {
+const CaringGrade = ({ setCaringGrade, error, data }) => {
   const options = getOptions('caringGrade');
   const optionKeys = options.map((obj) => Object.keys(obj)[0]);
 
@@ -16,6 +17,7 @@ const CaringGrade = ({ setCaringGrade, error }) => {
         <Required />
       </div>
       <Dropdown
+        value={data && getKeyByValue(options, data)}
         width="100%"
         options={optionKeys}
         onChange={(selectedKey) => {

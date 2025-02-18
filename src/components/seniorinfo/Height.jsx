@@ -3,12 +3,16 @@ import styled from 'styled-components';
 import { InputStyle } from '../../util/common-style';
 import { LabelStyle } from '../../util/common-style';
 
-const Height = ({ setHeight }) => {
+const Height = ({ setHeight, data }) => {
   return (
     <Container>
       <Label>어르신 키</Label>
       <Wrapper>
-        <Input type="text" onChange={(e) => setHeight(e.target.value)} />
+        <Input
+          type="text"
+          onChange={(e) => setHeight(e.target.value)}
+          value={data}
+        />
         <p>cm</p>
       </Wrapper>
     </Container>

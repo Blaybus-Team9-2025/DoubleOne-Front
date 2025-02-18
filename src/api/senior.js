@@ -65,11 +65,15 @@ export const deleteSenior = async (seniorId) => {
 };
 
 // 어르신 정보 수정
-export const patchSenior = async (seniorId, data) => {
+export const patchSenior = async (seniorId, data, imgFile) => {
   const formData = new FormData();
 
-  Object.entries(data).forEach(([key, value]) => formData.append(key, value));
-  formData.append('seniorId', seniorId);
+  formData.append(
+    'data',
+    new Blob([JSON.stringify(data)], { type: 'application/json' })
+  );
+
+  formData.append('imgFile', imgFile);
 
   try {
     const res = await http.patch(`/seniors/${seniorId}`, formData, {

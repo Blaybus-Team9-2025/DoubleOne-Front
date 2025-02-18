@@ -64,7 +64,7 @@ const SeniorInfo = () => {
   }, [dementiaSymptoms]);
 
   const handleRegister = async () => {
-    console.log(error);
+    console.log(atom);
     if (!validate()) {
       alert('입력값을 확인해주세요.');
       return;
