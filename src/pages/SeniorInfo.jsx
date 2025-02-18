@@ -33,16 +33,47 @@ const SeniorInfo = () => {
   const { managerId } = useAtomValue(LoginAtom);
 
   const [dementiaSymptoms, setDementiaSymptoms] = useState([]);
+  const [imgFile, setImgFile] = useState(null);
+
+  const [error, setError] = useState(
+    Object.keys(atom).reduce((acc, key) => ({ ...acc, [key]: false }), {})
+  );
+
+  const validate = () => {
+    const newErrors = {};
+
+    Object.entries(atom).forEach(([key, val]) => {
+      if (key !== 'height' && key !== 'etcDisease' && !val) {
+        newErrors[key] = true; // 값이 비어있으면 오류로 설정
+      }
+      if (key === 'dementiaSymptoms' && val.length <= 0) {
+        newErrors[key] = true;
+      }
+    });
+    setError(newErrors); // 한 번에 setError 실행
+
+    return Object.keys(newErrors).length === 0; // 오류가 없으면 true 반환
+  };
 
   useEffect(() => {
-    setAtom({ ...atom, managerId: managerId });
+    setAtom((prev) => ({ ...prev, managerId: managerId }));
   }, [managerId]);
 
+  useEffect(() => {
+    setAtom((prev) => ({ ...prev, dementiaSymptoms: dementiaSymptoms }));
+  }, [dementiaSymptoms]);
+
   const handleRegister = async () => {
-    const res = await postSenior(atom, dementiaSymptoms);
-    console.log(res);
-    if (res.status === 200) {
-      // 라우팅 추가
+    console.log(error);
+    if (!validate()) {
+      alert('입력값을 확인해주세요.');
+      return;
+    }
+
+    const res = await postSenior(atom, imgFile);
+    if (res.status === 201) {
+      // 성공 시 마이페이지로 이동
+      nav('/mypage/manager');
     }
   };
 
@@ -57,27 +88,43 @@ const SeniorInfo = () => {
         </Title>
         {type === 'recruit' && <GetInfo>정보 불러오기</GetInfo>}
       </Wrapper>
-      <ImgUpload
-        edit={false}
-        setPostImg={(input) => setAtom({ ...atom, imgFile: input })}
-      />
-      <NameAndGender type={'info'} target={'senior'} />
-      <BirthDate type={'info'} target={'senior'} />
+      <ImgUpload edit={false} setPostImg={setImgFile} />
+      <NameAndGender type={'info'} target={'senior'} error={error.name} />
+      <BirthDate type={'info'} target={'senior'} error={error.birthDate} />
       <CaringGrade
-        setCaringGrade={(input) => setAtom({ ...atom, careLevel: input })}
+        setCaringGrade={(input) =>
+          setAtom((prev) => ({ ...prev, careLevel: input }))
+        }
+        error={error.careLevel}
       />
-      <Height setHeight={(input) => setAtom({ ...atom, height: input })} />
-      <Weight setWeight={(input) => setAtom({ ...atom, weight: input })} />
-      <Dementia setDementia={setDementiaSymptoms} />
+      <Height
+        setHeight={(input) => setAtom((prev) => ({ ...prev, height: input }))}
+      />
+      <Weight
+        setWeight={(input) => setAtom((prev) => ({ ...prev, weight: input }))}
+        error={error.weight}
+      />
+      <Dementia
+        setDementia={setDementiaSymptoms}
+        error={error.dementiaSymptoms}
+      />
       <EtcDisease
-        setEtcDisease={(input) => setAtom({ ...atom, etcDisease: input })}
+        setEtcDisease={(input) =>
+          setAtom((prev) => ({ ...prev, etcDisease: input }))
+        }
       />
       {type === 'recruit' && <GenderPreference />}
-      <AddressInput required type={'info'} target={'senior'} />
+      <AddressInput
+        required
+        type={'info'}
+        target={'senior'}
+        error={error.address}
+      />
       <Cohabitation
         setCohabitation={(input) =>
-          setAtom({ ...atom, cohabitationStatus: input })
+          setAtom((prev) => ({ ...prev, cohabitationStatus: input }))
         }
+        error={error.cohabitationStatus}
       />
       {type === 'register' ? (
         <RoundButton

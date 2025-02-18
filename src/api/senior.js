@@ -22,12 +22,15 @@ export const getSeniorFilterList = async (type) => {
 };
 
 // 어르신 정보 등록
-export const postSenior = async (data, dementiaSymptoms) => {
+export const postSenior = async (data, imgFile) => {
   const formData = new FormData();
 
-  Object.entries(data).forEach(([key, value]) => formData.append(key, value));
+  formData.append(
+    'data',
+    new Blob([JSON.stringify(data)], { type: 'application/json' })
+  );
 
-  dementiaSymptoms.forEach((item) => formData.append('dementiaSymptoms', item));
+  formData.append('imgFile', imgFile);
 
   try {
     const res = await http.post('/seniors', formData, {

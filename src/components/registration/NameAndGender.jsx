@@ -11,6 +11,7 @@ import {
   KakaoWorkerSignupAtom,
 } from '../../jotai/Signup';
 import { SeniorInfoAtom } from '../../jotai/SeniorInfo';
+import { useEffect } from 'react';
 
 const NameAndGender = ({ type, target, error }) => {
   const atom = (() => {
@@ -36,8 +37,13 @@ const NameAndGender = ({ type, target, error }) => {
   };
 
   const onGenderChange = (gender) => {
-    setInput((prev) => ({ ...prev, gender }));
+    setInput((prev) => ({ ...prev, gender: gender }));
   };
+
+  useEffect(() => {
+    // 초기값
+    onGenderChange('F');
+  }, []);
 
   return (
     <Container>

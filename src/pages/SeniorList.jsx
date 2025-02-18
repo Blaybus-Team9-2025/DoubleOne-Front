@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import { getSeniorList } from '../api/senior';
+import { getOptions } from '../util/get-options';
 
 import Card from '../components/_common/Card';
 import Header from '../components/_common/Header';
