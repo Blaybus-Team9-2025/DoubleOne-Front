@@ -10,6 +10,7 @@ import {
   KakaoManagerSignupAtom,
   KakaoWorkerSignupAtom,
 } from '../../jotai/Signup';
+import { SeniorInfoAtom } from '../../jotai/SeniorInfo';
 
 const NameAndGender = ({ type, target, error }) => {
   const atom = (() => {
@@ -21,6 +22,10 @@ const NameAndGender = ({ type, target, error }) => {
       return KakaoWorkerSignupAtom;
     } else if (type === 'kakao' && target === 'manager') {
       return KakaoManagerSignupAtom;
+    }
+
+    if (type === 'info' && target === 'senior') {
+      return SeniorInfoAtom;
     }
   })();
 

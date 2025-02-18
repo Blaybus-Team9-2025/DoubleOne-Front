@@ -12,6 +12,7 @@ import {
   KakaoManagerSignupAtom,
   KakaoWorkerSignupAtom,
 } from '../../jotai/Signup';
+import { SeniorInfoAtom } from '../../jotai/SeniorInfo';
 
 const years = Array.from(
   { length: 2025 - 1930 + 1 },
@@ -31,6 +32,10 @@ const BirthDate = ({ type, target, error }) => {
       return KakaoWorkerSignupAtom;
     } else if (type === 'kakao' && target === 'manager') {
       return KakaoManagerSignupAtom;
+    }
+
+    if (type === 'info' && target === 'senior') {
+      return SeniorInfoAtom;
     }
   })();
   const [input, setInput] = useAtom(atom);

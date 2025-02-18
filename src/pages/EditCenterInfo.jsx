@@ -30,9 +30,9 @@ const EditCenterInfo = () => {
           <Key>센터 이름</Key>
           <Val>000 센터</Val>
         </FixedWrapper>
-        <PhoneNum />
-        <AddressInput />
-        <CarYn />
+        <PhoneNum type={'email'} target={'manager'} />
+        <AddressInput type={'email'} target={'manager'} />
+        <CarYn type={'email'} />
         <InputWrapper>
           <Label htmlFor="grade">센터 등급</Label>
           <Input id="grade" />

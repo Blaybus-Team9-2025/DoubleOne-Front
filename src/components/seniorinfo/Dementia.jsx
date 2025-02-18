@@ -5,7 +5,12 @@ import { CheckboxStyle } from '../../util/common-style';
 import { LabelStyle } from '../../util/common-style';
 import { getOptions } from '../../util/get-options';
 
-const Dementia = () => {
+const Dementia = ({ setDementia }) => {
+  const handleCheck = (val) => {
+    setDementia((prev) =>
+      prev.includes(val) ? prev.filter((item) => item !== val) : [...prev, val]
+    );
+  };
   return (
     <Container>
       <div>
@@ -15,7 +20,11 @@ const Dementia = () => {
       <Wrapper>
         {getOptions('dementia').map((val, idx) => (
           <CheckboxWrapper key={idx}>
-            <Checkbox type="checkbox" id={idx} />
+            <Checkbox
+              type="checkbox"
+              id={idx}
+              onChange={() => handleCheck(val)}
+            />
             <Text htmlFor={idx}>{val}</Text>
           </CheckboxWrapper>
         ))}

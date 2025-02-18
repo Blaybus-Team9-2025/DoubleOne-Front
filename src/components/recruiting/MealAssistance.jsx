@@ -5,11 +5,14 @@ import { LabelStyle } from '../../util/common-style';
 import { getOptions } from '../../util/get-options';
 
 const MealAssistance = () => {
+  const options = getOptions('meal');
+  const optionKeys = options.map((obj) => Object.keys(obj)[0]);
+
   return (
     <Container>
       <Label>식사 보조</Label>
       <Wrapper>
-        {getOptions('meal').map((val, idx) => (
+        {optionKeys.map((val, idx) => (
           <Col key={idx}>
             <input type="checkbox" id={val} />
             <label htmlFor={val}>{val}</label>
