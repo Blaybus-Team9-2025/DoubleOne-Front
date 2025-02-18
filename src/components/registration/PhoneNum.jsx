@@ -1,10 +1,47 @@
 import styled from 'styled-components';
+import { useAtom } from 'jotai';
 
 import Required from '../_common/Required';
 import { InputStyle } from '../../util/common-style';
 import { LabelStyle } from '../../util/common-style';
+import {
+  EmailWorkerSignupAtom,
+  EmailManagerSignupAtom,
+  KakaoManagerSignupAtom,
+  KakaoWorkerSignupAtom,
+} from '../../jotai/Signup';
 
-const PhoneNum = ({ required }) => {
+const PhoneNum = ({ required, type, target, error }) => {
+  const atom = (() => {
+    if (type === 'email' && target === 'worker') {
+      return EmailWorkerSignupAtom;
+    } else if (type === 'email' && target === 'manager') {
+      return EmailManagerSignupAtom;
+    } else if (type === 'kakao' && target === 'worker') {
+      return KakaoWorkerSignupAtom;
+    } else if (type === 'kakao' && target === 'manager') {
+      return KakaoManagerSignupAtom;
+    }
+  })();
+  const [input, setInput] = useAtom(atom);
+
+  const onChangeInput = (e, order) => {
+    let newPhoneNum = [...input.phoneNum.split('-')];
+
+    if (order === 1) {
+      newPhoneNum[0] = e.target.value;
+    } else if (order === 2) {
+      newPhoneNum[1] = e.target.value;
+    } else if (order === 3) {
+      newPhoneNum[2] = e.target.value;
+    }
+
+    setInput((prev) => ({
+      ...prev,
+      phoneNum: newPhoneNum.join('-'),
+    }));
+  };
+
   return (
     <Container>
       <div>
@@ -15,26 +52,32 @@ const PhoneNum = ({ required }) => {
         <Input
           type="text"
           id="tel"
-          className="first"
+          className={error && 'error'}
+          value={input.phoneNum.split('-')[0]}
           placeholder="010"
           name="tel1"
           maxLength={3}
+          onChange={(e) => onChangeInput(e, 1)}
         />
         <Input
           type="text"
           id="tel"
-          className="second"
+          className={error && 'error'}
+          value={input.phoneNum.split('-')[1] || ''}
           placeholder="0000"
           name="tel2"
           maxLength={4}
+          onChange={(e) => onChangeInput(e, 2)}
         />
         <Input
           type="text"
           id="tel"
-          className="third"
+          className={error && 'error'}
+          value={input.phoneNum.split('-')[2] || ''}
           placeholder="0000"
           name="tel3"
           maxLength={4}
+          onChange={(e) => onChangeInput(e, 3)}
         />
       </TelWrapper>
     </Container>
@@ -51,6 +94,10 @@ const Container = styled.div`
 
 const Input = styled.input`
   ${InputStyle}
+
+  &.error {
+    border-color: var(--red);
+  }
 `;
 
 const Label = styled.label`

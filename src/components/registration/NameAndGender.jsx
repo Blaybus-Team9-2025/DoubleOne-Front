@@ -2,18 +2,36 @@ import styled from 'styled-components';
 import { useAtom } from 'jotai';
 
 import Required from '../_common/Required';
-import { SignupAtom } from '../../jotai/Signup';
 import { InputStyle } from '../../util/common-style';
 import { LabelStyle } from '../../util/common-style';
+import {
+  EmailWorkerSignupAtom,
+  EmailManagerSignupAtom,
+  KakaoManagerSignupAtom,
+  KakaoWorkerSignupAtom,
+} from '../../jotai/Signup';
 
-const NameAndGender = () => {
-  const [signup, setSignup] = useAtom(SignupAtom);
+const NameAndGender = ({ type, target, error }) => {
+  const atom = (() => {
+    if (type === 'email' && target === 'worker') {
+      return EmailWorkerSignupAtom;
+    } else if (type === 'email' && target === 'manager') {
+      return EmailManagerSignupAtom;
+    } else if (type === 'kakao' && target === 'worker') {
+      return KakaoWorkerSignupAtom;
+    } else if (type === 'kakao' && target === 'manager') {
+      return KakaoManagerSignupAtom;
+    }
+  })();
 
-  const onChangeInput = (e) => {
-    setSignup({
-      ...signup,
-      [e.target.name]: e.target.value,
-    });
+  const [input, setInput] = useAtom(atom);
+
+  const onChangeName = (e) => {
+    setInput((prev) => ({ ...prev, name: e.target.value }));
+  };
+
+  const onGenderChange = (gender) => {
+    setInput((prev) => ({ ...prev, gender }));
   };
 
   return (
@@ -29,9 +47,10 @@ const NameAndGender = () => {
             id="name"
             name="name"
             placeholder="이름을 입력하세요."
-            value={signup.name}
+            value={input.name}
             maxLength="4"
-            onChange={onChangeInput}
+            onChange={onChangeName}
+            className={error && 'error'}
           />
         </Div>
         <Div>
@@ -41,26 +60,14 @@ const NameAndGender = () => {
           </div>
           <ButtonContainer>
             <button
-              className={signup.gender === 'male' ? 'active' : ''}
-              onClick={() =>
-                setSignup({
-                  ...signup,
-                  gender: 'male',
-                })
-              }
+              className={input.gender === 'M' ? 'active' : ''}
+              onClick={() => onGenderChange('M')}
             >
               남
             </button>
             <button
-              className={
-                !signup.gender || signup.gender === 'female' ? 'active' : ''
-              }
-              onClick={() =>
-                setSignup({
-                  ...signup,
-                  gender: 'female',
-                })
-              }
+              className={!input.gender || input.gender === 'F' ? 'active' : ''}
+              onClick={() => onGenderChange('F')}
             >
               여
             </button>
@@ -95,6 +102,10 @@ const Div = styled.div`
 
   input {
     ${InputStyle}
+
+    &.error {
+      border-color: var(--red);
+    }
   }
 `;
 

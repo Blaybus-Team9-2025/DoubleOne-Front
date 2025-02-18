@@ -24,11 +24,12 @@ const KakaoAuthPage = () => {
         //   accessToken: data.accessToken,
         //   refreshToken: data.refreshToken,
         // });
+        console.log('data', data);
 
         // 로그인 처리 & 메인 페이지로 이동
-        window.localStorage.setItem('accessToken', data.accessToken);
-        window.localStorage.setItem('refreshToken', data.refreshToken);
-        window.location.href = '/';
+        // window.localStorage.setItem('accessToken', data.accessToken);
+        // window.localStorage.setItem('refreshToken', data.refreshToken);
+        // window.location.href = '/';
 
         // 회원이 아니면 사용자 정보를 일부 받기(이름, 연락처 등) -> 카카오로 회원가입하기 (개인 or 기업) 페이지로 연결
       }

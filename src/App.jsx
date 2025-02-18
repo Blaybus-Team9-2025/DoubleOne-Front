@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import Splash from './pages/Splash';
 import Home from './pages/Home';
+import KakaoAuthPage from './pages/KakaoAuthPage';
 import MyPage from './pages/MyPage';
 import ManagerMyPage from './components/mypage/ManagerMyPage';
 import WorkerMyPage from './components/mypage/WorkerMyPage';
@@ -47,6 +48,10 @@ function App() {
           <Route path="careworker" element={<WorkerMyPage />} />
         </Route>
         <Route path="/login" element={<Login />} />
+        <Route
+          path="/login/oauth2/code/kakao"
+          element={<KakaoAuthPage />}
+        />
         <Route path="/signupselect/:type" element={<SignUpSelect />} />
         <Route path="/signup/:type/:target" element={<SignUp />} />
         <Route path="/contact/:id" element={<Contact />} />

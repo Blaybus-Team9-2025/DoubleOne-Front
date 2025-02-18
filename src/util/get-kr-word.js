@@ -11,9 +11,9 @@ export const getTypeKr = (type) => {
 
 export const getTargetKr = (target) => {
   switch (target) {
-    case 'individual':
+    case 'worker':
       return '개인';
-    case 'center':
+    case 'manager':
       return '기업';
   }
 };

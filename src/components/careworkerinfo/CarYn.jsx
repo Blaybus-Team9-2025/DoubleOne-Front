@@ -1,11 +1,20 @@
 import styled from 'styled-components';
 import { useAtom } from 'jotai';
 
-import { CareworkerInfoAtom } from '../../jotai/CareworkerInfo';
-import { LabelStyle } from '../../util/common-style';
+import {
+  KakaoManagerSignupAtom,
+  EmailManagerSignupAtom,
+} from '../../jotai/Signup';
 
-const CarYn = () => {
-  const [info, setInfo] = useAtom(CareworkerInfoAtom);
+const CarYn = ({ type }) => {
+  const atom = (() => {
+    if (type === 'email') {
+      return EmailManagerSignupAtom;
+    } else if (type === 'kakao') {
+      return KakaoManagerSignupAtom;
+    }
+  })();
+  const [input, setInput] = useAtom(atom);
 
   return (
     <Container>
@@ -17,11 +26,11 @@ const CarYn = () => {
             type="radio"
             name="carYn"
             id="yes"
-            checked={info.carYn}
+            checked={input?.hasTruck}
             onChange={() =>
-              setInfo((prev) => ({
+              setInput((prev) => ({
                 ...prev,
-                carYn: true,
+                hasTruck: true,
               }))
             }
           />
@@ -32,11 +41,11 @@ const CarYn = () => {
             type="radio"
             name="carYn"
             id="no"
-            checked={!info.carYn}
+            checked={!input?.hasTruck}
             onChange={() =>
-              setInfo((prev) => ({
+              setInput((prev) => ({
                 ...prev,
-                carYn: false,
+                hasTruck: false,
               }))
             }
           />

@@ -4,21 +4,33 @@ import { useAtom } from 'jotai';
 
 import Required from '../_common/Required';
 import Alert from './Alert';
-import { SignupAtom } from '../../jotai/Signup';
 import { InputStyle } from '../../util/common-style';
+import {
+  KakaoManagerSignupAtom,
+  EmailManagerSignupAtom,
+} from '../../jotai/Signup';
+import { getCenterNames } from '../../api/signup';
 
-const CenterName = () => {
-  const [validYn, setValidYn] = useState(true);
-  const [signup, setSignup] = useAtom(SignupAtom);
-
-  const isValidCenter = () => {
-    const centerList = []; // 백에서 가져오기
-
-    if (centerList.includes(signup.centerName)) {
-      setValidYn(true);
-    } else {
-      setValidYn(false);
+const CenterName = ({ type, error }) => {
+  const atom = (() => {
+    if (type === 'email') {
+      return EmailManagerSignupAtom;
+    } else if (type === 'kakao') {
+      return KakaoManagerSignupAtom;
     }
+  })();
+
+  const [validYn, setValidYn] = useState(true);
+  const [input, setInput] = useAtom(atom);
+
+  const isValidCenter = async () => {
+    const res = await getCenterNames();
+
+    // if (centerList.includes(input.centerName)) {
+    //   setValidYn(true);
+    // } else {
+    //   setValidYn(false);
+    // }
   };
 
   return (
@@ -31,11 +43,13 @@ const CenterName = () => {
         <input
           type="text"
           placeholder="센터이름을 입력하세요."
-          value={signup.centerName}
+          value={input.centerName}
+          className={error && 'error'}
           onChange={(e) =>
-            setSignup({
+            setInput((prev) => ({
+              ...prev,
               centerName: e.target.value,
-            })
+            }))
           }
         />
         <button onClick={isValidCenter}>센터 확인</button>
@@ -65,6 +79,10 @@ const Wrapper = styled.div`
   input {
     flex: 0.6;
     ${InputStyle}
+
+    &.error {
+      border-color: var(--red);
+    }
   }
 
   button {

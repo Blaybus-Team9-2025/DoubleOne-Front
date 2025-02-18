@@ -4,13 +4,31 @@ import styled from 'styled-components';
 import DaumPostcode from 'react-daum-postcode';
 
 import Required from '../_common/Required';
-import { SignupAtom } from '../../jotai/Signup';
 import { InputStyle } from '../../util/common-style';
 import { LabelStyle } from '../../util/common-style';
+import {
+  EmailWorkerSignupAtom,
+  EmailManagerSignupAtom,
+  KakaoManagerSignupAtom,
+  KakaoWorkerSignupAtom,
+} from '../../jotai/Signup';
 
-const AddressInput = ({ required }) => {
-  const [signup, setSignup] = useAtom(SignupAtom);
+const AddressInput = ({ required, type, target }) => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const atom = (() => {
+    if (type === 'email' && target === 'worker') {
+      return EmailWorkerSignupAtom;
+    } else if (type === 'email' && target === 'manager') {
+      return EmailManagerSignupAtom;
+    } else if (type === 'kakao' && target === 'worker') {
+      return KakaoWorkerSignupAtom;
+    } else if (type === 'kakao' && target === 'manager') {
+      return KakaoManagerSignupAtom;
+    }
+  })();
+
+  const [signup, setSignup] = useAtom(atom);
 
   // 우편번호 찾기 팝업 시 뒷 배경 스크롤 방지
   useEffect(() => {

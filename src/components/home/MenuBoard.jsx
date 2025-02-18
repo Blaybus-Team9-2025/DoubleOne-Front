@@ -10,7 +10,7 @@ const MenuBoard = ({ type }) => {
   return (
     <Container className={type === 'manager' && 'manager'}>
       <Header>
-        <ProfileWrapper>
+        <ProfileWrapper onClick={() => nav('/mypage')}>
           <ProfileImg>
             <img src={logo} />
           </ProfileImg>
@@ -135,6 +135,7 @@ const Header = styled.div`
 const ProfileWrapper = styled.div`
   display: flex;
   align-items: center;
+  cursor: pointer;
 
   p {
     font-size: 24px;

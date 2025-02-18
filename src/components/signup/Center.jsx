@@ -1,8 +1,22 @@
 import styled from 'styled-components';
+import { useAtom } from 'jotai';
 
 import { InputStyle } from '../../util/common-style';
+import {
+  KakaoManagerSignupAtom,
+  EmailManagerSignupAtom,
+} from '../../jotai/Signup';
 
-const Center = () => {
+const Center = ({ type }) => {
+  const atom = (() => {
+    if (type === 'email') {
+      return EmailManagerSignupAtom;
+    } else if (type === 'kakao') {
+      return KakaoManagerSignupAtom;
+    }
+  })();
+  const [input, setInput] = useAtom(atom);
+
   return (
     <Container>
       <CenterGrade>
@@ -12,6 +26,13 @@ const Center = () => {
           id="grade"
           placeholder="센터 등급을 입력하세요."
           maxLength="20"
+          value={input.centerGrade}
+          onChange={(e) =>
+            setInput((prev) => ({
+              ...prev,
+              centerGrade: e.target.value,
+            }))
+          }
         />
       </CenterGrade>
       <CenterPeriod>
@@ -21,6 +42,13 @@ const Center = () => {
           id="period"
           placeholder="운영 기간을 입력하세요."
           maxLength="20"
+          value={input.centerPeriod}
+          onChange={(e) =>
+            setInput((prev) => ({
+              ...prev,
+              centerPeriod: e.target.value,
+            }))
+          }
         />
       </CenterPeriod>
     </Container>
