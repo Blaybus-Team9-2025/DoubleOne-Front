@@ -3,7 +3,10 @@ import styled from 'styled-components';
 import Required from '../_common/Required';
 import { getOptions } from '../../util/get-options';
 
-const Cohabitation = () => {
+const Cohabitation = ({ setCohabitation }) => {
+  const options = getOptions('cohabitation');
+  const optionKeys = options.map((obj) => Object.keys(obj)[0]);
+
   return (
     <Container>
       <div>
@@ -11,9 +14,17 @@ const Cohabitation = () => {
         <Required />
       </div>
       <Wrapper>
-        {getOptions('cohabitation').map((val, idx) => (
+        {optionKeys.map((val, idx) => (
           <RadioWrapper key={idx}>
-            <input type="radio" id={val} name="cohabitation" />
+            <input
+              type="radio"
+              id={val}
+              name="cohabitation"
+              onChange={() => {
+                const selectedValue = options.find((obj) => obj[val])[val];
+                setCohabitation(selectedValue);
+              }}
+            />
             <Text htmlFor={val}>{val}</Text>
           </RadioWrapper>
         ))}

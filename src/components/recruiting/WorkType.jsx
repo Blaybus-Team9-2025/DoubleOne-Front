@@ -5,17 +5,18 @@ import Required from '../_common/Required';
 import { LabelStyle } from '../../util/common-style';
 
 const options = [
-  '방문요양',
-  '입주요양',
-  '방문목록',
-  '주야간보호',
-  '요양원',
-  '병원',
-  '병원동행',
+  { 방문요양: 'HOME_CARE' },
+  { 입주요양: 'LIVE_IN' },
+  { 방문목욕: 'BATH' },
+  { 주야간보호: 'DAY_CARE' },
+  { 요양원: 'FACILITY' },
+  { 병원동행: 'HOSPITAL' },
 ];
 
 const WorkType = () => {
   const [selectedIdx, setSelectedIdx] = useState(null);
+
+  const optionKeys = options.map((obj) => Object.keys(obj)[0]);
 
   return (
     <Container>
@@ -24,7 +25,7 @@ const WorkType = () => {
         <Required />
       </div>
       <Wrapper>
-        {options.map((val, idx) => (
+        {optionKeys.map((val, idx) => (
           <Box
             key={idx}
             isSelected={selectedIdx === idx}

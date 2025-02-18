@@ -5,11 +5,14 @@ import { LabelStyle } from '../../util/common-style';
 import { getOptions } from '../../util/get-options';
 
 const ToiletingAssistance = () => {
+  const options = getOptions('toileting');
+  const optionKeys = options.map((obj) => Object.keys(obj)[0]);
+
   return (
     <Container>
       <Label>배변보조</Label>
       <Wrapper>
-        {getOptions('toileting').map((val, idx) => (
+        {optionKeys.map((val, idx) => (
           <CheckboxWrapper key={idx}>
             <Checkbox type="checkbox" id={val} />
             <Text htmlFor={val}>{val}</Text>

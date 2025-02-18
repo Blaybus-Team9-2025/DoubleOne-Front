@@ -5,11 +5,14 @@ import { LabelStyle } from '../../util/common-style';
 import { getOptions } from '../../util/get-options';
 
 const MobilityAssistance = () => {
+  const options = getOptions('mobility');
+  const optionKeys = options.map((obj) => Object.keys(obj)[0]);
+
   return (
     <Container>
       <Label>이동 보조</Label>
       <Wrapper>
-        {getOptions('mobility').map((val, idx) => (
+        {optionKeys.map((val, idx) => (
           <Col key={idx}>
             <input type="checkbox" id={val} />
             <label htmlFor={val}>{val}</label>
