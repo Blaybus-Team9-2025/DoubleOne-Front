@@ -5,7 +5,7 @@ import Dropdown from '../registration/Dropdown';
 import { LabelStyle } from '../../util/common-style';
 import { getOptions } from '../../util/get-options';
 
-const CaringGrade = ({ setCaringGrade }) => {
+const CaringGrade = ({ setCaringGrade, error }) => {
   const options = getOptions('caringGrade');
   const optionKeys = options.map((obj) => Object.keys(obj)[0]);
 
@@ -24,6 +24,7 @@ const CaringGrade = ({ setCaringGrade }) => {
           ];
           setCaringGrade(selectedValue);
         }}
+        error={error}
       />
     </Container>
   );

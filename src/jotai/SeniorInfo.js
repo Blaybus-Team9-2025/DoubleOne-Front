@@ -9,7 +9,7 @@ export const SeniorInfoAtom = atom({
   height: 0,
   weight: 0,
   address: '',
-  conhabitationStatus: '',
-  imgFile: null,
+  cohabitationStatus: '',
+  dementiaSymptoms: [],
   etcDisease: '',
 });

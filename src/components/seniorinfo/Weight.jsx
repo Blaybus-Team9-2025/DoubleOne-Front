@@ -4,7 +4,7 @@ import { InputStyle } from '../../util/common-style';
 import { LabelStyle } from '../../util/common-style';
 import Required from '../_common/Required';
 
-const Weight = ({ setWeight }) => {
+const Weight = ({ setWeight, error }) => {
   return (
     <Container>
       <div>
@@ -12,7 +12,11 @@ const Weight = ({ setWeight }) => {
         <Required />
       </div>
       <Wrapper>
-        <Input type="text" onChange={(e) => setWeight(e.target.value)} />
+        <Input
+          type="text"
+          onChange={(e) => setWeight(e.target.value)}
+          className={error && 'error'}
+        />
         <p>kg</p>
       </Wrapper>
     </Container>
@@ -46,4 +50,8 @@ const Wrapper = styled.div`
 const Input = styled.input`
   width: 100%;
   ${InputStyle}
+
+  &.error {
+    border-color: var(--red);
+  }
 `;

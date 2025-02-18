@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Required from '../_common/Required';
 import { getOptions } from '../../util/get-options';
 
-const Cohabitation = ({ setCohabitation }) => {
+const Cohabitation = ({ setCohabitation, error }) => {
   const options = getOptions('cohabitation');
   const optionKeys = options.map((obj) => Object.keys(obj)[0]);
 
@@ -25,7 +25,9 @@ const Cohabitation = ({ setCohabitation }) => {
                 setCohabitation(selectedValue);
               }}
             />
-            <Text htmlFor={val}>{val}</Text>
+            <Text htmlFor={val} className={error && 'error'}>
+              {val}
+            </Text>
           </RadioWrapper>
         ))}
       </Wrapper>
@@ -61,4 +63,8 @@ const RadioWrapper = styled.div`
 
 const Text = styled.label`
   cursor: pointer;
+
+  &.error {
+    color: var(--red);
+  }
 `;

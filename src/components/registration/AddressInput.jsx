@@ -14,7 +14,7 @@ import {
 } from '../../jotai/Signup';
 import { SeniorInfoAtom } from '../../jotai/SeniorInfo';
 
-const AddressInput = ({ required, type, target }) => {
+const AddressInput = ({ required, type, target, error }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const atom = (() => {
@@ -96,7 +96,7 @@ const AddressInput = ({ required, type, target }) => {
           </Div>
           <ZoneCodeWrapper>
             <Input
-              className="zoneCode"
+              className={`zoneCode ${error && 'error'}`}
               type="text"
               value={signup.zonecode}
               name="zondcode"
@@ -108,14 +108,14 @@ const AddressInput = ({ required, type, target }) => {
           </ZoneCodeWrapper>
         </div>
         <Input
-          className="address"
+          className={`address ${error && 'error'}`}
           type="text"
           value={signup.address}
           name="address"
           onChange={onChangeInput}
         />
         <Input
-          className="detailedAddress"
+          className={`detailedAddress ${error && 'error'}`}
           type="text"
           value={signup.detailedAddress}
           onChange={onChangeInput}
@@ -156,6 +156,10 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
+
+  .error {
+    border-color: var(--red);
+  }
 `;
 
 const Div = styled.div`
