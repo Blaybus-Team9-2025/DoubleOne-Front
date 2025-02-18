@@ -8,6 +8,7 @@ import RoundButton from '../components/_common/RoundButton';
 import chatBubble from '../assets/chat_bubble.png';
 import Modal from '../components/_common/Modal';
 import { KAKAO_AUTH_URI } from '../api/user';
+import { EmailLogin } from '../api/user';
 
 const ModalInfo = {
   type: 'alert',
@@ -19,8 +20,8 @@ const Login = () => {
   const nav = useNavigate();
 
   const [input, setInput] = useState({
-    id: '',
-    pw: '',
+    email: '',
+    password: '',
   });
   const [modalYn, setModalYn] = useState(false);
 
@@ -33,10 +34,14 @@ const Login = () => {
     window.location.href = KAKAO_AUTH_URI;
   };
 
-  const onLoginClick = () => {
-    // 로그인 api 사용
-    // 로그인 실패한 경우
-    setModalYn(true);
+  const onLoginClick = async () => {
+    const res = await EmailLogin(input);
+    if (res) {
+      nav('/mypage');
+    } else {
+      // 로그인 실패한 경우
+      setModalYn(true);
+    }
   };
 
   const onChangeInput = (e) => {
@@ -61,7 +66,7 @@ const Login = () => {
           <p>아이디(이메일)</p>
           <input
             type="text"
-            name="id"
+            name="email"
             placeholder="아이디(이메일)"
             value={input.id}
             onChange={onChangeInput}
@@ -72,7 +77,7 @@ const Login = () => {
           <div>
             <input
               type="password"
-              name="pw"
+              name="password"
               placeholder="비밀번호"
               value={input.pw}
               onChange={onChangeInput}

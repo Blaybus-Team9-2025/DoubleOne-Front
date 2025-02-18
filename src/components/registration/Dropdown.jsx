@@ -14,8 +14,9 @@ export const Dropdown = ({
   setData,
   target,
   data,
+  error,
 }) => {
-  const [currentValue, setCurrentValue] = useState(exp || init || options[0]);
+  const [currentValue, setCurrentValue] = useState(exp || init);
   const [showOptions, setShowOptions] = useState(false);
 
   const onClick = (e) => {
@@ -35,7 +36,7 @@ export const Dropdown = ({
     <SelectBox
       onClick={() => setShowOptions((prev) => !prev)}
       width={width}
-      className={green && 'green'}
+      className={(green && 'green') || (error && 'error')}
     >
       <Label isExp={currentValue === exp} className={green && 'green'}>
         {currentValue}
@@ -74,6 +75,10 @@ const SelectBox = styled.div`
     &::before {
       color: black;
     }
+  }
+
+  &.error {
+    border-color: var(--red);
   }
 
   &::before {

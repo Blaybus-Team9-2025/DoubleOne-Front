@@ -1,27 +1,47 @@
 import styled from 'styled-components';
 import { useState } from 'react';
+import { useAtom } from 'jotai';
 
 import Required from '../_common/Required';
 import Alert from './Alert';
 import { InputStyle } from '../../util/common-style';
 import { LabelStyle } from '../../util/common-style';
+import {
+  EmailWorkerSignupAtom,
+  EmailManagerSignupAtom,
+} from '../../jotai/Signup';
+import { generateRandomCode } from '../../util/generateCode';
+import { sendEmailCode, verifyEmailCode } from '../../api/signup';
 
-const Email = () => {
+const Email = ({ target, error }) => {
+  const atom =
+    target === 'worker' ? EmailWorkerSignupAtom : EmailManagerSignupAtom;
+  const [input, setInput] = useAtom(atom);
   const [matchYn, setMatchYn] = useState(true);
-  const [email, setEmail] = useState('');
   const [code, setCode] = useState('');
 
-  const isValidCode = () => {
-    const answer = '1234'; // 백에서 받아오기
+  const onChangeInput = (e) => {
+    setInput((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
 
-    if (code === answer) {
-      setMatchYn(true);
-    } else {
+  const onSendCode = async () => {
+    let verificationCode = generateRandomCode();
+    await sendEmailCode({
+      email: input.email,
+      verificationCode,
+    });
+  };
+
+  const verifyCode = async () => {
+    const res = await verifyEmailCode({
+      email: input.email,
+      verificationCode: code,
+    });
+
+    if (!res?.success) {
       setMatchYn(false);
     }
   };
-
-  const getCode = () => {};
 
   return (
     <Container>
@@ -33,10 +53,12 @@ const Email = () => {
         <Wrapper>
           <Input
             placeholder="abc@email.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={input?.email}
+            onChange={onChangeInput}
+            name="email"
+            className={error && 'error'}
           />
-          <Button onClick={getCode}>인증번호 받기</Button>
+          <Button onClick={onSendCode}>인증번호 받기</Button>
         </Wrapper>
         <div>
           <Wrapper>
@@ -44,8 +66,10 @@ const Email = () => {
               placeholder="인증번호"
               value={code}
               onChange={(e) => setCode(e.target.value)}
+              name="code"
+              className={error && 'error'}
             />
-            <Button onClick={isValidCode}>인증번호 확인</Button>
+            <Button onClick={verifyCode}>인증번호 확인</Button>
           </Wrapper>
           {!matchYn && (
             <Alert text="인증번호가 일치하지 않습니다. 다시 확인해주세요." />
@@ -82,11 +106,17 @@ const Wrapper = styled.div`
 const Input = styled.input`
   flex: 0.7;
   ${InputStyle}
+
+  &.error {
+    border-color: var(--red);
+  }
 `;
 
 const Button = styled.button`
   height: 40px;
   flex: 0.3;
+  font-size: 16px;
+  white-space: nowrap;
   background-color: var(--green);
   box-shadow: var(--shadow);
   padding: 10px 20px;

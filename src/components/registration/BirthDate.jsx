@@ -1,11 +1,17 @@
 import styled from 'styled-components';
 import { useAtom } from 'jotai';
+import { useState, useEffect } from 'react';
 
 import Required from '../_common/Required';
 import Dropdown from './Dropdown';
-import { SignupAtom } from '../../jotai/Signup';
 import { InputStyle } from '../../util/common-style';
 import { LabelStyle } from '../../util/common-style';
+import {
+  EmailWorkerSignupAtom,
+  EmailManagerSignupAtom,
+  KakaoManagerSignupAtom,
+  KakaoWorkerSignupAtom,
+} from '../../jotai/Signup';
 
 const years = Array.from(
   { length: 2025 - 1930 + 1 },
@@ -14,15 +20,40 @@ const years = Array.from(
 const months = Array.from({ length: 12 - 1 + 1 }, (_, i) => `${1 + i}월`);
 const days = Array.from({ length: 31 - 1 + 1 }, (_, i) => `${1 + i}일`);
 
-const BirthDate = () => {
-  const [signup, setSignup] = useAtom(SignupAtom);
+const BirthDate = ({ type, target, error }) => {
+  console.log(type, target);
+  const atom = (() => {
+    if (type === 'email' && target === 'worker') {
+      return EmailWorkerSignupAtom;
+    } else if (type === 'email' && target === 'manager') {
+      return EmailManagerSignupAtom;
+    } else if (type === 'kakao' && target === 'worker') {
+      return KakaoWorkerSignupAtom;
+    } else if (type === 'kakao' && target === 'manager') {
+      return KakaoManagerSignupAtom;
+    }
+  })();
+  const [input, setInput] = useAtom(atom);
 
-  const onChangeInput = (e) => {
-    setSignup({
-      ...signup,
-      [e.target.name]: e.target.value,
-    });
-  };
+  const [year, setYear] = useState('');
+  const [month, setMonth] = useState('');
+  const [day, setDay] = useState('');
+
+  useEffect(() => {
+    if (year && month && day) {
+      // '년', '월', '일' 제거
+      const newYear = year.replace(/[^\d]/g, '');
+      const newMonth = month.replace(/[^\d]/g, '').padStart(2, '0');
+      const newDay = day.replace(/[^\d]/g, '').padStart(2, '0');
+
+      let newBirthDate = `${newYear}-${newMonth}-${newDay}`;
+
+      setInput((prev) => ({
+        ...prev,
+        birthDate: newBirthDate,
+      }));
+    }
+  }, [year, month, day]);
 
   return (
     <Container>
@@ -35,14 +66,25 @@ const BirthDate = () => {
           <Dropdown
             options={years}
             width="40%"
-            className="year"
-            setData={setSignup}
-            data={signup}
+            value={input.birthDate?.split('-')[0]}
+            onChange={setYear}
             target="year"
-            init="2000년"
+            error={error ? true : undefined}
           />
-          <Dropdown options={months} width="30%" className="month" />
-          <Dropdown options={days} width="30%" className="day" />
+          <Dropdown
+            options={months}
+            width="30%"
+            value={input.birthDate?.split('-')[1] || ''}
+            onChange={setMonth}
+            error={error ? true : undefined}
+          />
+          <Dropdown
+            options={days}
+            width="30%"
+            value={input.birthDate?.split('-')[2] || ''}
+            onChange={setDay}
+            error={error ? true : undefined}
+          />
         </DropdownWrapper>
       </Wrapper>
     </Container>

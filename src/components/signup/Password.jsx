@@ -1,20 +1,27 @@
 import styled from 'styled-components';
 import { useState } from 'react';
+import { useAtom } from 'jotai';
 
 import Required from '../_common/Required';
 import Alert from './Alert';
 import { isValidPassword } from '../../util/isValidPassword';
 import { InputStyle } from '../../util/common-style';
 import { LabelStyle } from '../../util/common-style';
+import {
+  EmailManagerSignupAtom,
+  EmailWorkerSignupAtom,
+} from '../../jotai/Signup';
 
-const Password = ({ required }) => {
-  const [pw, setPw] = useState('');
+const Password = ({ required, target, error }) => {
+  const atom =
+    target === 'worker' ? EmailWorkerSignupAtom : EmailManagerSignupAtom;
+  const [input, setInput] = useAtom(atom);
   const [checkPw, setCheckPw] = useState('');
   const [errorType, setErrorType] = useState('none');
 
   const onChangePw = (e) => {
     const newPw = e.target.value;
-    setPw(newPw);
+    setInput((prev) => ({ ...prev, password: newPw }));
 
     if (!isValidPassword(newPw)) {
       setErrorType('invalid'); // 비밀번호 형식 오류
@@ -29,9 +36,9 @@ const Password = ({ required }) => {
     const newCheckPw = e.target.value;
     setCheckPw(newCheckPw);
 
-    if (newCheckPw !== pw) {
+    if (newCheckPw !== input.password) {
       setErrorType('mismatch'); // 비밀번호와 불일치
-    } else if (isValidPassword(pw)) {
+    } else if (isValidPassword(input.password)) {
       setErrorType('none'); // 정상
     }
   };
@@ -47,8 +54,9 @@ const Password = ({ required }) => {
           id="pw"
           type="password"
           placeholder="비밀번호"
-          value={pw}
+          value={input.password}
           onChange={onChangePw}
+          className={error && 'error'}
         />
         {errorType === 'invalid' ? (
           <Alert text="비밀번호를 다시 확인해주세요." />
@@ -60,6 +68,7 @@ const Password = ({ required }) => {
           placeholder="비밀번호 확인"
           value={checkPw}
           onChange={onChangeCheckPw}
+          className={error && 'error'}
         />
         {errorType === 'mismatch' && (
           <Alert text="비밀번호가 일치하지 않습니다. 다시 확인해주세요." />
@@ -98,4 +107,8 @@ const Wrapper = styled.div`
 
 const Input = styled.input`
   ${InputStyle}
+
+  &.error {
+    border-color: var(--red);
+  }
 `;

@@ -14,21 +14,21 @@ const SignUpSelect = () => {
 
   return (
     <Container>
-      <Header /> 
+      <Header />
       <Title mb="100">
         <p>{getTypeKr(type)}로</p>
         <p>회원가입 하기</p>
       </Title>
       <ButtonWrapper>
         <Button
-          className="individual"
-          onClick={() => nav(`/signup/${type}/individual`)}
+          className="worker"
+          onClick={() => nav(`/signup/${type}/worker`)}
         >
           개인 회원
         </Button>
         <Button
-          className="center"
-          onClick={() => nav(`/signup/${type}/center`)}
+          className="manager"
+          onClick={() => nav(`/signup/${type}/manager`)}
         >
           기업 회원
         </Button>
@@ -56,11 +56,12 @@ const Button = styled.button`
   border-radius: 15px;
   box-shadow: var(--shadow);
 
-  &.individual {
+  &.worker {
     background-color: var(--green);
   }
 
-  &.center {
+  &.manager {
     background-color: var(--blue);
+    color: white;
   }
 `;
