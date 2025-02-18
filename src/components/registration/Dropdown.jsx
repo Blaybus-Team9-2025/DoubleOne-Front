@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 // 선택 옵션, 색상(종류), 너비, 초기값, placeholder
@@ -13,11 +13,17 @@ export const Dropdown = ({
   onChange,
   setData,
   target,
-  data,
+  value,
   error,
 }) => {
-  const [currentValue, setCurrentValue] = useState(exp || init);
+  const [currentValue, setCurrentValue] = useState(value || exp || init);
   const [showOptions, setShowOptions] = useState(false);
+
+  useEffect(() => {
+    if (value) {
+      setCurrentValue(value);
+    }
+  }, [value]);
 
   const onClick = (e) => {
     const selectedValue = e.target.textContent;

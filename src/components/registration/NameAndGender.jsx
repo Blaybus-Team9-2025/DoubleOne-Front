@@ -42,7 +42,9 @@ const NameAndGender = ({ type, target, error }) => {
 
   useEffect(() => {
     // 초기값
-    onGenderChange('F');
+    if (!input.gender) {
+      onGenderChange('F');
+    }
   }, []);
 
   return (

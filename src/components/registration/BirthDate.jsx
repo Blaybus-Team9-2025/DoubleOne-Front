@@ -71,7 +71,7 @@ const BirthDate = ({ type, target, error }) => {
           <Dropdown
             options={years}
             width="40%"
-            value={input.birthDate?.split('-')[0]}
+            value={input.birthDate?.split('-')[0] + '년'}
             onChange={setYear}
             target="year"
             error={error ? true : undefined}
@@ -79,14 +79,14 @@ const BirthDate = ({ type, target, error }) => {
           <Dropdown
             options={months}
             width="30%"
-            value={input.birthDate?.split('-')[1] || ''}
+            value={parseInt(input.birthDate?.split('-')[1], 10) + '월' || ''}
             onChange={setMonth}
             error={error ? true : undefined}
           />
           <Dropdown
             options={days}
             width="30%"
-            value={input.birthDate?.split('-')[2] || ''}
+            value={parseInt(input.birthDate?.split('-')[2], 10) + '일' || ''}
             onChange={setDay}
             error={error ? true : undefined}
           />

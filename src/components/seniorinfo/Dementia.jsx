@@ -5,7 +5,7 @@ import { CheckboxStyle } from '../../util/common-style';
 import { LabelStyle } from '../../util/common-style';
 import { getOptions } from '../../util/get-options';
 
-const Dementia = ({ setDementia, error }) => {
+const Dementia = ({ dementia, setDementia, error }) => {
   const handleCheck = (val) => {
     setDementia((prev) =>
       prev.includes(val) ? prev.filter((item) => item !== val) : [...prev, val]
@@ -23,6 +23,7 @@ const Dementia = ({ setDementia, error }) => {
             <Checkbox
               type="checkbox"
               id={idx}
+              checked={dementia?.includes(val)}
               onChange={() => handleCheck(val)}
             />
             <Text htmlFor={idx} className={error && 'error'}>

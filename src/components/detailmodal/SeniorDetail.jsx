@@ -10,6 +10,7 @@ import { getSeniorDetail } from '../../api/senior';
 import Dementia from '../seniorinfo/Dementia';
 import Cohabitation from '../seniorinfo/Cohabitation';
 import { translateDate } from '../../util/calculateDate';
+import { getKeyByValue } from '../../util/getKeyByValue';
 
 const SeniorDetail = ({ edit }) => {
   const { id } = useAtomValue(IdAtom);
@@ -43,11 +44,6 @@ const SeniorDetail = ({ edit }) => {
 
   const coHabitationOptions = getOptions('cohabitation');
   const caringGradeOptions = getOptions('caringGrade');
-
-  const getKeyByValue = (options, value) => {
-    const foundObj = options.find((obj) => Object.values(obj)[0] === value);
-    return foundObj ? Object.keys(foundObj)[0] : null;
-  };
 
   return (
     <Container>

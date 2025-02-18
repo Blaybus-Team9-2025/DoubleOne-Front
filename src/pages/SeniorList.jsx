@@ -8,14 +8,10 @@ import Header from '../components/_common/Header';
 import DetailModal from '../components/detailmodal/DetailModal';
 import { useSetAtom } from 'jotai';
 import { IdAtom } from '../jotai/Id';
+import { getKeyByValue } from '../util/getKeyByValue';
 
 const SeniorList = () => {
   const options = getOptions('caringGrade');
-
-  const getKeyByValue = (value) => {
-    const foundObj = options.find((obj) => Object.values(obj)[0] === value);
-    return foundObj ? Object.keys(foundObj)[0] : null;
-  };
 
   const [data, setData] = useState([
     {
@@ -77,7 +73,7 @@ const SeniorList = () => {
                 <p>{item.name} 어르신</p>
                 <p>
                   {item.gender === 'M' ? '남' : '여'} / 장기요양등급{' '}
-                  {getKeyByValue(item.careLevel)}
+                  {getKeyByValue(options, item.careLevel)}
                 </p>
                 <p>{item.address}</p>
               </Card>

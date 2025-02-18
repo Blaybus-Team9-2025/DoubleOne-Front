@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Header from '../components/_common/Header';
 import Title from '../components/_common/Title';
@@ -13,25 +13,90 @@ import Height from '../components/seniorinfo/Height';
 import Weight from '../components/seniorinfo/Weight';
 import Dementia from '../components/seniorinfo/Dementia';
 import EtcDisease from '../components/seniorinfo/EtcDisease';
-import GenderPreference from '../components/seniorinfo/GenderPreference';
 import Cohabitation from '../components/seniorinfo/Cohabitation';
-
-const ModalInfo1 = {
-  type: 'confirm',
-  text: 'ooo 어르신 정보를 삭제하시겠습니까?',
-  btnText1: '아니오',
-  btnText2: '예',
-};
-
-const ModalInfo2 = {
-  type: 'alert',
-  text: '삭제가 완료되었습니다',
-  btnText1: '확인',
-};
+import { useAtom, useAtomValue } from 'jotai';
+import { IdAtom } from '../jotai/Id';
+import { getSeniorDetail, patchSenior } from '../api/senior';
+import NameAndGender from '../components/registration/NameAndGender';
+import { SeniorInfoAtom } from '../jotai/SeniorInfo';
+import { LoginAtom } from '../jotai/Login';
+import BirthDate from '../components/registration/BirthDate';
 
 const EditSeniorInfo = () => {
+  const ModalInfo1 = {
+    type: 'confirm',
+    text: `${atom.name} 어르신 정보를 삭제하시겠습니까?`,
+    btnText1: '아니오',
+    btnText2: '예',
+  };
+
+  const ModalInfo2 = {
+    type: 'alert',
+    text: '삭제가 완료되었습니다',
+    btnText1: '확인',
+  };
+
+  const { managerId } = useAtomValue(LoginAtom);
+  const { id } = useAtomValue(IdAtom);
+  const [atom, setAtom] = useAtom(SeniorInfoAtom);
+
+  useEffect(() => {
+    const getData = async () => {
+      const res = await getSeniorDetail(id);
+      setAtom({ ...res?.data, managerId: managerId });
+      setDementiaSymptoms(atom.dementiaSymptoms);
+
+      console.log(res.data);
+    };
+
+    // getData();
+  }, [id]);
+
+  const [error, setError] = useState(
+    Object.keys(atom).reduce((acc, key) => ({ ...acc, [key]: false }), {})
+  );
+
+  const validate = () => {
+    const newErrors = {};
+
+    Object.entries(atom).forEach(([key, val]) => {
+      if (key !== 'height' && key !== 'etcDisease' && !val) {
+        newErrors[key] = true; // 값이 비어있으면 오류로 설정
+      }
+      if (key === 'dementiaSymptoms' && val.length <= 0) {
+        newErrors[key] = true;
+      }
+    });
+    setError(newErrors); // 한 번에 setError 실행
+
+    return Object.keys(newErrors).length === 0; // 오류가 없으면 true 반환
+  };
+
+  const [dementiaSymptoms, setDementiaSymptoms] = useState([]);
+  const [imgFile, setImgFile] = useState(null);
+
   const nav = useNavigate();
-  const onSave = () => {};
+  // 저장하기 버튼 클릭
+  const onSave = async () => {
+    const patchData = {
+      managerId: atom.managerId,
+      name: atom.name,
+      gender: atom.gender,
+      birthDate: atom.birthDate,
+      careLevel: atom.careLevel,
+      height: atom.height,
+      weight: atom.weight,
+      address: atom.address,
+      cohabitationStatus: atom.cohabitationStatus,
+      dementiaSymptoms: atom.dementiaSymptoms,
+      etcDisease: atom.etcDisease,
+    };
+    if (imgFile) {
+      const res = await patchSenior(id, patchData, imgFile);
+    } else {
+      const res = await patchSenior(id, patchData, atom.imgFile);
+    }
+  };
 
   // 삭제하기 문구 눌렀을 때
   const onClickDeactivate = () => {
@@ -53,38 +118,49 @@ const EditSeniorInfo = () => {
 
   return (
     <Container>
-      <Header title="온림 溫林" />
+      <Header title="어르신 정보 수정하기" />
       <Wrapper>
         <Title>
-          <p>ㅇㅇㅇ 어르신</p>
+          <p>{atom.name} 어르신</p>
         </Title>
-        <ImgUpload edit />
-        <Div>
-          <FixedWrapper>
-            <Key>이름</Key>
-            <Val>000</Val>
-          </FixedWrapper>
-          <FixedWrapper>
-            <Key>성별</Key>
-            <Val>여성</Val>
-          </FixedWrapper>
-        </Div>
-        <FixedWrapper>
-          <Key>아이디(이메일)</Key>
-          <Val>abc@gmail.com</Val>
-        </FixedWrapper>
-        <FixedWrapper>
-          <Key>생년월일</Key>
-          <Val>1973년 3월 22일</Val>
-        </FixedWrapper>
-        <CaringGrade />
-        <Height />
-        <Weight />
-        <Dementia />
-        <EtcDisease />
-        <GenderPreference />
-        <AddressInput required />
-        <Cohabitation />
+        <ImgUpload edit setEditedImg={setImgFile} url={atom.profileImg} />
+        <NameAndGender type={'info'} target={'senior'} error={error.name} />
+        <BirthDate type={'info'} target={'senior'} error={error.birthDate} />
+        <CaringGrade
+          setCaringGrade={(input) =>
+            setAtom((prev) => ({ ...prev, careLevel: input }))
+          }
+          error={error.careLevel}
+          data={atom.careLevel}
+        />
+        <Height
+          setHeight={(input) => setAtom((prev) => ({ ...prev, height: input }))}
+          data={atom.height}
+        />
+        <Weight
+          setWeight={(input) => setAtom((prev) => ({ ...prev, weight: input }))}
+          error={error.weight}
+          data={atom.weight}
+        />
+        <Dementia
+          dementia={dementiaSymptoms}
+          setDementia={setDementiaSymptoms}
+          error={error.dementiaSymptoms}
+        />
+        <EtcDisease
+          setEtcDisease={(input) =>
+            setAtom((prev) => ({ ...prev, etcDisease: input }))
+          }
+          data={atom.etcDisease}
+        />
+        <AddressInput type={'info'} target={'senior'} error={error.address} />
+        <Cohabitation
+          setCohabitation={(input) =>
+            setAtom((prev) => ({ ...prev, cohabitationStatus: input }))
+          }
+          error={error.cohabitationStatus}
+          data={atom.cohabitationStatus}
+        />
       </Wrapper>
       <ButtonWrapper>
         <RoundButton text="취소" mt="40" onClick={() => nav(-1)} />
