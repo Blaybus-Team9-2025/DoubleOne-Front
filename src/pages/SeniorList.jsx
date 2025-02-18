@@ -6,8 +6,17 @@ import { getOptions } from '../util/get-options';
 import Card from '../components/_common/Card';
 import Header from '../components/_common/Header';
 import DetailModal from '../components/detailmodal/DetailModal';
+import { useSetAtom } from 'jotai';
+import { IdAtom } from '../jotai/Id';
 
 const SeniorList = () => {
+  const options = getOptions('caringGrade');
+
+  const getKeyByValue = (value) => {
+    const foundObj = options.find((obj) => Object.values(obj)[0] === value);
+    return foundObj ? Object.keys(foundObj)[0] : null;
+  };
+
   const [data, setData] = useState([
     {
       seniorId: -1,
@@ -15,18 +24,34 @@ const SeniorList = () => {
       age: -1,
       gender: '',
       address: '',
+      birthDate: '',
+      careLevel: '',
+      cohabitationStatus: '',
+      dementiaSymptoms: [],
+      etcDisease: '',
+      height: -1,
+      weight: -1,
+      matchingStatus: '',
+      profileImg: '',
     },
   ]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const setIdAtom = useSetAtom(IdAtom);
 
   useEffect(() => {
     const getData = async () => {
       const res = await getSeniorList();
       setData(res?.data);
+      console.log(res.data);
     };
 
     getData();
   }, []);
+
+  const handleCardClick = (id) => {
+    setIdAtom({ id: id });
+    setIsModalOpen(true);
+  };
 
   return (
     <Div>
@@ -46,11 +71,14 @@ const SeniorList = () => {
               <Card
                 key={item.seniorId}
                 bg="green"
-                profile={item.profile}
-                onClick={() => setIsModalOpen(true)}
+                profile={item.profileImg}
+                onClick={() => handleCardClick(item.seniorId)}
               >
                 <p>{item.name} 어르신</p>
-                <p>{item.gender === 'M' ? '남' : '여'} / 장기요양등급 2급</p>
+                <p>
+                  {item.gender === 'M' ? '남' : '여'} / 장기요양등급{' '}
+                  {getKeyByValue(item.careLevel)}
+                </p>
                 <p>{item.address}</p>
               </Card>
             );

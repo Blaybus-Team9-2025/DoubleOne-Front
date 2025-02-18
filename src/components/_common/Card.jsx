@@ -35,6 +35,11 @@ const ImgDiv = styled.div`
   border-radius: 15px;
   background-color: #ffffff;
   flex-shrink: 0;
+  overflow: hidden;
+  img {
+    width: 100%;
+    object-fit: cover;
+  }
 `;
 
 const TextDiv = styled.div`
