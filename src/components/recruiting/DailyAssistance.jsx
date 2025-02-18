@@ -5,11 +5,14 @@ import { LabelStyle } from '../../util/common-style';
 import { getOptions } from '../../util/get-options';
 
 const DailyAssistance = () => {
+  const options = getOptions('daily');
+  const optionKeys = options.map((obj) => Object.keys(obj)[0]);
+
   return (
     <Container>
       <Label>일상생활</Label>
       <Wrapper>
-        {getOptions('daily').map((val, idx) => (
+        {optionKeys.map((val, idx) => (
           <Col key={idx}>
             <input type="checkbox" id={val} />
             <label htmlFor={val}>{val}</label>
