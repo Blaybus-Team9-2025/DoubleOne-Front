@@ -1,6 +1,9 @@
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 const WorkerProfile = () => {
+  const nav = useNavigate();
+
   return (
     <Div>
       <ImgDiv>
@@ -11,7 +14,9 @@ const WorkerProfile = () => {
           <p>김얼리</p>
           <p>요양보호사님</p>
         </div>
-        <button>개인정보 수정하기</button>
+        <button onClick={() => nav(`/editcareworkerinfo/${1}`)}>
+          개인정보 수정하기
+        </button>
       </NameDiv>
     </Div>
   );
@@ -57,7 +62,7 @@ const NameDiv = styled.div`
 
   button {
     width: fit-content;
-    font-size: 14px;
+    font-size: 16px;
     padding: 2px 14px;
     border-radius: 20px;
     background-color: #e5e5e5;

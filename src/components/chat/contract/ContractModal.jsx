@@ -41,7 +41,7 @@ const Overlay = styled.div`
 `;
 
 const ModalWrapper = styled.div`
-  max-height: 90vh;
+  max-height: 90svh;
   min-width: 260px;
   max-width: 560px;
   width: calc(100% - 40px);
@@ -65,8 +65,8 @@ const CloseButton = styled.div`
   display: flex;
   justify-content: end;
   img {
-    width: 24px;
-    height: 24px;
+    width: 35px;
+    height: 35px;
     cursor: pointer;
   }
 `;

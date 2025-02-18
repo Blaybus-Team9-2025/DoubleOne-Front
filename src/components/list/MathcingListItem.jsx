@@ -1,21 +1,29 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import WorkerDetailedItem from './WorkerDetailedItem';
 import Card from '../_common/Card';
+import SquareButton from '../_common/SquareButton';
+import Modal from '../_common/Modal';
 
 import chevron from '../../assets/chevron-right.png';
-import SquareButton from '../_common/SquareButton';
-import DetailModal from '../detailmodal/DetailModal';
 
 const MathcingListItem = ({ id, name, age, addr, profile, workers, type }) => {
   const [isCardOpen, setIsCardOpen] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isTerminationModalOpen, setIsTerminationModalOpen] = useState(false);
+
+  const nav = useNavigate();
+
+  const handleTerminationClick = (e) => {
+    e.stopPropagation();
+    setIsTerminationModalOpen(true);
+  };
 
   return (
     <div>
       {isCardOpen ? (
-        <OpenedCardDiv onClick={() => setIsModalOpen(true)}>
+        <OpenedCardDiv onClick={() => nav(`/editseniorinfo/${id}`)}>
           <CardDiv>
             <div className="img-box">
               <img src={profile} />
@@ -35,7 +43,9 @@ const MathcingListItem = ({ id, name, age, addr, profile, workers, type }) => {
               return <WorkerDetailedItem key={index} data={item} type={type} />;
             })}
             {type === 'acceptance' && (
-              <SquareButton color="white">계약종료</SquareButton>
+              <SquareButton color="white" onClick={handleTerminationClick}>
+                계약종료
+              </SquareButton>
             )}
           </WorkerDiv>
         </OpenedCardDiv>
@@ -51,10 +61,15 @@ const MathcingListItem = ({ id, name, age, addr, profile, workers, type }) => {
           <p>{addr}</p>
         </Card>
       )}
-      <DetailModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        type={'senior'}
+      <Modal
+        isOpen={isTerminationModalOpen}
+        onClose={() => setIsTerminationModalOpen(false)}
+        btnText1={'아니오'}
+        btnText2={'예'}
+        onClick1={() => setIsTerminationModalOpen(false)}
+        onClick2={() => console.log('계약 종료 api 연결 예정')}
+        text={'매칭을 종료하시겠습니까?'}
+        type={'confirm'}
       />
     </div>
   );
