@@ -21,14 +21,12 @@ const ScheduleList = ({ date }) => {
     {
       time: '18:30~20:30',
       content: '식사 보조',
-      place:
-        '서울특별시 중구 세종대로 110 서울특별시 중구 세종대로 110 서울특별시 중구 세종대로 110',
+      place: '서울특별시 서대문구 대현동',
     },
   ];
   return (
     <Div>
       <p className="title">오늘의 일정</p>
-      {date}
       {mockData.map((item, index) => {
         return (
           <ScheduleItem

@@ -2,63 +2,36 @@ import styled from 'styled-components';
 
 import msg from '../../../assets/msg-alarm.png';
 import { useNavigate } from 'react-router-dom';
+import { getOptions } from '../../../util/get-options';
+import { getKeyByValue } from '../../../util/getKeyByValue';
 
-const mock = [
-  {
-    from: '00복지센터',
-    place: '서울특별시 마포구 합정동',
-    time: '월수금(오후 12~6시)',
-    work: '일상보조',
-  },
-  {
-    from: 'ㅁㅁ복지센터',
-    place: '서울특별시 경기도 제주도',
-    time: '월수금(오후 12~6시)',
-    work: '일상보조',
-  },
-  {
-    from: '네모복지센터',
-    place: '부산광역시 대구동',
-    time: '월수금(오후 12~6시)',
-    work: '일상보조',
-  },
-  {
-    from: '00복지센터',
-    place: '서울특별시 마포구 합정동',
-    time: '화목(오후 12~6시)',
-    work: '식사보조',
-  },
-  {
-    from: '00복지센터',
-    place: '서울특별시 마포구 합정동',
-    time: '화목(오후 12~6시)',
-    work: '식사보조',
-  },
-  {
-    from: '00복지센터',
-    place: '서울특별시 마포구 합정동',
-    time: '화목(오후 12~6시)',
-    work: '식사보조',
-  },
-];
+const MatchingAlarms = ({ data }) => {
+  const weekdayOptions = getOptions('weekday');
 
-const MatchingAlarms = () => {
   const nav = useNavigate();
   return (
     <Div>
       <p className="title">매칭 요청 알림</p>
       <List>
         <Line />
-        {mock.map((item, index) => {
+        {data.map((item, index) => {
           return (
-            <ItemWrapper key={index} onClick={() => nav(`/chat/${index}`)}>
+            <ItemWrapper
+              key={index}
+              onClick={() => nav(`/chat/${item.chatRoomId}`)}
+            >
               <img src={msg} />
               <div>
-                <p>{item.from}에서 온 매칭 요청입니다.</p>
-                <p>{item.place}</p>
-                <p>
-                  {item.time} · {item.work}
-                </p>
+                <p>{item.centerName}에서 온 매칭 요청입니다.</p>
+                <p>{item.address}</p>
+                {item.seniorSchedules?.map((schedule, idx) => {
+                  return (
+                    <p key={idx}>
+                      {getKeyByValue(weekdayOptions, schedule.day)}{' '}
+                      {schedule.startTime} ~ {schedule.endTime}
+                    </p>
+                  );
+                })}
               </div>
             </ItemWrapper>
           );

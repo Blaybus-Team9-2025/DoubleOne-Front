@@ -1,4 +1,5 @@
 import { atom } from 'jotai';
+import { atomWithStorage } from 'jotai/utils';
 
 // BEFORE_REQUEST 대기
 // WAITING 응답 대기
@@ -33,4 +34,9 @@ export const MatchingList = atom({
       ],
     },
   ],
+});
+
+export const MatchingIdAtom = atomWithStorage('matchingAtom', {
+  chatRoomId: 0,
+  matchingId: 0,
 });

@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@stomp/stompjs": "^7.0.0",
     "axios": "^1.7.9",
     "jotai": "^2.12.0",
     "react": "^19.0.0",
@@ -19,6 +20,7 @@
     "react-router-dom": "^7.1.5",
     "react-slick": "^0.30.3",
     "slick-carousel": "^1.8.1",
+    "sockjs-client": "^1.6.1",
     "styled-components": "^6.1.15"
   },
   "devDependencies": {
