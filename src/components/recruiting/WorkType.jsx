@@ -1,22 +1,31 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Required from '../_common/Required';
 import { LabelStyle } from '../../util/common-style';
-
-const options = [
-  { 방문요양: 'HOME_CARE' },
-  { 입주요양: 'LIVE_IN' },
-  { 방문목욕: 'BATH' },
-  { 주야간보호: 'DAY_CARE' },
-  { 요양원: 'FACILITY' },
-  { 병원동행: 'HOSPITAL' },
-];
+import { useAtom } from 'jotai';
+import { RecruitingInfoAtom } from '../../jotai/Recruiting';
+import { getKeyByValue } from '../../util/getKeyByValue';
+import { getOptions } from '../../util/get-options';
 
 const WorkType = () => {
   const [selectedIdx, setSelectedIdx] = useState(null);
+  const [input, setInput] = useAtom(RecruitingInfoAtom);
 
+  const options = getOptions('workType');
   const optionKeys = options.map((obj) => Object.keys(obj)[0]);
+
+  const handleChange = (idx) => {
+    setSelectedIdx(idx);
+    setInput((prev) => ({ ...prev, workType: Object.values(options[idx])[0] }));
+  };
+
+  useEffect(() => {
+    if (input.workType) {
+      const current = getKeyByValue(options, input.workType);
+      setSelectedIdx(optionKeys.findIndex((val) => val === current));
+    }
+  }, [input.workType]);
 
   return (
     <Container>
@@ -29,7 +38,7 @@ const WorkType = () => {
           <Box
             key={idx}
             isSelected={selectedIdx === idx}
-            onClick={() => setSelectedIdx(idx)}
+            onClick={() => handleChange(idx)}
           >
             {val}
           </Box>

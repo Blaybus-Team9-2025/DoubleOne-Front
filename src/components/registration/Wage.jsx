@@ -7,7 +7,9 @@ import { InputStyle } from '../../util/common-style';
 import { LabelStyle } from '../../util/common-style';
 import { getMonthlyPay } from '../../util/get-monthly-wage';
 import { CareworkerConditionsAtom } from '../../jotai/CareworkerInfo';
+import { RecruitingInfoAtom } from '../../jotai/Recruiting';
 import { getOptions } from '../../util/get-options';
+import { useEffect, useMemo, useState } from 'react';
 
 // 한글 ↔ 영어 매핑
 const wageOptions = getOptions('wageType'); // [{ 시급: 'HOURLY' }, { 일급: 'DAILY' }, ... ]
@@ -19,14 +21,42 @@ const reverseWageMap = Object.fromEntries(
 const wageTypes = Object.keys(wageMap);
 
 const Wage = ({ recruiting }) => {
-  const [input, setInput] = useAtom(CareworkerConditionsAtom);
+  const atom = useMemo(
+    () => (recruiting ? RecruitingInfoAtom : CareworkerConditionsAtom),
+    [recruiting]
+  );
+  const [input, setInput] = useAtom(atom);
+  const [amount, setAmount] = useState(0);
+
+  useEffect(() => {
+    if (input?.wage) {
+      if (input?.wageType) {
+        setAmount(getMonthlyPay(input.wageType, input.wage));
+      } else if (input?.payType) {
+        setAmount(getMonthlyPay(input.payType, input.wage));
+      }
+    }
+  }, [input?.wage, input?.wageType, input?.payType]);
+
+  useEffect(() => {
+    if (recruiting) {
+      setInput((prev) => ({ ...prev, amount: amount }));
+    }
+  }, [amount]);
 
   // 한글 → 영어 변환하여 wageType 저장
   const updateWageType = (selected) => {
-    setInput((prev) => ({
-      ...prev,
-      wageType: wageMap[selected] || selected,
-    }));
+    if (recruiting) {
+      setInput((prev) => ({
+        ...prev,
+        payType: wageMap[selected] || selected,
+      }));
+    } else {
+      setInput((prev) => ({
+        ...prev,
+        wageType: wageMap[selected] || selected,
+      }));
+    }
   };
 
   const onChangeWage = (e) => {
@@ -45,20 +75,17 @@ const Wage = ({ recruiting }) => {
       <Wrapper>
         <Dropdown
           width="25%"
-          init={reverseWageMap[input.wageType] || '시급'}
+          init={reverseWageMap[input?.wageType] || '시급'}
           options={wageTypes}
           onChange={updateWageType}
         />
         <InputWrapper>
-          <Input value={input.wage} onChange={onChangeWage} />
+          <Input value={input?.wage} onChange={onChangeWage} />
           <Unit>원</Unit>
         </InputWrapper>
-        {input.wageType !== 'PER_TASK' && (
+        {input?.wageType !== 'PER_TASK' && (
           <MonthlyPay>
-            <p>
-              (월급:{' '}
-              {getMonthlyPay(input.wageType, input.wage).toLocaleString()} ₩)
-            </p>
+            <p>(월급: {amount.toLocaleString()} ₩)</p>
           </MonthlyPay>
         )}
       </Wrapper>

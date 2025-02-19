@@ -1,26 +1,40 @@
 import styled from 'styled-components';
 
-import Required from '../_common/Required';
 import { LabelStyle } from '../../util/common-style';
+import { useAtom } from 'jotai';
+import { RecruitingInfoAtom } from '../../jotai/Recruiting';
 
 const GenderPreference = () => {
+  const [input, setInput] = useAtom(RecruitingInfoAtom);
+
   return (
     <Container>
       <div>
         <Label>선호 요양사 성별</Label>
-        <Required />
       </div>
       <Wrapper>
         <Div>
-          <input type="radio" name="gender" id="none" />
-          <label htmlFor="none">무관</label>
-        </Div>
-        <Div>
-          <input type="radio" name="gender" id="m" />
+          <input
+            type="radio"
+            name="gender"
+            id="m"
+            checked={input.preferGender === 'M'}
+            onChange={() =>
+              setInput((prev) => ({ ...prev, preferGender: 'M' }))
+            }
+          />
           <label htmlFor="m">남성</label>
         </Div>
         <Div>
-          <input type="radio" name="gender" id="f" />
+          <input
+            type="radio"
+            name="gender"
+            id="f"
+            checked={input.preferGender === 'F'}
+            onChange={() =>
+              setInput((prev) => ({ ...prev, preferGender: 'F' }))
+            }
+          />
           <label htmlFor="f">여성</label>
         </Div>
       </Wrapper>

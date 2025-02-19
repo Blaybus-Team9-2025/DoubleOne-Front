@@ -1,5 +1,5 @@
-import { atom } from 'jotai';
+import { atomWithStorage } from 'jotai/utils';
 
-export const IdAtom = atom({
+export const IdAtom = atomWithStorage('selectedId', {
   id: -1,
 });

@@ -5,8 +5,30 @@ import ManagerProfile from './manager/ManagerProfile';
 
 import chevron from '../../assets/chevron-right.png';
 import styled from 'styled-components';
+import { useAtomValue, useSetAtom } from 'jotai';
+import { ManagerInfoAtom } from '../../jotai/ManagerInfo';
+import { useEffect } from 'react';
+import { LoginAtom } from '../../jotai/Login';
+import { getManagerInfo } from '../../api/manager';
 
 const ManagerMyPage = () => {
+  const setManagerInfo = useSetAtom(ManagerInfoAtom);
+  const { managerId } = useAtomValue(LoginAtom);
+
+  useEffect(() => {
+    const getData = async () => {
+      const res = await getManagerInfo(managerId);
+      if (res?.data) {
+        setManagerInfo(res.data);
+      }
+    };
+
+    console.log(managerId);
+    if (managerId > 0) {
+      getData();
+    }
+  }, [managerId]);
+
   const nav = useNavigate();
 
   return (

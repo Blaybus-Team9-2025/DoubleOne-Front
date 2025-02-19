@@ -1,53 +1,81 @@
 import styled from 'styled-components';
 import Card from '../components/_common/Card';
 import Header from '../components/_common/Header';
+import { useEffect, useState } from 'react';
+import { getConditions } from '../api/condition';
+import DetailModal from '../components/detailmodal/DetailModal';
+import { useAtomValue, useSetAtom } from 'jotai';
+import { LoginAtom } from '../jotai/Login';
+import { IdAtom } from '../jotai/Id';
 
 const JobList = () => {
+  const [data, setData] = useState([
+    {
+      name: '김어르신',
+      imgFile: null,
+      seniorConditionId: 1,
+      isEndMatch: false,
+    },
+  ]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { managerId } = useAtomValue(LoginAtom);
+  const setIdAtom = useSetAtom(IdAtom);
+
+  useEffect(() => {
+    const getData = async () => {
+      const res = await getConditions(managerId);
+      if (res?.status) {
+        setData(res?.data);
+      }
+    };
+
+    if (managerId > 0) {
+      getData();
+    }
+  }, [managerId]);
+
+  const handleClick = async (seniorConditionId, seniorId) => {
+    await setIdAtom({
+      seniorConditionId: seniorConditionId,
+      seniorId: seniorId,
+    });
+    setIsModalOpen(true);
+  };
+
   return (
     <Div>
       <Header title={'구인공고 목록'} />
       <div>
         <InfoWrapper>
-          <p>90,897건</p>
-          <select name="filter" id="filter">
-            <option value={'latest'}>최신등록순</option>
-            <option value={'incomplete'}>매칭 미완료순</option>
-            <option value={'grade'}>요양 등급순</option>
-          </select>
+          <p>{data.length}건</p>
         </InfoWrapper>
         <CardsDiv>
-          <Card bg="green">
-            <p>김ㅇㅇ 어르신</p>
-            <p>서울시 관악구 대학동</p>
-            <p>○ 매칭중이에요</p>
-          </Card>
-          <Card bg="green">
-            <p>김ㅇㅇ 어르신</p>
-            <p>서울시 관악구 대학동</p>
-            <p>○ 매칭중이에요</p>
-          </Card>
-          <Card bg="green">
-            <p>김ㅇㅇ 어르신</p>
-            <p>서울시 관악구 대학동</p>
-            <p>○ 매칭중이에요</p>
-          </Card>
-          <Card bg="green">
-            <p>김ㅇㅇ 어르신</p>
-            <p>서울시 관악구 대학동</p>
-            <p>● 매칭이 완료되었어요</p>
-          </Card>
-          <Card bg="green">
-            <p>김ㅇㅇ 어르신</p>
-            <p>서울시 관악구 대학동</p>
-            <p>● 매칭이 완료되었어요</p>
-          </Card>
-          <Card bg="green">
-            <p>김ㅇㅇ 어르신</p>
-            <p>서울시 관악구 대학동</p>
-            <p>● 매칭이 완료되었어요</p>
-          </Card>
+          {data?.map((item, idx) => {
+            return (
+              <Card
+                key={idx}
+                bg="green"
+                onClick={() =>
+                  handleClick(item.seniorConditionId, item.seniorId)
+                }
+                profile={item.profileImg}
+              >
+                <p>{item.name} 어르신</p>
+                <p>
+                  {item.isEndMatch ? '● 매칭이 완료되었어요' : '○ 매칭중이에요'}
+                </p>
+              </Card>
+            );
+          })}
         </CardsDiv>
       </div>
+      {isModalOpen && (
+        <DetailModal
+          type="recruiting"
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+        />
+      )}
     </Div>
   );
 };

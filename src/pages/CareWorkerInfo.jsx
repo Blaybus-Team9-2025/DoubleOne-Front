@@ -105,10 +105,10 @@ const CareWorkerInfo = () => {
             <p>케어 가능 항목(중복 선택 가능)</p>
             <Required />
           </Div>
-          <MealAssistance />
-          <ToiletingAssistance />
-          <MobilityAssistance />
-          <DailyAssistance />
+          <MealAssistance target={'careworker'} />
+          <ToiletingAssistance target={'careworker'} />
+          <MobilityAssistance target={'careworker'} />
+          <DailyAssistance target={'careworker'} />
           <ButtonWrapper>
             <RoundButton
               text="이전으로"

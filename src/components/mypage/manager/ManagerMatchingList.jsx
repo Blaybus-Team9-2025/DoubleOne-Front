@@ -1,9 +1,46 @@
 import styled from 'styled-components';
 import Card from '../../_common/Card';
 import { useNavigate } from 'react-router-dom';
+import { useAtomValue, useSetAtom } from 'jotai';
+import { LoginAtom } from '../../../jotai/Login';
+import { useEffect, useState } from 'react';
+import { IdAtom } from '../../../jotai/Id';
+import { getManagerConditions } from '../../../api/manager';
 
 const ManagerMatchingList = () => {
+  const [data, setData] = useState([
+    {
+      name: '김어르신',
+      imgFile: null,
+      address: '서울특별시',
+      seniorConditionId: -1,
+      seniorId: -1,
+    },
+  ]);
+
   const nav = useNavigate();
+
+  const { managerId } = useAtomValue(LoginAtom);
+  const setIdData = useSetAtom(IdAtom);
+
+  useEffect(() => {
+    const getData = async () => {
+      const res = await getManagerConditions(managerId);
+      if (res?.data) {
+        console.log(res.data);
+        setData(res.data);
+      }
+    };
+
+    if (managerId > 0) {
+      getData();
+    }
+  }, [managerId]);
+
+  const handleClick = (id, url) => {
+    setIdData({ id: id });
+    nav(url);
+  };
 
   return (
     <Div>
@@ -11,21 +48,22 @@ const ManagerMatchingList = () => {
         <p>현재 매칭중인 어르신</p>
       </TitleDiv>
       <CardDiv>
-        <Card bg="green" onClick={() => nav(`/contact/${1}`)}>
-          <p>김ㅇㅇ 어르신</p>
-          <p>서울시 관악구 대학동</p>
-          <p>현재 3명 매칭중</p>
-        </Card>
-        <Card bg="green" onClick={() => nav(`/contact/${2}`)}>
-          <p>김ㅇㅇ 어르신</p>
-          <p>서울시 관악구 대학동</p>
-          <p>현재 3명 매칭중</p>
-        </Card>
-        <Card bg="green" onClick={() => nav(`/contact/${3}`)}>
-          <p>김ㅇㅇ 어르신</p>
-          <p>서울시 관악구 대학동</p>
-          <p>현재 3명 매칭중</p>
-        </Card>
+        {data?.map((item, idx) => {
+          return (
+            <Card
+              key={idx}
+              bg="green"
+              profile={item.profileImg}
+              onClick={() =>
+                handleClick(item.seniorConditionId, `/contact/${item.seniorId}`)
+              }
+            >
+              <p>{item.name}</p>
+              <p>{item.address}</p>
+              <p></p>
+            </Card>
+          );
+        })}
       </CardDiv>
     </Div>
   );

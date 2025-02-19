@@ -16,7 +16,7 @@ const ManagerButtonBox = () => {
         <p>어르신 목록 확인하기</p>
         <img src={chevron} />
       </div>
-      <div onClick={() => nav('/seniorinfo/recruit')}>
+      <div onClick={() => nav('/recruiting/select')}>
         <p>구인 정보 등록하기</p>
         <img src={chevron} />
       </div>

@@ -16,11 +16,31 @@ import Schedule from '../components/registration/Schedule';
 import Wage from '../components/registration/Wage';
 import Benefits from '../components/recruiting/Benefits';
 import RecruitingDetail from '../components/recruiting/RecruitingDetail';
+import GenderPreference from '../components/seniorinfo/GenderPreference';
+import { useAtomValue } from 'jotai';
+import { RecruitingInfoAtom } from '../jotai/Recruiting';
+import { IdAtom } from '../jotai/Id';
+import { postCondition } from '../api/condition';
+import { useResetAtom } from 'jotai/utils';
 
 const Recruiting = () => {
   const params = useParams();
   const { order } = params;
   const nav = useNavigate();
+  const data = useAtomValue(RecruitingInfoAtom);
+  const { id } = useAtomValue(IdAtom);
+  const resetInput = useResetAtom(RecruitingInfoAtom);
+  const resetId = useResetAtom(IdAtom);
+
+  const handleSumbit = async () => {
+    console.log(data, id);
+    const res = await postCondition(id, data);
+    if (res.status === 201) {
+      resetInput();
+      resetId();
+      nav('/mypage/manager');
+    }
+  };
 
   return (
     <Container>
@@ -35,10 +55,11 @@ const Recruiting = () => {
             <p>어르신 필요 서비스(중복 선택 가능)</p>
             <Required />
           </Div>
-          <MealAssistance />
-          <ToiletingAssistance />
-          <MobilityAssistance />
-          <DailyAssistance />
+          <GenderPreference />
+          <MealAssistance target={'recruit'} />
+          <ToiletingAssistance target={'recruit'} />
+          <MobilityAssistance target={'recruit'} />
+          <DailyAssistance target={'recruit'} />
           <RoundButton
             color="green"
             text="저장하고 다음으로"
@@ -69,7 +90,7 @@ const Recruiting = () => {
             <p>공고 상세 정보</p>
           </Title>
           <RecruitingDetail />
-          <RoundButton color="green" text="등록하기" />
+          <RoundButton color="green" text="등록하기" onClick={handleSumbit} />
         </>
       )}
     </Container>
