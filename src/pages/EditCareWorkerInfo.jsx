@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { useAtom } from 'jotai';
 
 import Header from '../components/_common/Header';
 import Title from '../components/_common/Title';
@@ -10,6 +11,8 @@ import ImgUpload from '../components/registration/ImgUpload';
 import PhoneNum from '../components/registration/PhoneNum';
 import AddressInput from '../components/registration/AddressInput';
 import Password from '../components/signup/Password';
+import { CareWorkerInfoAtom } from '../jotai/CareworkerInfo';
+import { editWorkerInfo } from '../api/worker';
 
 const ModalInfo1 = {
   type: 'confirm',
@@ -26,7 +29,32 @@ const ModalInfo2 = {
 
 const EditCareWorkerInfo = () => {
   const nav = useNavigate();
-  const onSave = () => {};
+  const onSave = async () => {
+    const patchData = {
+      seniorId: atom.seniorId,
+      careLevel: atom.careLevel,
+      address: atom.address,
+      etcDisease: atom.etcDisease,
+    };
+
+    //  if (!validate(patchData)) {
+    //    alert('입력값을 확인해주세요');
+    //    return;
+    //  }
+
+    //  let res;
+
+    //  if (imgFile) {
+    //    res = await editWorkerInfo(id, patchData, imgFile);
+    //  } else {
+    //    res = await editWorkerInfo(id, patchData, atom?.imgFile);
+    //  }
+
+    // 성공 시
+  };
+
+  const [imgFile, setImgFile] = useState(null);
+  const [atom, setAtom] = useAtom(CareWorkerInfoAtom);
 
   // 탈퇴하기 문구 눌렀을 때
   const onClickDeactivate = () => {
@@ -53,7 +81,7 @@ const EditCareWorkerInfo = () => {
         <Title>
           <p>ㅇㅇㅇ 요양보호사님</p>
         </Title>
-        <ImgUpload edit />
+        <ImgUpload edit setEditedImg={setImgFile} url={imgFile} />
         <Div>
           <FixedWrapper>
             <Key>이름</Key>
@@ -72,9 +100,9 @@ const EditCareWorkerInfo = () => {
           <Key>생년월일</Key>
           <Val>1973년 3월 22일</Val>
         </FixedWrapper>
-        <PhoneNum />
-        <AddressInput />
-        <Password />
+        <PhoneNum type="edit" target="worker" />
+        <AddressInput type="edit" target="worker" />
+        <Password type="edit" target="worker" />
       </Wrapper>
       <ButtonWrapper>
         <RoundButton text="취소" mt="40" onClick={() => nav(-1)} />

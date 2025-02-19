@@ -51,7 +51,7 @@ const SignUp = () => {
     }
   })();
 
-  const loginInfo = useAtomValue(LoginAtom);
+  const { memberId } = useAtomValue(LoginAtom);
   const input = useAtomValue(atom);
 
   // Atom의 키 값들을 전부 false로 초기화
@@ -74,34 +74,37 @@ const SignUp = () => {
 
   const onSubmit = async () => {
     // if (!validate()) {
-    //   alert('입력값을 확인해주세요.');
     //   return;
     // }
 
     try {
       let response;
-      const requestData = { ...input };
+      const data = { ...input };
 
       if (type === 'email' && target === 'worker') {
-        response = await emailWorkerSignup(requestData);
+        response = await emailWorkerSignup(data);
       } else if (type === 'email' && target === 'manager') {
-        response = await emailManagerSignup(requestData);
+        response = await emailManagerSignup(data);
       } else if (type === 'kakao' && target === 'worker') {
-        response = await kakaoWorkerSignup(requestData);
+        response = await kakaoWorkerSignup({
+          ...data,
+          memberId: memberId,
+        });
       } else if (type === 'kakao' && target === 'manager') {
-        response = await kakaoManagerSignup(requestData);
+        response = await kakaoManagerSignup({
+          ...data,
+          memberId: memberId,
+        });
       } else {
         alert('잘못된 요청입니다.');
         return;
       }
 
-      if (response?.success) {
-        alert('회원가입이 완료되었습니다.');
-
+      if (response.status === 201) {
         if (type === 'email') {
           nav('/login');
         } else if (type === 'kakao') {
-          nav(`/home/${loginInfo.memberType.toLowerCase()}`);
+          nav(`/home/${response?.memberType.toLowerCase()}`);
         }
       }
     } catch (error) {
@@ -121,7 +124,12 @@ const SignUp = () => {
           {type === 'email' && (
             <>
               <Email target={target} error={error.email} />
-              <Password required target={target} error={error.password} />
+              <Password
+                required
+                type={type}
+                target={target}
+                error={error.password}
+              />
             </>
           )}
           <NameAndGender type={type} target={target} error={error.name} />

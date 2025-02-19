@@ -11,7 +11,7 @@ export const postWorkerConditions = async (workerId, data) => {
 };
 
 // 요양사 기본 정보 편집
-export const EditWorkerInfo = async (workerId, data) => {
+export const editWorkerInfo = async (workerId, data) => {
   try {
     const res = await http.patch(`/workers/${workerId}`, data);
     return res;

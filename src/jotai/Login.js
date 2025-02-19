@@ -1,6 +1,6 @@
-import { atom } from 'jotai';
+import { atomWithStorage } from 'jotai/utils';
 
-export const LoginAtom = atom({
+export const LoginAtom = atomWithStorage({
   memberId: -1,
   memberType: '',
   workerId: -1,

@@ -24,6 +24,8 @@ const PhoneNum = ({ required, type, target, error }) => {
       return KakaoManagerSignupAtom;
     } else if (type === 'info' && target === 'worker') {
       return CareWorkerInfoAtom;
+    } else if (type === 'edit' && target === 'worker') {
+      return CareWorkerInfoAtom;
     }
   })();
   const [input, setInput] = useAtom(atom);

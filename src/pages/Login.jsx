@@ -53,7 +53,7 @@ const Login = () => {
       window.localStorage.setItem('refreshToken', res.refreshToken);
 
       // 홈 페이지로 이동
-      nav(`/home/${loginInfo.memberType.toLowerCase()}`);
+      nav(`/home/${res?.memberType.toLowerCase()}`);
     } else {
       // 로그인 실패한 경우
       setModalYn(true);

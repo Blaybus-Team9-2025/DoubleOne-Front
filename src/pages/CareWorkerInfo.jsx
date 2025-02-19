@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAtomValue } from 'jotai';
+import { useEffect, useState } from 'react';
 
 import Title from '../components/_common/Title';
 import Header from '../components/_common/Header';
@@ -26,8 +27,12 @@ import MobilityAssistance from '../components/recruiting/MobilityAssistance';
 import DailyAssistance from '../components/recruiting/DailyAssistance';
 
 import { postWorkerConditions } from '../api/worker';
-import { CareworkerConditionsAtom } from '../jotai/CareworkerInfo';
+import {
+  CareworkerConditionsAtom,
+  CareWorkerInfoAtom,
+} from '../jotai/CareworkerInfo';
 import { LoginAtom } from '../jotai/Login';
+import { getWorkerInfo } from '../api/worker';
 
 const CareWorkerInfo = () => {
   const nav = useNavigate();
@@ -36,10 +41,12 @@ const CareWorkerInfo = () => {
 
   const input = useAtomValue(CareworkerConditionsAtom);
   const id = useAtomValue(LoginAtom);
+  const workerId = String(id.memberId);
+
+  const [workerInfo, setWorkerInfo] = useState();
 
   // 요양사 희망 근무 조건 등록
   const onSubmit = async () => {
-    const workerId = String(id.memberId);
     console.log(workerId);
     const res = await postWorkerConditions(workerId, input);
 
@@ -47,6 +54,18 @@ const CareWorkerInfo = () => {
       nav('/mypage/careworker');
     }
   };
+
+  const fetchData = async () => {
+    const res = getWorkerInfo(workerId);
+    console.log('res', res.data);
+    if (res?.data) {
+      setWorkerInfo(res.data);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <Container>
@@ -56,7 +75,7 @@ const CareWorkerInfo = () => {
           <Title mb="20">
             <p>개인정보 입력</p>
           </Title>
-          <ImgUpload />
+          <ImgUpload type="info" />
           <NameAndGender type="info" target="worker" />
           <PhoneNum required type="info" target="worker" />
           <AddressInput required type="info" target="worker" />
