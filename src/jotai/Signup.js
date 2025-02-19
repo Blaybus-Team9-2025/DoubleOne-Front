@@ -1,7 +1,7 @@
-import { atomWithStorage } from 'jotai';
+import { atom } from 'jotai';
 
 // 이메일 + 개인
-export const EmailWorkerSignupAtom = atomWithStorage({
+export const EmailWorkerSignupAtom = atom({
   email: '',
   name: '',
   password: '',
@@ -15,7 +15,7 @@ export const EmailWorkerSignupAtom = atomWithStorage({
 });
 
 // 이메일 + 기업
-export const EmailManagerSignupAtom = atomWithStorage({
+export const EmailManagerSignupAtom = atom({
   name: '',
   email: '',
   gender: 'M',
@@ -33,7 +33,7 @@ export const EmailManagerSignupAtom = atomWithStorage({
 });
 
 // 카카오 + 개인
-export const KakaoWorkerSignupAtom = atomWithStorage({
+export const KakaoWorkerSignupAtom = atom({
   memberId: 0,
   name: '',
   gender: 'F',
@@ -45,7 +45,7 @@ export const KakaoWorkerSignupAtom = atomWithStorage({
 });
 
 // 카카오 + 기업
-export const KakaoManagerSignupAtom = atomWithStorage({
+export const KakaoManagerSignupAtom = atom({
   memberId: 0,
   name: '',
   phoneNum: '',

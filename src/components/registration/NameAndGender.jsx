@@ -11,7 +11,7 @@ import {
   KakaoWorkerSignupAtom,
 } from '../../jotai/Signup';
 import { SeniorInfoAtom } from '../../jotai/SeniorInfo';
-import { CareworkerInfoAtom } from '../../jotai/CareworkerInfo';
+import { CareWorkerInfoAtom } from '../../jotai/CareworkerInfo';
 import { useEffect } from 'react';
 
 const NameAndGender = ({ type, target, error }) => {
@@ -24,13 +24,10 @@ const NameAndGender = ({ type, target, error }) => {
       return KakaoWorkerSignupAtom;
     } else if (type === 'kakao' && target === 'manager') {
       return KakaoManagerSignupAtom;
-    }
-
-    if (type === 'info' && target === 'senior') {
+    } else if (type === 'info' && target === 'senior') {
       return SeniorInfoAtom;
-    }
-    if (type === 'info' && target === 'worker') {
-      return CareworkerInfoAtom;
+    } else if (type === 'info' && target === 'worker') {
+      return CareWorkerInfoAtom;
     }
   })();
 

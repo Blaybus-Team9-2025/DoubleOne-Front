@@ -13,7 +13,6 @@ import {
   KakaoWorkerSignupAtom,
 } from '../../jotai/Signup';
 import { SeniorInfoAtom } from '../../jotai/SeniorInfo';
-import { CareworkerInfoAtom } from '../../jotai/CareworkerInfo';
 
 const years = Array.from(
   { length: 2025 - 1930 + 1 },
@@ -23,7 +22,6 @@ const months = Array.from({ length: 12 - 1 + 1 }, (_, i) => `${1 + i}월`);
 const days = Array.from({ length: 31 - 1 + 1 }, (_, i) => `${1 + i}일`);
 
 const BirthDate = ({ type, target, error }) => {
-  console.log(type, target);
   const atom = (() => {
     if (type === 'email' && target === 'worker') {
       return EmailWorkerSignupAtom;
