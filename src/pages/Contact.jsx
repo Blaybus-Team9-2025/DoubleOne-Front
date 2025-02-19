@@ -11,7 +11,7 @@ import DetailModal from '../components/detailmodal/DetailModal';
 
 const Contact = () => {
   const params = useParams();
-  const { id } = params;
+  const { seniorId } = params;
   const idData = useAtomValue(IdAtom);
 
   const [data, setData] = useState(contactListType);
@@ -44,7 +44,7 @@ const Contact = () => {
         </p>
         <p>{data.seniorAddress}</p>
       </Card>
-      <ContactList id={id} data={data.workers} />
+      <ContactList seniorId={seniorId} data={data.workers} />
       <DetailModal
         type={'recruiting'}
         isOpen={isModalOpen}

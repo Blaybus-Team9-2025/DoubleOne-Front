@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import ContactItem from './ContactItem';
 import { calculateTotalExperience } from '../../util/calculateDate';
 
-const ContactList = ({ id, data }) => {
+const ContactList = ({ seniorId, data }) => {
   return (
     <ListDiv>
       <Title>요양보호사를 선택해주세요</Title>
@@ -26,10 +26,12 @@ const ContactList = ({ id, data }) => {
                 key={idx}
                 isChatting={item.requestMatching}
                 name={item.workerName}
-                managerId={id}
+                seniorId={seniorId}
                 workerId={item.workerId}
+                workerConditionId={item.workerConditionId}
                 desc={desc}
                 addr={addr}
+                workPeriods={item.workPeriods}
               />
             );
           })

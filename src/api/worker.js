@@ -57,7 +57,7 @@ export const getWorkerRequests = async (workerId) => {
 // 요양사 정보 조회(회원가입 정보)
 export const getWorkerInfo = async (workerId) => {
   try {
-    const res = await http.get(`/workers/${workerId}/getWorker`);
+    const res = await http.get(`/workers/${workerId}/getworker`);
     return res;
   } catch (err) {
     console.log(err);

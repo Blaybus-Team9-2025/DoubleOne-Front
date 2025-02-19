@@ -30,9 +30,10 @@ const Slick = ({ data }) => {
           <Shadow>
             <Content>
               <InfoCard
-                regions={data.worker_regions}
-                schedules={data.worker_schedules}
+                regions={data.workerRegions}
+                schedules={data.workerSchedules}
                 wage={data.wage}
+                wageType={data.wageType}
               />
             </Content>
           </Shadow>
@@ -40,7 +41,7 @@ const Slick = ({ data }) => {
         <ContentDiv>
           <Shadow>
             <Content>
-              <CareerCard experiences={data.workPeriods} />
+              <CareerCard />
             </Content>
           </Shadow>
         </ContentDiv>

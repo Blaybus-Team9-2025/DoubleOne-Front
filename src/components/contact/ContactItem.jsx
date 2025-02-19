@@ -3,14 +3,33 @@ import styled from 'styled-components';
 
 import chevron from '../../assets/chevron-right.png';
 import mail from '../../assets/mail.png';
+import { useSetAtom } from 'jotai';
+import { CareWorkerPeriodsAtom } from '../../jotai/CareworkerInfo';
 
-const ContactItem = ({ isChatting, managerId, workerId, name, addr, desc }) => {
+const ContactItem = ({
+  isChatting,
+  seniorId,
+  workerId,
+  workerConditionId,
+  name,
+  addr,
+  desc,
+  workPeriods,
+}) => {
   const nav = useNavigate();
+  const setWorkPeriodsData = useSetAtom(CareWorkerPeriodsAtom);
+
+  const handleClick = (url) => {
+    setWorkPeriodsData({ workPeriods: [...workPeriods] });
+    nav(url);
+  };
 
   return (
     <Item
       className={`${isChatting && 'blue'}`}
-      onClick={() => nav(`/contact/${managerId}/${workerId}`)}
+      onClick={() =>
+        handleClick(`/contact/${seniorId}/${workerId}/${workerConditionId}`)
+      }
     >
       <CheckBox className={`${isChatting && 'blue'}`}>
         <Box className={`${isChatting && 'blue'}`} />

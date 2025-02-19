@@ -67,6 +67,7 @@ export const contactListType = {
   workers: [
     {
       workerId: 0,
+      workerConditionId: 0,
       workerName: '',
       workerRegions: [
         {
@@ -87,4 +88,59 @@ export const contactListType = {
       requestMatching: false,
     },
   ],
+};
+
+// 요양사 회원가입 정보
+export const workerInfoType = {
+  workerId: 0,
+  name: '',
+  gender: '',
+  phoneNum: '',
+  hasTrained: false,
+  hasVehicle: false,
+  address: '',
+  zipcode: '',
+  detailAddress: '',
+};
+
+export const workerConditionInfoType = {
+  workerId: 0,
+  name: '',
+  gender: '',
+  phoneNum: '',
+  hasTrained: true,
+  hasVehicle: false,
+  discuss: true,
+  address: '',
+  introduction: '',
+  memberId: 0,
+  password: '0',
+  wageType: '',
+  wage: 0,
+  workerLicenses: [
+    {
+      licenseType: '',
+      licenseNum: '',
+    },
+  ],
+  workerRegions: [
+    {
+      city: '',
+      district: '',
+      neighborhood: '',
+    },
+  ],
+  workerSchedules: [
+    {
+      day: '',
+      startTime: '',
+      endTime: '',
+    },
+  ],
+  services: {
+    MEAL_ASSISTANCE: [''],
+    DAILY_LIFE_SUPPORT: [''],
+    MOBILITY_ASSISTANCE: [''],
+    TOILETING_ASSISTANCE: [''],
+  },
 };

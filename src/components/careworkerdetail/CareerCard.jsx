@@ -1,10 +1,16 @@
+import { useAtom, useAtomValue } from 'jotai';
+import { CareWorkerPeriodsAtom } from '../../jotai/CareworkerInfo';
 import { calculateTotalExperience, sliceDate } from '../../util/calculateDate';
 
-const CareerCard = ({ experiences }) => {
-  const filteredDateList = experiences.map(({ startDate, endDate }) => ({
-    startDate: startDate,
-    endDate: endDate,
-  }));
+const CareerCard = () => {
+  const experiences = useAtomValue(CareWorkerPeriodsAtom);
+
+  const filteredDateList = experiences.workPeriods?.map(
+    ({ startDate, endDate }) => ({
+      startDate: startDate,
+      endDate: endDate,
+    })
+  );
 
   const totalMonths = calculateTotalExperience(filteredDateList);
   const years = Math.floor(totalMonths / 12);
@@ -19,13 +25,15 @@ const CareerCard = ({ experiences }) => {
           {months > 0 && <span> {months}개월</span>}
         </p>
       </div>
-      {experiences.map((item, index) => {
+      {experiences.workPeriods.map((item, index) => {
+        const end = item.current ? '현재' : sliceDate(item.endDate);
+
         return (
           <div key={index} className="row career-item">
             <p className="subtitle">{item.organization}</p>
             <div>
               <p>
-                {sliceDate(item.startDate)} ~ {sliceDate(item.endDate)}
+                {sliceDate(item.startDate)} ~ {end}
               </p>
               <div className="role">
                 <p>{item.title}</p>
