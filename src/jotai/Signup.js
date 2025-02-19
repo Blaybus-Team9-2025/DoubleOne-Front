@@ -36,7 +36,7 @@ export const EmailManagerSignupAtom = atom({
 export const KakaoWorkerSignupAtom = atom({
   memberId: 0,
   name: '',
-  gender: 'F',
+  gender: 'M',
   birthDate: '',
   phoneNum: '',
   address: '',
@@ -53,7 +53,9 @@ export const KakaoManagerSignupAtom = atom({
   address: '',
   detailAddress: '',
   zipcode: '',
-  hasTruck: false,
+  birthDate: '',
+  gender: 'M',
+  hasTruck: true,
   centerGrade: '',
   centerPeriod: '',
 });

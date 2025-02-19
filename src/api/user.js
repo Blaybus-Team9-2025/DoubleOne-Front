@@ -11,7 +11,6 @@ export const sendCode = async (code) => {
       code,
       redirectUri: `${import.meta.env.VITE_REACT_APP_KAKAO_REDIRECT_URI}`,
     });
-    console.log('code', code);
     return res;
   } catch (err) {
     console.log(err);
@@ -20,9 +19,7 @@ export const sendCode = async (code) => {
 
 export const EmailLogin = async (data) => {
   try {
-    const res = await http.post('/login', {
-      data,
-    });
+    const res = await http.post('/login', data);
 
     return res;
   } catch (err) {

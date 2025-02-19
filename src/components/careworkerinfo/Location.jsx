@@ -7,14 +7,66 @@ import Required from '../_common/Required';
 import AddInput from '../registration/AddInput';
 
 import { CareworkerConditionsAtom } from '../../jotai/CareworkerInfo';
-import { getDistrict, getNeighborhood } from '../../api/address';
 
 const cities = ['서울특별시', '성남시', '부천시'];
+const districts = [
+  {
+    city: '서울특별시',
+    districts: ['강남구', '종로구', '송파구'],
+  },
+  {
+    city: '성남시',
+    districts: ['분당구', '수정구', '중원구'],
+  },
+  {
+    city: '부천시',
+    districts: ['소사구', '오정구', '원미구'],
+  },
+];
+const neighborhoods = [
+  {
+    district: '강남구',
+    neighborhoods: ['역삼동', '삼성동', '논현동', '청담동'],
+  },
+  {
+    district: '종로구',
+    neighborhoods: ['경희궁동', '관훈동', '종로1가', '사직동'],
+  },
+  {
+    district: '송파구',
+    neighborhoods: ['잠실동', '가락동', '문정동', '신천동'],
+  },
+  {
+    district: '분당구',
+    neighborhoods: ['정자동', '야탑동', '수내동', '서현동'],
+  },
+  {
+    district: '수정구',
+    neighborhoods: ['신흥동', '상대원동', '단대동', '복정동'],
+  },
+  {
+    district: '중원구',
+    neighborhoods: ['여수동', '금광동', '상대원동', '하대동'],
+  },
+  {
+    district: '소사구',
+    neighborhoods: ['소사본동', '송내동', '심곡동', '고리울동'],
+  },
+  {
+    district: '오정구',
+    neighborhoods: ['내동', '대산동', '여월동', '삼정동'],
+  },
+  {
+    district: '원미구',
+    neighborhoods: ['중동', '상동', '하동', '산곡동'],
+  },
+];
 
 const License = () => {
   const [input, setInput] = useAtom(CareworkerConditionsAtom);
-  const [districts, setDistricts] = useState({});
-  const [neighborhoods, setNeighborhoods] = useState({});
+  const [availableDistricts, setAvailableDistricts] = useState([]);
+  const [availableNeighborhoods, setAvailableNeighborhoods] = useState([]);
+
   console.log(input);
 
   // 기본 근무 지역 초기화
@@ -29,29 +81,21 @@ const License = () => {
 
   // 시 선택 시 해당 구 목록 가져오기
   useEffect(() => {
-    const fetchDistricts = async () => {
-      const newDistricts = {};
-      for (const region of input.regionDtoList) {
-        newDistricts[region.city] = await getDistrict(region.city);
-      }
-      setDistricts(newDistricts);
-    };
-    fetchDistricts();
-  }, [input.regionDtoList.map((r) => r.city).join()]); // city 값이 변경될 때마다 호출
+    const selectedCity =
+      input.regionDtoList[input.regionDtoList.length - 1]?.city;
+    const cityData = districts.find((item) => item.city === selectedCity);
+    setAvailableDistricts(cityData ? cityData.districts : []);
+  }, [input.regionDtoList]);
 
   // 구 선택 시 해당 동 목록 가져오기
   useEffect(() => {
-    const fetchNeighborhoods = async () => {
-      const newNeighborhoods = {};
-      for (const region of input.regionDtoList) {
-        newNeighborhoods[region.district] = await getNeighborhood(
-          region.district
-        );
-      }
-      setNeighborhoods(newNeighborhoods);
-    };
-    fetchNeighborhoods();
-  }, [input.regionDtoList.map((r) => r.district).join()]); // district 값이 변경될 때마다 호출
+    const selectedDistrict =
+      input.regionDtoList[input.regionDtoList.length - 1]?.district;
+    const districtData = neighborhoods.find(
+      (item) => item.district === selectedDistrict
+    );
+    setAvailableNeighborhoods(districtData ? districtData.neighborhoods : []);
+  }, [input.regionDtoList]);
 
   // 새로운 근무 지역 추가
   const addDropdown = () => {
@@ -93,13 +137,13 @@ const License = () => {
           <DropdownWrapper>
             <Dropdown
               width="50%"
-              options={districts[region.city] || []}
+              options={availableDistricts}
               value={region.district}
               onChange={(val) => updateLocation(index, 'district', val)}
             />
             <Dropdown
               width="50%"
-              options={neighborhoods[region.district] || []}
+              options={availableNeighborhoods}
               value={region.neighborhood}
               onChange={(val) => updateLocation(index, 'neighborhood', val)}
             />

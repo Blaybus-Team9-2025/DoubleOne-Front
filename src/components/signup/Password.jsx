@@ -11,13 +11,24 @@ import {
   EmailManagerSignupAtom,
   EmailWorkerSignupAtom,
 } from '../../jotai/Signup';
+import { CareWorkerInfoAtom } from '../../jotai/CareworkerInfo';
 
-const Password = ({ required, target, error }) => {
-  const atom =
-    target === 'worker' ? EmailWorkerSignupAtom : EmailManagerSignupAtom;
+const Password = ({ required, target, error, type }) => {
+  const atom = (() => {
+    if (type === 'edit' && target === 'worker') {
+      return CareWorkerInfoAtom;
+    } else if (type === 'email' && target === 'worker') {
+      return EmailWorkerSignupAtom;
+    } else if (type === 'email' && target === 'manager') {
+      return EmailManagerSignupAtom;
+    }
+  })();
+
   const [input, setInput] = useAtom(atom);
   const [checkPw, setCheckPw] = useState('');
   const [errorType, setErrorType] = useState('none');
+
+  console.log(input);
 
   const onChangePw = (e) => {
     const newPw = e.target.value;
