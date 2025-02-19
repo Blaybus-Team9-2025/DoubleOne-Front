@@ -15,7 +15,7 @@ const SeniorList = () => {
 
   const [data, setData] = useState([
     {
-      seniorId: 1,
+      seniorId: -1,
       name: '',
       age: -1,
       gender: '',
