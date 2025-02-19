@@ -28,12 +28,12 @@ const AddressInput = ({ required, type, target, error }) => {
       return KakaoManagerSignupAtom;
     }
 
-    if (type === 'info' && target === 'senior') {
+    if (type === 'info' && target === 'worker') {
       return SeniorInfoAtom;
     }
   })();
 
-  const [signup, setSignup] = useAtom(atom);
+  const [input, setInput] = useAtom(atom);
 
   // 우편번호 찾기 팝업 시 뒷 배경 스크롤 방지
   useEffect(() => {
@@ -64,11 +64,11 @@ const AddressInput = ({ required, type, target, error }) => {
   const handleComplete = (data) => {
     const { address, zonecode } = data;
 
-    setSignup({
-      ...signup,
+    setInput((prev) => ({
+      ...prev,
       address,
-      zonecode,
-    });
+      zipcode: zonecode,
+    }));
   };
 
   const closeHandler = (state) => {
@@ -80,10 +80,10 @@ const AddressInput = ({ required, type, target, error }) => {
   };
 
   const onChangeInput = (e) => {
-    setSignup({
-      ...signup,
+    setInput((prev) => ({
+      ...prev,
       [e.target.name]: e.target.value,
-    });
+    }));
   };
 
   return (
@@ -98,7 +98,7 @@ const AddressInput = ({ required, type, target, error }) => {
             <Input
               className={`zoneCode ${error && 'error'}`}
               type="text"
-              value={signup.zonecode}
+              value={input.zipcode}
               name="zondcode"
               onChange={onChangeInput}
             />
@@ -110,16 +110,16 @@ const AddressInput = ({ required, type, target, error }) => {
         <Input
           className={`address ${error && 'error'}`}
           type="text"
-          value={signup.address}
+          value={input.address}
           name="address"
           onChange={onChangeInput}
         />
         <Input
           className={`detailedAddress ${error && 'error'}`}
           type="text"
-          value={signup.detailedAddress}
+          value={input.detailAddress}
           onChange={onChangeInput}
-          name="detailedAddress"
+          name="detailAddress"
           placeholder="상세주소를 입력해주세요"
         />
       </Wrapper>

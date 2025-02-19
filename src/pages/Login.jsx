@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { useAtom } from 'jotai';
 
 import Title from '../components/_common/Title';
 import Header from '../components/_common/Header';
@@ -9,6 +10,7 @@ import chatBubble from '../assets/chat_bubble.png';
 import Modal from '../components/_common/Modal';
 import { KAKAO_AUTH_URI } from '../api/user';
 import { EmailLogin } from '../api/user';
+import { LoginAtom } from '../jotai/Login';
 
 const ModalInfo = {
   type: 'alert',
@@ -24,6 +26,7 @@ const Login = () => {
     password: '',
   });
   const [modalYn, setModalYn] = useState(false);
+  const [loginInfo, setLoginInfo] = useAtom(LoginAtom);
 
   const onClose = () => {
     setModalYn(false);
@@ -36,8 +39,21 @@ const Login = () => {
 
   const onLoginClick = async () => {
     const res = await EmailLogin(input);
+
     if (res) {
-      nav('/mypage');
+      setLoginInfo({
+        memberId: res.memberId,
+        memberType: res.memberType,
+        workerId: res.workerId,
+        managerId: res.managerId,
+      });
+
+      // 로그인 처리
+      window.localStorage.setItem('accessToken', res.accessToken);
+      window.localStorage.setItem('refreshToken', res.refreshToken);
+
+      // 홈 페이지로 이동
+      nav(`/home/${loginInfo.memberType.toLowerCase()}`);
     } else {
       // 로그인 실패한 경우
       setModalYn(true);
@@ -68,7 +84,7 @@ const Login = () => {
             type="text"
             name="email"
             placeholder="아이디(이메일)"
-            value={input.id}
+            value={input.email}
             onChange={onChangeInput}
           />
         </IdWrapper>
@@ -79,7 +95,7 @@ const Login = () => {
               type="password"
               name="password"
               placeholder="비밀번호"
-              value={input.pw}
+              value={input.password}
               onChange={onChangeInput}
             />
             <span onClick={() => nav('/find-pw/auth')}>비밀번호 찾기</span>

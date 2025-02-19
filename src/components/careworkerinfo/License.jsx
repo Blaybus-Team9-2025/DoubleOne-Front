@@ -5,15 +5,50 @@ import { useState } from 'react';
 import Dropdown from '../registration/Dropdown';
 import Required from '../_common/Required';
 import Alert from '../signup/Alert';
-import { CareworkerInfoAtom } from '../../jotai/CareworkerInfo';
 import { InputStyle } from '../../util/common-style';
 import { LabelStyle } from '../../util/common-style';
 import { getOptions } from '../../util/get-options';
+import { CareworkerConditionsAtom } from '../../jotai/CareworkerInfo';
 
 const License = () => {
+  const options = getOptions('license');
+  const optionKeys = options.map((obj) => Object.keys(obj)[0]);
+
   const [validYn, setValidYn] = useState(true);
   const [validNumYn, setValidNumYn] = useState(true);
-  const [info, setInfo] = useAtom(CareworkerInfoAtom);
+  const [input, setInput] = useAtom(CareworkerConditionsAtom);
+
+  const handleLicenseTypeChange = (selectedKey) => {
+    const selectedValue = options.find((obj) => obj[selectedKey])[selectedKey];
+
+    setInput((prev) => ({
+      ...prev,
+      licenseDtoList: [
+        {
+          licenseType: selectedValue,
+          licenseNum: '',
+        },
+      ],
+    }));
+  };
+
+  const handleLicenseNumChange = (e) => {
+    const { value } = e.target;
+
+    setInput((prev) => {
+      const updatedLicenseDtoList = prev.licenseDtoList.map((item, index) => {
+        if (index === 0) {
+          return { ...item, licenseNum: value };
+        }
+        return item;
+      });
+
+      return {
+        ...prev,
+        licenseDtoList: updatedLicenseDtoList,
+      };
+    });
+  };
 
   return (
     <Container>
@@ -24,15 +59,31 @@ const License = () => {
       <Wrapper>
         <Dropdown
           width="100%"
-          options={getOptions('license')}
-          data={info}
-          setData={setInfo}
-          target="license"
-          exp="자격증 종류를 선택하세요"
+          options={optionKeys}
+          value={
+            options.find(
+              (obj) =>
+                Object.keys(obj)[0] === input.licenseDtoList[0]?.licenseType
+            )
+              ? Object.values(
+                  options.find(
+                    (obj) =>
+                      Object.keys(obj)[0] ===
+                      input.licenseDtoList[0]?.licenseType
+                  )
+                )[0]
+              : ''
+          }
+          onChange={handleLicenseTypeChange}
+          exp="자격증 종류를 선택해주세요"
         />
-        {!validYn && <Alert text="필수 선택 자격증을 등록해주세요." />}
-        <Input placeholder="자격증 번호" />
-        {!validNumYn && <Alert text="자격증 번호를 확인해주세요." />}
+        {!validYn && <Alert text="필수 선택 자격증을 등록해주세요." />}{' '}
+        <Input
+          placeholder="자격증 번호를 입력하세요"
+          value={input.licenseDtoList[0]?.licenseNum || ''}
+          onChange={handleLicenseNumChange}
+        />
+        {!validNumYn && <Alert text="자격증 번호를 확인해주세요." />}{' '}
       </Wrapper>
     </Container>
   );

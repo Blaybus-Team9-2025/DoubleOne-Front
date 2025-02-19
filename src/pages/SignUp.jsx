@@ -31,6 +31,7 @@ import Center from '../components/signup/Center';
 import Email from '../components/signup/Email';
 import Password from '../components/signup/Password';
 import CarYn from '../components/careworkerinfo/CarYn';
+import { LoginAtom } from '../jotai/Login';
 
 const SignUp = () => {
   const nav = useNavigate();
@@ -50,8 +51,8 @@ const SignUp = () => {
     }
   })();
 
+  const loginInfo = useAtomValue(LoginAtom);
   const input = useAtomValue(atom);
-  console.log('input', input);
 
   // Atom의 키 값들을 전부 false로 초기화
   const [error, setError] = useState(
@@ -96,9 +97,15 @@ const SignUp = () => {
 
       if (response?.success) {
         alert('회원가입이 완료되었습니다.');
+
+        if (type === 'email') {
+          nav('/login');
+        } else if (type === 'kakao') {
+          nav(`/home/${loginInfo.memberType.toLowerCase()}`);
+        }
       }
     } catch (error) {
-      console.error('회원가입 에러:', error);
+      console.error('회원가입 에러', error);
     }
   };
 

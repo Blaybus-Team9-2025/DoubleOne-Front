@@ -7,8 +7,9 @@ export const KAKAO_AUTH_URI = `https://kauth.kakao.com/oauth/authorize?response_
 
 export const sendCode = async (code) => {
   try {
-    const res = await http.post('/auth/kakao/login', {
+    const res = await http.post('/login/token', {
       code,
+      redirectUri: `${import.meta.env.VITE_REACT_APP_KAKAO_REDIRECT_URI}`,
     });
     console.log('code', code);
     return res;

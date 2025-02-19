@@ -5,6 +5,7 @@ import {
   KakaoManagerSignupAtom,
   EmailManagerSignupAtom,
 } from '../../jotai/Signup';
+import { CareworkerConditionsAtom } from '../../jotai/CareworkerInfo';
 
 const CarYn = ({ type }) => {
   const atom = (() => {
@@ -12,13 +13,30 @@ const CarYn = ({ type }) => {
       return EmailManagerSignupAtom;
     } else if (type === 'kakao') {
       return KakaoManagerSignupAtom;
+    } else if (type === 'register') {
+      return CareworkerConditionsAtom;
     }
   })();
   const [input, setInput] = useAtom(atom);
 
+  const key = type === 'register' ? 'hasVehicle' : 'hasTruck';
+
+  const onChange = (val) => {
+    setInput((prev) => {
+      const newState = {
+        ...prev,
+        [key]: val,
+      };
+
+      return newState;
+    });
+  };
+
   return (
     <Container>
-      <Label>목욕 차량 소유 여부</Label>
+      <Label>
+        {type === 'register' ? '차량 소유 여부' : '목욕 차량 소유 여부'}
+      </Label>
       <Wrapper>
         <div>
           <label htmlFor="yes">예</label>
@@ -26,13 +44,9 @@ const CarYn = ({ type }) => {
             type="radio"
             name="carYn"
             id="yes"
-            checked={input?.hasTruck}
-            onChange={() =>
-              setInput((prev) => ({
-                ...prev,
-                hasTruck: true,
-              }))
-            }
+            value="true"
+            checked={input?.[key] === true}
+            onChange={() => onChange(true)}
           />
         </div>
         <div>
@@ -41,13 +55,9 @@ const CarYn = ({ type }) => {
             type="radio"
             name="carYn"
             id="no"
-            checked={!input?.hasTruck}
-            onChange={() =>
-              setInput((prev) => ({
-                ...prev,
-                hasTruck: false,
-              }))
-            }
+            value="false"
+            checked={input?.[key] === false}
+            onChange={() => onChange(false)}
           />
         </div>
       </Wrapper>

@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 import { useAtom } from 'jotai';
 
-import { CareworkerInfoAtom } from '../../jotai/CareworkerInfo';
+import { CareworkerConditionsAtom } from '../../jotai/CareworkerInfo';
 
 const CourseYn = () => {
-  const [info, setInfo] = useAtom(CareworkerInfoAtom);
+  const [input, setInput] = useAtom(CareworkerConditionsAtom);
 
   return (
     <Container>
@@ -16,11 +16,11 @@ const CourseYn = () => {
             type="radio"
             name="courseYn"
             id="yes"
-            checked={info.courseYn}
+            checked={input.hasTrained === true}
             onChange={() =>
-              setInfo((prev) => ({
+              setInput((prev) => ({
                 ...prev,
-                courseYn: true,
+                hasTrained: true,
               }))
             }
           />
@@ -31,11 +31,11 @@ const CourseYn = () => {
             type="radio"
             name="courseYn"
             id="no"
-            checked={!info.courseYn}
+            checked={input.hasTrained === false}
             onChange={() =>
-              setInfo((prev) => ({
+              setInput((prev) => ({
                 ...prev,
-                courseYn: false,
+                hasTrained: false,
               }))
             }
           />

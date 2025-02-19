@@ -1,3 +1,7 @@
+import styled from 'styled-components';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useAtomValue } from 'jotai';
+
 import Title from '../components/_common/Title';
 import Header from '../components/_common/Header';
 import RoundButton from '../components/_common/RoundButton';
@@ -21,15 +25,27 @@ import ToiletingAssistance from '../components/recruiting/ToiletingAssistance';
 import MobilityAssistance from '../components/recruiting/MobilityAssistance';
 import DailyAssistance from '../components/recruiting/DailyAssistance';
 
-import styled from 'styled-components';
-import { useParams, useNavigate } from 'react-router-dom';
+import { postWorkerConditions } from '../api/worker';
+import { CareworkerConditionsAtom } from '../jotai/CareworkerInfo';
+import { LoginAtom } from '../jotai/Login';
 
 const CareWorkerInfo = () => {
   const nav = useNavigate();
   const params = useParams();
   const { order } = params;
 
-  const onSubmit = () => {};
+  const input = useAtomValue(CareworkerConditionsAtom);
+  const id = useAtomValue(LoginAtom);
+
+  // 요양사 희망 근무 조건 등록
+  const onSubmit = async () => {
+    const workerId = String(id);
+    const res = await postWorkerConditions(workerId, input);
+
+    if (res.status === '201') {
+      nav('/mypage/careworker');
+    }
+  };
 
   return (
     <Container>
@@ -40,13 +56,13 @@ const CareWorkerInfo = () => {
             <p>개인정보 입력</p>
           </Title>
           <ImgUpload />
-          <NameAndGender />
-          <PhoneNum required />
-          <AddressInput required />
+          <NameAndGender type="info" target="worker" />
+          <PhoneNum required type="info" target="worker" />
+          <AddressInput required type="info" target="worker" />
           <License />
           <div>
-            <CarYn />
-            <CourseYn />
+            <CarYn type="register" />
+            <CourseYn type="register" />
           </div>
           <RoundButton
             text="저장하고 다음으로"

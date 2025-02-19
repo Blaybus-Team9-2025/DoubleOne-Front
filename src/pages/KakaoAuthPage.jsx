@@ -1,10 +1,13 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAtom } from 'jotai';
 
 import { sendCode } from '../api/user';
+import { LoginAtom } from '../jotai/Login';
 
 const KakaoAuthPage = () => {
   const nav = useNavigate();
+  const [loginInfo, setLoginInfo] = useAtom(LoginAtom);
 
   useEffect(() => {
     const params = new URL(document.location.toString()).searchParams;
@@ -15,25 +18,24 @@ const KakaoAuthPage = () => {
       const data = res?.data;
 
       if (data) {
-        // 회원인지 아닌지 판단
-
-        // 회원이면 사용자 정보를 다 받아서 recoil에 저장
-        // setLogin({
-        //   name: data.name,
-        //   email: data.email,
-        //   accessToken: data.accessToken,
-        //   refreshToken: data.refreshToken,
-        // });
+        // 로그인 성공 시 사용자 정보를 다 받아서 recoil에 저장
+        setLoginInfo({
+          memberId: data.memberId,
+          memberType: data.memberType,
+          workerId: data.workerId,
+          managerId: data.managerId,
+          // accessToken: data.accessToken,
+          // refreshToken: data.refreshToken,
+        });
         console.log('data', data);
 
-        // 로그인 처리 & 메인 페이지로 이동
-        // window.localStorage.setItem('accessToken', data.accessToken);
-        // window.localStorage.setItem('refreshToken', data.refreshToken);
-        // window.location.href = '/';
+        // 로그인 처리
+        window.localStorage.setItem('accessToken', data.accessToken);
+        window.localStorage.setItem('refreshToken', data.refreshToken);
 
-        // 회원이 아니면 사용자 정보를 일부 받기(이름, 연락처 등) -> 카카오로 회원가입하기 (개인 or 기업) 페이지로 연결
+        // 회원 가입 페이지로 이동
+        nav('/signupselect/kakao');
       }
-      // data가 안오면 카카오 로그인 실패 -> '카카오 계정을 가져오지 못했습니다' 모달창 띄우기
     };
 
     login();

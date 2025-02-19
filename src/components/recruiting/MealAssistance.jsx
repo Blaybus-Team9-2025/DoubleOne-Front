@@ -1,12 +1,31 @@
 import styled from 'styled-components';
+import { useAtom } from 'jotai';
 
-import { CheckboxStyle } from '../../util/common-style';
-import { LabelStyle } from '../../util/common-style';
+import { CheckboxStyle, LabelStyle } from '../../util/common-style';
 import { getOptions } from '../../util/get-options';
+import { CareworkerConditionsAtom } from '../../jotai/CareworkerInfo';
 
 const MealAssistance = () => {
   const options = getOptions('meal');
   const optionKeys = options.map((obj) => Object.keys(obj)[0]);
+  const optionValues = options.map((obj) => Object.values(obj)[0]);
+  const [input, setInput] = useAtom(CareworkerConditionsAtom);
+
+  const handleCheckboxChange = (value) => {
+    setInput((prev) => {
+      const updatedAssistance = prev.services.MEAL_ASSISTANCE.includes(value)
+        ? prev.services.MEAL_ASSISTANCE.filter((item) => item !== value) // 이미 선택된 항목 제거
+        : [...prev.services.MEAL_ASSISTANCE, value]; // 선택되지 않은 항목 추가
+
+      return {
+        ...prev,
+        services: {
+          ...prev.services,
+          MEAL_ASSISTANCE: updatedAssistance,
+        },
+      };
+    });
+  };
 
   return (
     <Container>
@@ -14,7 +33,14 @@ const MealAssistance = () => {
       <Wrapper>
         {optionKeys.map((val, idx) => (
           <Col key={idx}>
-            <input type="checkbox" id={val} />
+            <input
+              type="checkbox"
+              id={val}
+              checked={input.services.MEAL_ASSISTANCE.includes(
+                optionValues[idx]
+              )}
+              onChange={() => handleCheckboxChange(optionValues[idx])}
+            />
             <label htmlFor={val}>{val}</label>
           </Col>
         ))}
