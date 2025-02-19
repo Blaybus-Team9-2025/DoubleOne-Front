@@ -1,7 +1,7 @@
-import { atomWithStorage } from 'jotai/utils';
+import { atom } from 'jotai';
 
 // 요양 보호사 희망 근무 조건
-export const CareworkerConditionsAtom = atomWithStorage({
+export const CareworkerConditionsAtom = atom({
   wageType: 'HOURLY',
   wage: null,
   discuss: false,
@@ -43,4 +43,17 @@ export const CareworkerConditionsAtom = atomWithStorage({
       neighborhood: '',
     },
   ],
+});
+
+// 요양사 개인 정보
+export const CareWorkerInfoAtom = atom({
+  workerId: -1,
+  name: '',
+  gender: 'M',
+  phoneNum: '',
+  hasTrained: false,
+  hasVehicle: false,
+  address: '',
+  zipcode: '',
+  datailedAddress: '',
 });

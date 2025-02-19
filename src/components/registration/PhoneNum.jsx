@@ -10,7 +10,7 @@ import {
   KakaoManagerSignupAtom,
   KakaoWorkerSignupAtom,
 } from '../../jotai/Signup';
-import { CareworkerInfoAtom } from '../../jotai/CareworkerInfo';
+import { CareWorkerInfoAtom } from '../../jotai/CareworkerInfo';
 
 const PhoneNum = ({ required, type, target, error }) => {
   const atom = (() => {
@@ -22,9 +22,8 @@ const PhoneNum = ({ required, type, target, error }) => {
       return KakaoWorkerSignupAtom;
     } else if (type === 'kakao' && target === 'manager') {
       return KakaoManagerSignupAtom;
-    }
-    if (type === 'info' && target === 'worker') {
-      return CareworkerInfoAtom;
+    } else if (type === 'info' && target === 'worker') {
+      return CareWorkerInfoAtom;
     }
   })();
   const [input, setInput] = useAtom(atom);

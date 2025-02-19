@@ -39,10 +39,11 @@ const CareWorkerInfo = () => {
 
   // 요양사 희망 근무 조건 등록
   const onSubmit = async () => {
-    const workerId = String(id);
+    const workerId = String(id.memberId);
+    console.log(workerId);
     const res = await postWorkerConditions(workerId, input);
 
-    if (res.status === '201') {
+    if (res) {
       nav('/mypage/careworker');
     }
   };
