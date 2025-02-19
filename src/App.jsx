@@ -52,9 +52,9 @@ function App() {
         <Route path="/login/oauth2/code/kakao" element={<KakaoAuthPage />} />
         <Route path="/signupselect/:type" element={<SignUpSelect />} />
         <Route path="/signup/:type/:target" element={<SignUp />} />
-        <Route path="/contact/:id" element={<Contact />} />
+        <Route path="/contact/:seniorId" element={<Contact />} />
         <Route
-          path="/contact/:seniorId/:workerId"
+          path="/contact/:seniorId/:workerId/:workerConditionId"
           element={<CareWorkerDetail />}
         />
         <Route path="/careworkerinfo/:order" element={<CareWorkerInfo />} />

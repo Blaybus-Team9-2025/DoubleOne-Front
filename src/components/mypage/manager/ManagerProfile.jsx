@@ -1,14 +1,22 @@
+import { useAtomValue } from 'jotai';
 import styled from 'styled-components';
+import { ManagerInfoAtom } from '../../../jotai/ManagerInfo';
+
+import logo from '../../../assets/logo.png';
 
 const ManagerProfile = () => {
+  const managerData = useAtomValue(ManagerInfoAtom);
   return (
     <Div>
       <ImgDiv>
-        <img />
+        <img
+          src={managerData.profileImg || logo}
+          className={managerData.profileImg || 'logo'}
+        />
       </ImgDiv>
       <NameDiv>
-        <p>김어스 님</p>
-        <p>서울노인 복지센터</p>
+        <p>{managerData.name} 님</p>
+        <p>{managerData.centerName}</p>
       </NameDiv>
     </Div>
   );
@@ -23,14 +31,20 @@ const Div = styled.div`
 const ImgDiv = styled.div`
   width: 92px;
   height: 92px;
-  background-color: #d3d3d3;
+  background-color: #ffffff;
   border-radius: 15px;
   flex-shrink: 0;
   box-shadow: var(--shadow);
+  display: flex;
+  justify-content: center;
+  align-items: center;
   img {
     width: 100%;
     object-fit: cover;
     border: none;
+    &.logo {
+      width: 50%;
+    }
   }
 `;
 

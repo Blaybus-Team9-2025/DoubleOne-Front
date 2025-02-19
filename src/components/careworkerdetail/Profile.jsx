@@ -1,10 +1,12 @@
 import styled from 'styled-components';
 
+import defaultImg from '../../assets/logo.png';
+
 const Profile = ({ profile, logo, name, cert }) => {
   return (
     <Div>
       <ImgDiv>
-        <img src={profile} />
+        <img src={profile || defaultImg} className={profile || 'logo'} />
       </ImgDiv>
       <ItemDiv>
         <div>
@@ -31,10 +33,17 @@ const ImgDiv = styled.div`
   width: 150px;
   height: 150px;
   border-radius: 15px;
-  background-color: #d9d9d9;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: var(--shadow);
   img {
     width: 100%;
     object-fit: cover;
+    &.logo {
+      width: 50%;
+    }
   }
 `;
 

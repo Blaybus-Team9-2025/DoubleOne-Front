@@ -1,11 +1,13 @@
 import styled from 'styled-components';
 import chevron from '../../assets/chevron-right.png';
 
+import logo from '../../assets/logo.png';
+
 const Card = ({ bg, children, onClick, profile }) => {
   return (
     <Div bg={bg} onClick={onClick}>
       <ImgDiv>
-        <img src={profile} />
+        <img src={profile || logo} className={profile || 'logo'} />
       </ImgDiv>
       <TextDiv>
         <div>{children}</div>
@@ -36,9 +38,15 @@ const ImgDiv = styled.div`
   background-color: #ffffff;
   flex-shrink: 0;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   img {
     width: 100%;
     object-fit: cover;
+    &.logo {
+      width: 50%;
+    }
   }
 `;
 

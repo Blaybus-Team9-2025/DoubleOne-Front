@@ -35,7 +35,8 @@ const Recruiting = () => {
   const handleSumbit = async () => {
     console.log(data, id);
     const res = await postCondition(id, data);
-    if (res.status === 201) {
+    console.log(res);
+    if (res.status === 200) {
       resetInput();
       resetId();
       nav('/mypage/manager');

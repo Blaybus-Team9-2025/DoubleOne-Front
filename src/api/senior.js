@@ -87,10 +87,10 @@ export const patchSenior = async (seniorId, data, imgFile) => {
   }
 };
 
-// 매칭된 요양사 확인
-export const getMatchingWorkers = async (seniorId) => {
+// 매칭된 요양사 확인 (Contact 페이지)
+export const getMatchingWorkers = async (conditionId) => {
   try {
-    const res = await http.get(`/seniors/match/${seniorId}`);
+    const res = await http.get(`/seniors/match/${conditionId}`);
     return res;
   } catch (err) {
     console.log(err);

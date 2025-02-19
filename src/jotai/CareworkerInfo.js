@@ -65,3 +65,15 @@ export const CareWorkerInfoAtom = atom({
 export const workerConditionIdAtom = atomWithStorage('workerConditionId', {
   workerConditionId: -1,
 });
+
+export const CareWorkerPeriodsAtom = atomWithStorage('workPeriods', {
+  workPeriods: [
+    {
+      title: '',
+      organization: '',
+      startDate: '',
+      endDate: '',
+      current: false,
+    },
+  ],
+});
