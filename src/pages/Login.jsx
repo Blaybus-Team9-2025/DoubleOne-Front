@@ -73,7 +73,7 @@ const Login = () => {
       <Title mb="60">
         <p>로그인/회원가입</p>
       </Title>
-      <KakaoButton onClick={onKakaoClick}>
+      <KakaoButton>
         <img src={chatBubble} />
         <span>카카오로 1초만에 시작하기</span>
       </KakaoButton>
