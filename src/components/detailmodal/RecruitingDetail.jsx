@@ -1,80 +1,126 @@
 import styled from 'styled-components';
 
 import { CheckboxStyle } from '../../util/common-style';
+import { useAtomValue } from 'jotai';
+import { IdAtom } from '../../jotai/Id';
+import { useEffect, useState } from 'react';
+import { getSeniorDetail } from '../../api/senior';
+import { getConditionDetail } from '../../api/condition';
+import { translateDate } from '../../util/calculateDate';
+import { getKeyByValue } from '../../util/getKeyByValue';
 import { getOptions } from '../../util/get-options';
+import { getManagerInfo } from '../../api/manager';
+import { recruitType, seniorType } from '../../util/dataTypes';
+import { ManagerInfoAtom } from '../../jotai/ManagerInfo';
 
 const RecruitingDetail = () => {
+  const idData = useAtomValue(IdAtom);
+  const [seniorData, setSeniorData] = useState({ seniorType });
+  const [recruitData, setRecruitData] = useState(recruitType);
+  const managerData = useAtomValue(ManagerInfoAtom);
+
+  const coHabitationOptions = getOptions('cohabitation');
+  const caringGradeOptions = getOptions('caringGrade');
+  const workTypeOptions = getOptions('workType');
+  const mealOptions = getOptions('meal');
+  const toiletingOptions = getOptions('toileting');
+  const mobilityOptions = getOptions('mobility');
+  const dailyOptions = getOptions('daily');
+  const payTypeOptions = getOptions('wageType');
+  const benefitsOptions = getOptions('benefits');
+  const insuranceOptions = getOptions('insurance');
+  const weekdayOptions = getOptions('weekday');
+
+  useEffect(() => {
+    const getData = async () => {
+      const res = await getSeniorDetail(idData.seniorId);
+      if (res.data) {
+        console.log(res);
+        setSeniorData(res.data);
+      }
+    };
+
+    console.log('idData.seniorId', idData.seniorId);
+
+    if (idData.seniorId > 0) {
+      getData();
+    }
+  }, [idData.seniorId]);
+
+  useEffect(() => {
+    const getData = async () => {
+      const res = await getConditionDetail(idData.seniorConditionId);
+      if (res.data) {
+        console.log(res);
+        setRecruitData(res.data);
+      }
+    };
+
+    console.log('idData.seniorConditionId', idData.seniorConditionId);
+
+    if (idData.seniorConditionId > 0) {
+      getData();
+    }
+  }, [idData.seniorConditionId]);
+
+  useEffect(() => {
+    console.log(idData);
+  }, [idData]);
+
   return (
     <Container>
       <Wrapper>
         <Title>어르신 정보</Title>
         <ImgWrapper>
-          <img src="" />
+          <img src={seniorData.profileImg} />
         </ImgWrapper>
         <Div>
           <FixedWrapper>
             <Key className="name">이름</Key>
-            <Val>김어스</Val>
+            <Val>{seniorData.name}</Val>
           </FixedWrapper>
           <FixedWrapper>
             <Key>성별</Key>
-            <Val>여</Val>
+            <Val>{seniorData.gender === 'M' ? '남' : '여'}</Val>
           </FixedWrapper>
         </Div>
         <FixedWrapper>
           <Key>생년월일</Key>
-          <Val>1985년 2월 15일</Val>
+          <Val>{translateDate(seniorData.birthDate || '2000-01-01')}</Val>
         </FixedWrapper>
         <FixedWrapper>
           <Key>장기요양등급</Key>
-          <Val>1급</Val>
+          <Val>{getKeyByValue(caringGradeOptions, seniorData.careLevel)}</Val>
         </FixedWrapper>
         <FixedWrapper>
           <Key>어르신 몸무게</Key>
-          <Val>51kg</Val>
+          <Val>{seniorData.weight}kg</Val>
         </FixedWrapper>
         <ItemWrapper>
           <Key>치매 증상</Key>
-          {getOptions('dementia').map((val, idx) => (
-            <CheckboxWrapper key={idx}>
-              <CheckBox disabled />
-              <label>{val}</label>
-            </CheckboxWrapper>
-          ))}
+          <div>
+            {seniorData.dementiaSymptoms?.map((val, idx) => {
+              return <Val key={idx}>{val}</Val>;
+            })}
+          </div>
         </ItemWrapper>
         <FixedWrapper>
           <Key>기타 보유 질병/질환</Key>
-          <Val>없음</Val>
+          <Val>{seniorData.etcDisease || '없음'}</Val>
         </FixedWrapper>
         <FixedWrapper>
           <Key>선호 요양사 성별</Key>
-          <CheckBoxRow>
-            <div>
-              <CheckBox disabled />
-              <label>무관</label>
-            </div>
-            <div>
-              <CheckBox disabled />
-              <label>여성</label>
-            </div>
-            <div>
-              <CheckBox disabled />
-              <label>남성</label>
-            </div>
-          </CheckBoxRow>
+          <Val>{recruitData.preferGender === 'M' ? '남' : '여'}</Val>
         </FixedWrapper>
         <FixedWrapper>
           <Key>주소</Key>
-          <Val>서울특별시 마포구 합정동</Val>
+          <Val>{seniorData.address}</Val>
         </FixedWrapper>
         <ItemWrapper>
           <Key>동거인 여부</Key>
-          {getOptions('cohabitation').map((val, idx) => (
-            <CheckboxWrapper key={idx}>
-              <CheckBox disabled />
-              <label>{val}</label>
-            </CheckboxWrapper>
-          ))}
+          <Val>
+            {getKeyByValue(coHabitationOptions, seniorData.cohabitationStatus)}
+          </Val>
         </ItemWrapper>
       </Wrapper>
 
@@ -82,51 +128,51 @@ const RecruitingDetail = () => {
         <Title>케어 필요 항목</Title>
         <FixedWrapper>
           <Key>근무종류</Key>
-          <Val>방문요양</Val>
+          <Val>{getKeyByValue(workTypeOptions, recruitData.workType)}</Val>
         </FixedWrapper>
 
         <ListWrapper>
           <ItemWrapper>
             <P>식사 보조</P>
-            {getOptions('meal').map((val, idx) => (
-              <CheckboxWrapper key={idx}>
-                <CheckBox disabled />
-                <label>{val}</label>
-              </CheckboxWrapper>
-            ))}
+            <div>
+              {recruitData.services.MEAL_ASSISTANCE?.map((item, idx) => {
+                return <Val key={idx}>{getKeyByValue(mealOptions, item)}</Val>;
+              })}
+            </div>
           </ItemWrapper>
         </ListWrapper>
         <ListWrapper>
           <ItemWrapper>
             <P>배변 보조</P>
-            {getOptions('toileting').map((val, idx) => (
-              <CheckboxWrapper key={idx}>
-                <CheckBox disabled />
-                <label>{val}</label>
-              </CheckboxWrapper>
-            ))}
+            <div>
+              {recruitData.services.TOILETING_ASSISTANCE?.map((item, idx) => {
+                return (
+                  <Val key={idx}>{getKeyByValue(toiletingOptions, item)}</Val>
+                );
+              })}
+            </div>
           </ItemWrapper>
         </ListWrapper>
         <ListWrapper>
           <ItemWrapper>
             <P>이동 보조</P>
-            {getOptions('mobility').map((val, idx) => (
-              <CheckboxWrapper key={idx}>
-                <CheckBox disabled />
-                <label>{val}</label>
-              </CheckboxWrapper>
-            ))}
+            <div>
+              {recruitData.services.MOBILITY_ASSISTANCE?.map((item, idx) => {
+                return (
+                  <Val key={idx}>{getKeyByValue(mobilityOptions, item)}</Val>
+                );
+              })}
+            </div>
           </ItemWrapper>
         </ListWrapper>
         <ListWrapper>
           <ItemWrapper>
             <P>일상생활</P>
-            {getOptions('daily').map((val, idx) => (
-              <CheckboxWrapper key={idx}>
-                <CheckBox disabled />
-                <label>{val}</label>
-              </CheckboxWrapper>
-            ))}
+            <div>
+              {recruitData.services.DAILY_LIFE_SUPPORT?.map((item, idx) => {
+                return <Val key={idx}>{getKeyByValue(dailyOptions, item)}</Val>;
+              })}
+            </div>
           </ItemWrapper>
         </ListWrapper>
       </Wrapper>
@@ -134,24 +180,44 @@ const RecruitingDetail = () => {
       <Wrapper>
         <Title>근무 상세 정보</Title>
         <FixedWrapper>
-          <Key>근무일정</Key>
-          <Val>
-            <p>목 12:00 ~ 14:00</p>
-            <p>금 12:00 ~ 14:00</p>
-          </Val>
+          <Key>{recruitData.title}</Key>
+          <div>
+            {recruitData.seniorSchedules?.map((item, idx) => {
+              return (
+                <Val key={idx}>
+                  {getKeyByValue(weekdayOptions, item.day)} {item.startTime} ~{' '}
+                  {item.endTime}
+                </Val>
+              );
+            })}
+          </div>
         </FixedWrapper>
         <FixedWrapper>
           <Key>근무조건</Key>
-          <Val>시급 13,000원</Val>
+          <Val>
+            {getKeyByValue(payTypeOptions, recruitData.payType)}{' '}
+            {recruitData.wage}원
+          </Val>
         </FixedWrapper>
         <ItemWrapper>
           <Key>복리후생</Key>
-          {getOptions('benefits').map((val, idx) => (
-            <CheckboxWrapper key={idx}>
-              <CheckBox disabled />
-              <label>{val}</label>
-            </CheckboxWrapper>
-          ))}
+          <div>
+            {recruitData.welfares.BENEFITS?.map((item, idx) => {
+              return (
+                <Val key={idx}>{getKeyByValue(benefitsOptions, item)}</Val>
+              );
+            })}
+          </div>
+        </ItemWrapper>
+        <ItemWrapper>
+          <Key>보험</Key>
+          <div>
+            {recruitData.welfares.INSURANCE?.map((item, idx) => {
+              return (
+                <Val key={idx}>{getKeyByValue(insuranceOptions, item)}</Val>
+              );
+            })}
+          </div>
         </ItemWrapper>
       </Wrapper>
 
@@ -165,18 +231,18 @@ const RecruitingDetail = () => {
         </FixedWrapper>
         <FixedWrapper>
           <Key>담당센터</Key>
-          <Val>서울노인 복지센터</Val>
+          <Val>{managerData.centerName}</Val>
         </FixedWrapper>
         <FixedWrapper>
           <Key>담당자 성함</Key>
-          <Val>김얼리</Val>
+          <Val>{managerData.name}</Val>
         </FixedWrapper>
         <FixedWrapper>
           <Key>담당자 연락처</Key>
-          <Val>
-            <p>earlyus@naver.com</p>
-            <p>010 - 1234 - 5678</p>
-          </Val>
+          <div>
+            <Val>{managerData.email}</Val>
+            <Val>{managerData.phoneNum}</Val>
+          </div>
         </FixedWrapper>
       </Wrapper>
     </Container>
@@ -207,7 +273,10 @@ const ImgWrapper = styled.div`
   width: 70%;
   min-height: 200px;
   max-height: 500px;
-  border: 1px solid black;
+  img {
+    width: 100%;
+    object-fit: cover;
+  }
 `;
 
 const Div = styled.div`

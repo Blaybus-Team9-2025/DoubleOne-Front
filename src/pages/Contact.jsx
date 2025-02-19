@@ -7,6 +7,8 @@ const Contact = () => {
   const params = useParams();
   const { id } = params;
 
+  // 어르신 정보 get api 호출
+
   return (
     <div style={{ marginTop: '100px' }}>
       <Header title="매칭" />

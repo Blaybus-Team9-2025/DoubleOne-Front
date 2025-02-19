@@ -11,10 +11,10 @@ export const postCondition = async (seniorId, data) => {
   }
 };
 
-// 근무 조건 목록 조회
-export const getConditions = async () => {
+// 근무 조건 목록 조회 (공고 목록)
+export const getConditions = async (managerId) => {
   try {
-    const res = await http.get('/managers/conditions');
+    const res = await http.get(`/managers/conditions/${managerId}/filters`);
     return res;
   } catch (err) {
     console.error(err);

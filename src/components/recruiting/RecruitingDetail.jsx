@@ -31,7 +31,7 @@ const RecruitingDetail = () => {
           disabled
           type="text"
           placeholder="요양보호센터"
-          value={managerData?.centerName}
+          value={managerData.centerName}
         />
       </Wrapper>
       <Wrapper>
@@ -40,7 +40,7 @@ const RecruitingDetail = () => {
           disabled
           type="text"
           placeholder="박요양"
-          value={managerData?.name}
+          value={managerData.name}
         />
       </Wrapper>
       <Wrapper>
@@ -50,13 +50,13 @@ const RecruitingDetail = () => {
           type="text"
           placeholder="abc@email.com"
           className="first"
-          value={managerData?.email}
+          value={managerData.email}
         />
         <Input
           disabled
           type="text"
           placeholder="010-0000-0000"
-          value={managerData?.phoneNum}
+          value={managerData.phoneNum}
         />
       </Wrapper>
     </Container>
