@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useAtomValue } from 'jotai';
+import { useAtomValue, useAtom } from 'jotai';
 import { useEffect, useState } from 'react';
 
 import Title from '../components/_common/Title';
@@ -27,12 +27,10 @@ import MobilityAssistance from '../components/recruiting/MobilityAssistance';
 import DailyAssistance from '../components/recruiting/DailyAssistance';
 
 import { postWorkerConditions } from '../api/worker';
-import {
-  CareworkerConditionsAtom,
-  CareWorkerInfoAtom,
-} from '../jotai/CareworkerInfo';
+import { CareworkerConditionsAtom } from '../jotai/CareworkerInfo';
 import { LoginAtom } from '../jotai/Login';
 import { getWorkerInfo } from '../api/worker';
+import { workerConditionIdAtom } from '../jotai/CareworkerInfo';
 
 const CareWorkerInfo = () => {
   const nav = useNavigate();
@@ -40,24 +38,32 @@ const CareWorkerInfo = () => {
   const { order } = params;
 
   const input = useAtomValue(CareworkerConditionsAtom);
-  const id = useAtomValue(LoginAtom);
-  const workerId = String(id.memberId);
+  const [workerConditionId, setWorkerConditionId] = useAtom(
+    workerConditionIdAtom
+  );
+  const { workerId } = useAtomValue(LoginAtom);
 
   const [workerInfo, setWorkerInfo] = useState();
 
   // 요양사 희망 근무 조건 등록
   const onSubmit = async () => {
-    console.log(workerId);
     const res = await postWorkerConditions(workerId, input);
 
+    console.log('res', res);
     if (res) {
       nav('/mypage/careworker');
     }
   };
 
+  console.log(input);
+
   const fetchData = async () => {
-    const res = getWorkerInfo(workerId);
+    const res = await getWorkerInfo(workerId);
     console.log('res', res.data);
+    setWorkerConditionId({
+      workerConditionId: res.data,
+    });
+
     if (res?.data) {
       setWorkerInfo(res.data);
     }

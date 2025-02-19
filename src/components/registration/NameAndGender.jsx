@@ -142,6 +142,7 @@ const ButtonContainer = styled.div`
     &.active {
       background-color: var(--blue);
       box-shadow: var(--shadow);
+      color: white;
     }
   }
 `;

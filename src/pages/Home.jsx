@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 
+import DetailModal from '../components/detailmodal/DetailModal';
+import CareWorkerDetail from '../components/detailmodal/CareWorkerDetail';
 import Header from '../components/_common/Header';
 import StaticsBoard from '../components/home/StaticsBoard';
 import MenuBoard from '../components/home/MenuBoard';
@@ -13,6 +15,7 @@ const Home = () => {
   return (
     <Container>
       <Header title="온림 溫林" />
+      {/* <DetailModal isOpen="true" type="careworker" /> */}
       {type === 'manager' ? (
         <StaticsBoard />
       ) : (

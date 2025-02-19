@@ -53,7 +53,6 @@ const CalendarMain = ({ home }) => {
               className="month"
               value={date.getMonth()}
               onChange={handleMonthChange}
-              disabled={home}
             >
               {months.map((month) => (
                 <option key={month} value={month - 1}>
@@ -61,11 +60,7 @@ const CalendarMain = ({ home }) => {
                 </option>
               ))}
             </Select>
-            <Select
-              value={date.getFullYear()}
-              onChange={handleYearChange}
-              disabled={home}
-            >
+            <Select value={date.getFullYear()} onChange={handleYearChange}>
               {years.map((year) => (
                 <option key={year} value={year}>
                   {year}
