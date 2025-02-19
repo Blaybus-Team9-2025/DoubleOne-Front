@@ -14,7 +14,7 @@ const DailyAssistance = ({ target }) => {
   const [input, setInput] = useAtom(atom);
 
   const atom = () => {
-    if (target === 'recruit') {
+    if (target === 'careworker') {
       return CareworkerConditionsAtom;
     }
 

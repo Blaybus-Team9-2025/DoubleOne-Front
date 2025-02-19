@@ -9,6 +9,7 @@ import darkCheck from '../../assets/checkCircle.svg';
 import { LabelStyle } from '../../util/common-style';
 import { CareworkerConditionsAtom } from '../../jotai/CareworkerInfo';
 import { getOptions } from '../../util/get-options';
+import { RecruitingInfoAtom } from '../../jotai/Recruiting';
 
 const weekdayOptions = getOptions('weekday');
 const weekdayMap = Object.assign({}, ...weekdayOptions);
@@ -16,8 +17,18 @@ const weekdayTypes = Object.keys(weekdayMap);
 
 const times = Array.from({ length: 13 }, (_, i) => `${9 + i}:00`);
 
-const Schedule = ({ recruiting }) => {
-  const [input, setInput] = useAtom(CareworkerConditionsAtom);
+const Schedule = ({ recruiting, target }) => {
+  const [input, setInput] = useAtom(atom);
+
+  const atom = () => {
+    if (target === 'careworker') {
+      return CareworkerConditionsAtom;
+    }
+
+    if (target === 'recruit') {
+      return RecruitingInfoAtom;
+    }
+  };
 
   const addDropdown = () => {
     if (input.scheduleDtoList.length < 20) {

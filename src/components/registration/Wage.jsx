@@ -7,6 +7,7 @@ import { InputStyle } from '../../util/common-style';
 import { LabelStyle } from '../../util/common-style';
 import { getMonthlyPay } from '../../util/get-monthly-wage';
 import { CareworkerConditionsAtom } from '../../jotai/CareworkerInfo';
+import { RecruitingInfoAtom } from '../../jotai/Recruiting';
 import { getOptions } from '../../util/get-options';
 
 // 한글 ↔ 영어 매핑
@@ -18,8 +19,18 @@ const reverseWageMap = Object.fromEntries(
 
 const wageTypes = Object.keys(wageMap);
 
-const Wage = ({ recruiting }) => {
-  const [input, setInput] = useAtom(CareworkerConditionsAtom);
+const Wage = ({ recruiting, target }) => {
+  const [input, setInput] = useAtom(atom);
+
+  const atom = () => {
+    if (target === 'careworker') {
+      return CareworkerConditionsAtom;
+    }
+
+    if (target === 'recruit') {
+      return RecruitingInfoAtom;
+    }
+  };
 
   // 한글 → 영어 변환하여 wageType 저장
   const updateWageType = (selected) => {
