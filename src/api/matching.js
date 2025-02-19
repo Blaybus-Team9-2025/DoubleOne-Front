@@ -60,3 +60,13 @@ export const getCurrentMatching = async (memberId) => {
     console.log(err);
   }
 };
+
+// 관리자 대시보드
+export const getMatchingStat = async (managerId) => {
+  try {
+    const res = await http.get(`/matching/${managerId}/stat`);
+    return res;
+  } catch (err) {
+    console.log(err);
+  }
+};

@@ -1,25 +1,80 @@
 import styled from 'styled-components';
+import { useParams } from 'react-router-dom';
+import { useAtomValue } from 'jotai';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { LoginAtom } from '../../jotai/Login';
+import { getMatchingStat } from '../../api/matching';
 
 const StaticsBoard = () => {
+  const params = useParams();
+  const { type } = params;
+  const nav = useNavigate();
+
+  const { managerId } = useAtomValue(LoginAtom);
+
+  const [data, setData] = useState({
+    totalMatchCount: 0,
+    newMatchCount: 0,
+    typeCountList: {
+      BEFORE_REQUEST: 0,
+      IN_PROGRESS: 0,
+      COMPLETED: 0,
+      WATING: 0,
+      PENDING: 0,
+      ACCEPTED: 0,
+      REJECTED: 0,
+    },
+    acceptanceRate: 0,
+    rejectionRate: 0,
+    seniorList: [
+      {
+        seniorId: -1,
+        name: '',
+        matchStatus: '',
+      },
+    ],
+  });
+
+  useEffect(() => {
+    const getData = async () => {
+      const res = await getMatchingStat(managerId);
+      if (res?.data) {
+        console.log(res.data);
+        setData(res.data);
+      }
+    };
+
+    if (managerId > 0) {
+      getData();
+    }
+  }, [managerId]);
+
+  // 비율 계산 함수
+  const getBarHeight = (count) => {
+    return data.totalMatchCount > 0 ? (count / data.totalMatchCount) * 100 : 0;
+  };
+
   return (
-    <Container>
+    <Container onClick={() => nav('/dashboard/status')}>
       <MonthResult>
         <p>이번 달 매칭</p>
         <GraphWrapper>
           <Graph>
-            <Bar height={70} />
+            <Bar height={getBarHeight(data.typeCountList.WATING)} />
             <p>대기중</p>
           </Graph>
           <Graph>
-            <Bar height={70} />
+            <Bar height={getBarHeight(data.typeCountList.IN_PROGRESS)} />
             <p>매칭중</p>
           </Graph>
           <Graph>
-            <Bar height={100} />
+            <Bar height={data.acceptanceRate} />
             <p>수락</p>
           </Graph>
           <Graph>
-            <Bar height={50} />
+            <Bar height={data.rejectionRate} />
             <p>거절</p>
           </Graph>
         </GraphWrapper>

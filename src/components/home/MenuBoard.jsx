@@ -1,11 +1,54 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import { useAtomValue } from 'jotai';
+import { useEffect, useState } from 'react';
 
 import SquareButton from '../_common/SquareButton';
 import logo from '../../assets/logo.png';
+import { LoginAtom } from '../../jotai/Login';
+import { getMatchingStat } from '../../api/matching';
 
 const MenuBoard = ({ type }) => {
   const nav = useNavigate();
+
+  const { managerId } = useAtomValue(LoginAtom);
+
+  const [data, setData] = useState({
+    totalMatchCount: 0,
+    newMatchCount: 0,
+    typeCountList: {
+      BEFORE_REQUEST: 0,
+      IN_PROGRESS: 0,
+      COMPLETED: 0,
+      WATING: 0,
+      PENDING: 0,
+      ACCEPTED: 0,
+      REJECTED: 0,
+    },
+    acceptanceRate: 0,
+    rejectionRate: 0,
+    seniorList: [
+      {
+        seniorId: -1,
+        name: '',
+        matchStatus: '',
+      },
+    ],
+  });
+
+  useEffect(() => {
+    const getData = async () => {
+      const res = await getMatchingStat(managerId);
+      if (res?.data) {
+        console.log(res.data);
+        setData(res.data);
+      }
+    };
+
+    if (managerId > 0) {
+      getData();
+    }
+  }, [managerId]);
 
   return (
     <Container className={type === 'manager' && 'manager'}>
@@ -20,16 +63,18 @@ const MenuBoard = ({ type }) => {
       </Header>
       {type === 'manager' ? (
         <BoxWrapper>
-          <Box className="inProgress">
+          <Box className="inProgress" onClick={() => nav('/list/inprogress')}>
             <Label>매칭 진행중</Label>
             <Percentage>
-              57<span>건</span>
+              {data?.typeCountList.IN_PROGRESS}
+              <span>건</span>
             </Percentage>
           </Box>
-          <Box className="complete">
+          <Box className="complete" onClick={() => nav('/list/acceptance')}>
             <Label>매칭 완료</Label>
             <Percentage>
-              89<span>건</span>
+              {data?.typeCountList.COMPLETED}
+              <span>건</span>
             </Percentage>
           </Box>
         </BoxWrapper>
