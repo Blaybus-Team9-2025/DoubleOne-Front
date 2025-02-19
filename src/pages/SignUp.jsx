@@ -73,9 +73,10 @@ const SignUp = () => {
   };
 
   const onSubmit = async () => {
-    // if (!validate()) {
-    //   return;
-    // }
+    if (!validate()) {
+      alert('입력 값을 확인해주세요');
+      return;
+    }
 
     try {
       let response;

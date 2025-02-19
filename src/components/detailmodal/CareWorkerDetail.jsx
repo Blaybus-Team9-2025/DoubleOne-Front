@@ -1,10 +1,92 @@
 import styled from 'styled-components';
+import { useEffect, useState } from 'react';
+import { useAtomValue } from 'jotai';
 
 import checkCircle from '../../assets/checkCircle.svg';
 import { CheckboxStyle } from '../../util/common-style';
 import { getOptions } from '../../util/get-options';
+import { getWorkerDetail, getWorkerInfo } from '../../api/worker';
+import { workerConditionIdAtom } from '../../jotai/CareworkerInfo';
+import { getKeyByValue } from '../../util/getKeyByValue';
+import { LoginAtom } from '../../jotai/Login';
+import { translateDate } from '../../util/calculateDate';
 
 const CareWorkerDetail = () => {
+  const { workerId } = useAtomValue(LoginAtom);
+  const { workerConditionId } = useAtomValue(workerConditionIdAtom);
+
+  const [info, setInfo] = useState({
+    workerId: -1,
+    name: '',
+    gender: 'M',
+    phoneNum: '',
+    hasTrained: false,
+    hasVehicle: false,
+    address: '',
+    zipcode: '',
+    detailAddress: '',
+  });
+
+  useEffect(() => {
+    const getInfo = async () => {
+      const res = await getWorkerInfo(workerId);
+      setInfo(res?.data);
+    };
+
+    getInfo();
+  }, [workerId]);
+
+  const [data, setData] = useState({
+    workerId: 1,
+    name: '',
+    gender: 'M',
+    phoneNum: '',
+    hasTrained: true,
+    hasVehicle: true,
+    address: '',
+    introduction: '',
+    memberId: -1,
+    password: '',
+    workerLicenses: [
+      {
+        licenseType: '',
+        licenseNum: '',
+      },
+    ],
+    workerRegions: [
+      {
+        city: '',
+        district: '',
+        neighborhood: '',
+      },
+    ],
+    workerSchedules: [
+      {
+        day: '',
+        startTime: '',
+        endTime: '',
+      },
+    ],
+  });
+
+  useEffect(() => {
+    const getData = async () => {
+      const res = await getWorkerDetail(workerConditionId);
+      setData(res?.data);
+    };
+
+    getData();
+  }, [workerConditionId]);
+
+  const licenseOptions = getOptions('license');
+  const mealOptions = getOptions('meal');
+  const weekdayOptions = getOptions('weekday');
+  const wageTypeOptions = getOptions('wageType');
+  const toiletiongOptions = getOptions('toileting');
+  const mobilityOptions = getOptions('mobility');
+  const dailyOptions = getOptions('daily');
+  const benefitOptions = getOptions('benefit');
+
   return (
     <Container>
       <Wrapper>
@@ -15,39 +97,39 @@ const CareWorkerDetail = () => {
         <Div>
           <FixedWrapper>
             <Key className="name">이름</Key>
-            <Val>김어스</Val>
+            <Val>{info.name}</Val>
           </FixedWrapper>
           <FixedWrapper>
             <Key>성별</Key>
-            <Val>여</Val>
+            <Val>{info.gender === 'M' ? '남' : '여'}</Val>
           </FixedWrapper>
         </Div>
         <FixedWrapper>
           <Key>생년월일</Key>
-          <Val>1985년 2월 15일</Val>
+          <Val>{info.birthDate}</Val>
         </FixedWrapper>
         <FixedWrapper>
           <Key>연락처</Key>
-          <Val>010-1234-5678</Val>
+          <Val>{info.phoneNum}</Val>
         </FixedWrapper>
         <FixedWrapper>
           <Key>주소</Key>
-          <Val>서울 특별시 마포구 합정동</Val>
+          <Val>{info.address}</Val>
         </FixedWrapper>
         <FixedWrapper>
           <Key>자격증</Key>
           <div>
-            <Val>요양보호사 1급</Val>
-            <Val>2014-0000</Val>
+            <Val>{getKeyByValue(licenseOptions, info.licenseType)}</Val>
+            <Val>{info.licenseNum}</Val>
           </div>
         </FixedWrapper>
         <FixedWrapper className="row">
           <Key>차량소유 여부</Key>
-          <Val>예</Val>
+          <Val>{info.hasVehicle ? '예' : '아니오'}</Val>
         </FixedWrapper>
         <FixedWrapper className="row">
           <Key>치매교육 이수 여부</Key>
-          <Val>아니오</Val>
+          <Val>{info.hasTrained ? '예' : '아니오'}</Val>
         </FixedWrapper>
       </Wrapper>
 
@@ -62,33 +144,37 @@ const CareWorkerDetail = () => {
             </div>
           </div>
           <div>
-            <Val>목 12:00 ~ 14:00</Val>
-            <Val>금 12:00 ~ 14:00</Val>
+            {data.workerSchedules.map((schedule, index) => (
+              <Val key={index}>
+                {getKeyByValue(weekdayOptions, schedule.day)}
+                {schedule.startTime} ~ {schedule.endTime}
+              </Val>
+            ))}
           </div>
         </FixedWrapper>
         <FixedWrapper>
           <Key>희망 시급</Key>
-          <Val>시급 13,000원</Val>
+          <Val>
+            {getKeyByValue(wageTypeOptions, data.wageType)} {data.wage}원
+          </Val>
         </FixedWrapper>
         <FixedWrapper>
           <Key>희망 근무지역</Key>
-          <div>
-            <Val>서울 특별시 마포구 합정동</Val>
-            <Val>서울 특별시 서대문구 대현동</Val>
-          </div>
+          {data.workerRegions.map((region, index) => (
+            <Val key={index}>
+              {region.city}
+              {region.district}
+              {region.neighborhood}
+            </Val>
+          ))}
         </FixedWrapper>
 
-        <FixedWrapper className="list">
+        {/* <FixedWrapper className="list">
           <Key>케어 가능 항목</Key>
           <ListWrapper>
             <ItemWrapper>
               <P>식사 보조</P>
-              {getOptions('meal').map((val, idx) => (
-                <CheckboxWrapper key={idx}>
-                  <CheckBox disabled />
-                  <label>{val}</label>
-                </CheckboxWrapper>
-              ))}
+              {getKeyByValue(mealOptions, data.)}
             </ItemWrapper>
           </ListWrapper>
           <ListWrapper>
@@ -124,23 +210,18 @@ const CareWorkerDetail = () => {
               ))}
             </ItemWrapper>
           </ListWrapper>
-        </FixedWrapper>
+        </FixedWrapper> */}
       </Wrapper>
 
       <Wrapper>
-        <Title>주요 경력</Title>
+        {/* <Title>주요 경력</Title>
         <FixedWrapper>
           <Val>식사지원</Val>
           <Val>2024.02.01 ~ 2025.02.01</Val>
-        </FixedWrapper>
+        </FixedWrapper> */}
         <FixedWrapper>
           <P>자기소개</P>
-          <p>
-            안녕하세요, 저는 요양보호사 1급 자격증을 보유하고 있으며, 어르신들의
-            편안한 생활을 돕는데 최선을 다하고 있습니다. 신체 활동 지원부터
-            정서적 교감까지 세심한 돌봄을 제공하며, 가족과 같은 따뜻한 마음으로
-            어르신을 모십니다.
-          </p>
+          <p>{data.introduction}</p>
         </FixedWrapper>
       </Wrapper>
     </Container>

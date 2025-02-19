@@ -11,9 +11,24 @@ export const postWorkerConditions = async (workerId, data) => {
 };
 
 // 요양사 기본 정보 편집
-export const editWorkerInfo = async (workerId, data) => {
+export const editWorkerInfo = async (workerId, data, imgFile) => {
+  console.log('data', data);
+
+  const formData = new FormData();
+
+  formData.append(
+    'data',
+    new Blob([JSON.stringify(data)], { type: 'application/json' })
+  );
+
+  formData.append('imgFile', imgFile);
+
   try {
-    const res = await http.patch(`/workers/${workerId}`, data);
+    const res = await http.patch(`/workers/${workerId}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
     return res;
   } catch (err) {
     console.log(err);

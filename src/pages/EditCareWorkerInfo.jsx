@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useState } from 'react';
 import { useAtom } from 'jotai';
 
@@ -13,6 +13,7 @@ import AddressInput from '../components/registration/AddressInput';
 import Password from '../components/signup/Password';
 import { CareWorkerInfoAtom } from '../jotai/CareworkerInfo';
 import { editWorkerInfo } from '../api/worker';
+import { LoginAtom } from '../jotai/Login';
 
 const ModalInfo1 = {
   type: 'confirm',
@@ -29,31 +30,9 @@ const ModalInfo2 = {
 
 const EditCareWorkerInfo = () => {
   const nav = useNavigate();
-  const onSave = async () => {
-    const patchData = {
-      seniorId: atom.seniorId,
-      careLevel: atom.careLevel,
-      address: atom.address,
-      etcDisease: atom.etcDisease,
-    };
-
-    //  if (!validate(patchData)) {
-    //    alert('입력값을 확인해주세요');
-    //    return;
-    //  }
-
-    //  let res;
-
-    //  if (imgFile) {
-    //    res = await editWorkerInfo(id, patchData, imgFile);
-    //  } else {
-    //    res = await editWorkerInfo(id, patchData, atom?.imgFile);
-    //  }
-
-    // 성공 시
-  };
 
   const [imgFile, setImgFile] = useState(null);
+  const { id } = useParams();
   const [atom, setAtom] = useAtom(CareWorkerInfoAtom);
 
   // 탈퇴하기 문구 눌렀을 때
@@ -72,6 +51,30 @@ const EditCareWorkerInfo = () => {
   const onClose = () => {
     setModal1Yn(false);
     setModal2Yn(false);
+  };
+
+  const onSave = async () => {
+    const patchData = {
+      workerId: id,
+      phoneNum: atom.phoneNum,
+      address: atom.address,
+      detailAddress: atom.detailAddress,
+      zipcode: atom.zipcode,
+      hasVehicle: atom.hasVehicle || false,
+      hasTrained: atom.hasTrained || false,
+      password: atom.password,
+      passwordConfirm: atom.passwordConfirm,
+    };
+
+    let res;
+
+    console.log('patchdata', patchData);
+
+    if (imgFile) {
+      res = await editWorkerInfo(id, patchData, imgFile);
+    } else {
+      res = await editWorkerInfo(id, patchData, atom?.imgFile);
+    }
   };
 
   return (
@@ -105,7 +108,11 @@ const EditCareWorkerInfo = () => {
         <Password type="edit" target="worker" />
       </Wrapper>
       <ButtonWrapper>
-        <RoundButton text="취소" mt="40" onClick={() => nav(-1)} />
+        <RoundButton
+          text="취소"
+          mt="40"
+          onClick={() => nav('mypage/careworker')}
+        />
         <RoundButton text="저장하기" color="green" onClick={onSave} />
         <p onClick={onClickDeactivate}>회원 탈퇴하기</p>
       </ButtonWrapper>

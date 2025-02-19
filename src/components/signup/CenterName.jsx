@@ -24,17 +24,25 @@ const CenterName = ({ type, error }) => {
   const [input, setInput] = useAtom(atom);
 
   const isValidCenter = async () => {
-    const res = await getCenterNames(input?.centerName);
+    try {
+      const res = await getCenterNames(input?.centerName);
+      console.log('center res', res.data);
 
-    console.log('center res', res.data);
+      if (res?.data) {
+        const trimmedInput = input?.centerName.replace(/\s+/g, '');
 
-    // 공백을 제거하고 비교
-    const trimmedInput = input?.centerName.replace(/\s+/g, '');
-    const isValid = res?.data?.some(
-      (name) => name.replace(/\s+/g, '') === trimmedInput
-    );
+        const isValid = res?.data?.some((name) => name.includes(trimmedInput));
 
-    setValidYn(isValid);
+        console.log('isValid', isValid);
+        setValidYn(isValid);
+      } else {
+        console.log('센터 정보가 없습니다.');
+        setValidYn(false);
+      }
+    } catch (error) {
+      console.error('센터 확인 에러', error);
+      setValidYn(true);
+    }
   };
 
   return (

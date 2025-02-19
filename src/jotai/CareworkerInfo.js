@@ -56,10 +56,14 @@ export const CareWorkerInfoAtom = atom({
   hasVehicle: false,
   address: '',
   zipcode: '',
-  detailedAddress: '',
+  detailAddress: '',
   password: '',
   confirmPassword: '',
   imgFile: '',
+});
+
+export const workerConditionIdAtom = atomWithStorage('workerConditionId', {
+  workerConditionId: -1,
 });
 
 export const CareWorkerPeriodsAtom = atomWithStorage('workPeriods', {
