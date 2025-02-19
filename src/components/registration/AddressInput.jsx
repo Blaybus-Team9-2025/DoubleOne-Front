@@ -27,7 +27,7 @@ const AddressInput = ({ required, type, target, error }) => {
       return KakaoWorkerSignupAtom;
     } else if (type === 'kakao' && target === 'manager') {
       return KakaoManagerSignupAtom;
-    } else if (type === 'edit' && target === 'worker') {
+    } else if (type === 'info' && target === 'worker') {
       return CareWorkerInfoAtom;
     } else if (type === 'info' && target === 'senior') {
       return SeniorInfoAtom;

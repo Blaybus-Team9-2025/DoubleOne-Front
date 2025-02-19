@@ -36,11 +36,12 @@ const Recruiting = () => {
     console.log(data, id);
     const res = await postCondition(id, data);
     console.log(res);
-    if (res.status === 200) {
+    if (res?.status === 200) {
       resetInput();
       resetId();
       nav('/mypage/manager');
     }
+    nav('/mypage/manager');
   };
 
   return (

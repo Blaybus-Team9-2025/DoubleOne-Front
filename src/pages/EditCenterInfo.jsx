@@ -16,7 +16,9 @@ const EditCenterInfo = () => {
   const [text, setText] = useState('');
   const nav = useNavigate();
 
-  const onSave = () => {};
+  const onSave = () => {
+    nav('/mypage/manager');
+  };
 
   return (
     <Container>
