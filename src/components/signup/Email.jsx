@@ -10,8 +10,7 @@ import {
   EmailWorkerSignupAtom,
   EmailManagerSignupAtom,
 } from '../../jotai/Signup';
-import { generateRandomCode } from '../../util/generateCode';
-import { sendEmailCode, verifyEmailCode } from '../../api/signup';
+import { sendEmail, verifyEmailCode } from '../../api/signup';
 
 const Email = ({ target, error }) => {
   const atom =
@@ -24,11 +23,9 @@ const Email = ({ target, error }) => {
     setInput((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const onSendCode = async () => {
-    let verificationCode = generateRandomCode();
-    await sendEmailCode({
+  const onGetCode = async () => {
+    await sendEmail({
       email: input.email,
-      verificationCode,
     });
   };
 
@@ -58,7 +55,7 @@ const Email = ({ target, error }) => {
             name="email"
             className={error && 'error'}
           />
-          <Button onClick={onSendCode}>인증번호 받기</Button>
+          <Button onClick={onGetCode}>인증번호 받기</Button>
         </Wrapper>
         <div>
           <Wrapper>

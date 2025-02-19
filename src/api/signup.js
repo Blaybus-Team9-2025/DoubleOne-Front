@@ -53,8 +53,8 @@ export const kakaoManagerSignup = async (data) => {
   }
 };
 
-// 이메일 + 인증 번호 전송
-export const sendEmailCode = async (data) => {
+// 이메일로 인증 번호 전송
+export const sendEmail = async (data) => {
   try {
     const res = await http.post('/email/send', {
       data,
@@ -69,7 +69,7 @@ export const sendEmailCode = async (data) => {
 // 이메일 + 인증 번호 검증
 export const verifyEmailCode = async (data) => {
   try {
-    const res = await http.get('/email/verify', {
+    const res = await http.post('/email/verify', {
       data,
     });
     console.log('res', res);

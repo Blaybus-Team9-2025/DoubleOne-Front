@@ -34,7 +34,7 @@ const Password = ({ required, target, error }) => {
 
   const onChangeCheckPw = (e) => {
     const newCheckPw = e.target.value;
-    setCheckPw(newCheckPw);
+    setInput((prev) => ({ ...prev, confirmPassword: newCheckPw }));
 
     if (newCheckPw !== input.password) {
       setErrorType('mismatch'); // 비밀번호와 불일치
@@ -66,7 +66,7 @@ const Password = ({ required, target, error }) => {
         <Input
           type="password"
           placeholder="비밀번호 확인"
-          value={checkPw}
+          value={input.confirmPassword}
           onChange={onChangeCheckPw}
           className={error && 'error'}
         />
