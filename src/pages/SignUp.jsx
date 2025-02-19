@@ -104,7 +104,7 @@ const SignUp = () => {
         if (type === 'email') {
           nav('/login');
         } else if (type === 'kakao') {
-          nav(`/home/${response?.memberType.toLowerCase()}`);
+          nav(`/home/${response?.data.memberType.toLowerCase()}`);
         }
       }
     } catch (error) {

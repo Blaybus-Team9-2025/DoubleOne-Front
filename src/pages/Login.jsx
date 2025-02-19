@@ -40,20 +40,20 @@ const Login = () => {
   const onLoginClick = async () => {
     const res = await EmailLogin(input);
 
-    if (res) {
+    if (res?.data) {
       setLoginInfo({
-        memberId: res.memberId,
-        memberType: res.memberType,
-        workerId: res.workerId,
-        managerId: res.managerId,
+        memberId: res.data.memberId,
+        memberType: res.data.memberType,
+        workerId: res.data.workerId,
+        managerId: res.data.managerId,
       });
 
       // 로그인 처리
-      window.localStorage.setItem('accessToken', res.accessToken);
-      window.localStorage.setItem('refreshToken', res.refreshToken);
+      window.localStorage.setItem('accessToken', res.data.accessToken);
+      window.localStorage.setItem('refreshToken', res.data.refreshToken);
 
       // 홈 페이지로 이동
-      nav(`/home/${res?.memberType.toLowerCase()}`);
+      nav(`/home/${res.data.memberType.toLowerCase()}`);
     } else {
       // 로그인 실패한 경우
       setModalYn(true);
