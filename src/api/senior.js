@@ -1,9 +1,9 @@
 import { http } from './http';
 
 // 어르신 정보 목록 조회
-export const getSeniorList = async () => {
+export const getSeniorList = async (sort) => {
   try {
-    const res = await http.get('/seniors');
+    const res = await http.get(`/seniors?sort=${sort}`);
     return res;
   } catch (err) {
     console.log(err);

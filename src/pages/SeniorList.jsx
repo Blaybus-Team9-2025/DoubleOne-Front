@@ -32,21 +32,29 @@ const SeniorList = () => {
     },
   ]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [filterType, setFilterType] = useState('latest');
+
   const setIdAtom = useSetAtom(IdAtom);
 
   useEffect(() => {
     const getData = async () => {
-      const res = await getSeniorList();
+      const res = await getSeniorList(filterType);
       setData(res?.data);
       console.log(res.data);
     };
 
     getData();
-  }, []);
+  }, [filterType]);
 
   const handleCardClick = (id) => {
     setIdAtom({ id: id });
     setIsModalOpen(true);
+  };
+
+  const handleFilter = () => {
+    const opt = document.getElementById('filter');
+    const optVal = opt.options[opt.selectedIndex].value;
+    setFilterType(optVal);
   };
 
   return (
@@ -55,10 +63,9 @@ const SeniorList = () => {
       <div>
         <InfoWrapper>
           <p>{data.length}건</p>
-          <select name="filter" id="filter">
+          <select name="filter" id="filter" onChange={handleFilter}>
             <option value={'latest'}>최신등록순</option>
-            <option value={'incomplete'}>매칭 미완료순</option>
-            <option value={'grade'}>요양 등급순</option>
+            <option value={'unmatched'}>매칭 미완료순</option>
           </select>
         </InfoWrapper>
         <CardsDiv>

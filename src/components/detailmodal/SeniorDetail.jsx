@@ -75,7 +75,7 @@ const SeniorDetail = ({ edit }) => {
         </FixedWrapper>
         <FixedWrapper>
           <Key>어르신 몸무게</Key>
-          <Val>51kg</Val>
+          <Val>{data.weight}kg</Val>
         </FixedWrapper>
         <ItemWrapper>
           <Key>치매 증상</Key>

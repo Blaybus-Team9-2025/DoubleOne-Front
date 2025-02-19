@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 import Header from '../components/_common/Header';
@@ -7,25 +7,21 @@ import Title from '../components/_common/Title';
 import Modal from '../components/_common/Modal';
 import RoundButton from '../components/_common/RoundButton';
 import ImgUpload from '../components/registration/ImgUpload';
-import AddressInput from '../components/registration/AddressInput';
 import CaringGrade from '../components/seniorinfo/CaringGrade';
-import Height from '../components/seniorinfo/Height';
-import Weight from '../components/seniorinfo/Weight';
-import Dementia from '../components/seniorinfo/Dementia';
 import EtcDisease from '../components/seniorinfo/EtcDisease';
-import Cohabitation from '../components/seniorinfo/Cohabitation';
 import { useAtom, useAtomValue } from 'jotai';
-import { IdAtom } from '../jotai/Id';
-import { getSeniorDetail, patchSenior } from '../api/senior';
-import NameAndGender from '../components/registration/NameAndGender';
+import { deleteSenior, getSeniorDetail, patchSenior } from '../api/senior';
 import { SeniorInfoAtom } from '../jotai/SeniorInfo';
 import { LoginAtom } from '../jotai/Login';
-import BirthDate from '../components/registration/BirthDate';
+import { translateDate } from '../util/calculateDate';
+import { getKeyByValue } from '../util/getKeyByValue';
+import { getOptions } from '../util/get-options';
+import { InputStyle, LabelStyle } from '../util/common-style';
 
 const EditSeniorInfo = () => {
   const ModalInfo1 = {
     type: 'confirm',
-    text: `${atom.name} 어르신 정보를 삭제하시겠습니까?`,
+    text: `어르신 정보를 삭제하시겠습니까?`,
     btnText1: '아니오',
     btnText2: '예',
   };
@@ -37,34 +33,31 @@ const EditSeniorInfo = () => {
   };
 
   const { managerId } = useAtomValue(LoginAtom);
-  const { id } = useAtomValue(IdAtom);
+  const { id } = useParams();
   const [atom, setAtom] = useAtom(SeniorInfoAtom);
 
   useEffect(() => {
+    // 어르신 정보 가져오기
     const getData = async () => {
       const res = await getSeniorDetail(id);
       setAtom({ ...res?.data, managerId: managerId });
-      setDementiaSymptoms(atom.dementiaSymptoms);
-
       console.log(res.data);
     };
 
-    // getData();
-  }, [id]);
+    getData();
+  }, [id, managerId]);
 
+  // 빈 필드 검증
   const [error, setError] = useState(
     Object.keys(atom).reduce((acc, key) => ({ ...acc, [key]: false }), {})
   );
 
-  const validate = () => {
+  const validate = (patchData) => {
     const newErrors = {};
 
-    Object.entries(atom).forEach(([key, val]) => {
-      if (key !== 'height' && key !== 'etcDisease' && !val) {
+    Object.entries(patchData).forEach(([key, val]) => {
+      if (key !== 'etcDisease' && !val) {
         newErrors[key] = true; // 값이 비어있으면 오류로 설정
-      }
-      if (key === 'dementiaSymptoms' && val.length <= 0) {
-        newErrors[key] = true;
       }
     });
     setError(newErrors); // 한 번에 setError 실행
@@ -72,30 +65,34 @@ const EditSeniorInfo = () => {
     return Object.keys(newErrors).length === 0; // 오류가 없으면 true 반환
   };
 
-  const [dementiaSymptoms, setDementiaSymptoms] = useState([]);
   const [imgFile, setImgFile] = useState(null);
+
+  const coHabitationOptions = getOptions('cohabitation');
 
   const nav = useNavigate();
   // 저장하기 버튼 클릭
   const onSave = async () => {
     const patchData = {
-      managerId: atom.managerId,
-      name: atom.name,
-      gender: atom.gender,
-      birthDate: atom.birthDate,
+      seniorId: atom.seniorId,
       careLevel: atom.careLevel,
-      height: atom.height,
-      weight: atom.weight,
       address: atom.address,
-      cohabitationStatus: atom.cohabitationStatus,
-      dementiaSymptoms: atom.dementiaSymptoms,
       etcDisease: atom.etcDisease,
     };
-    if (imgFile) {
-      const res = await patchSenior(id, patchData, imgFile);
-    } else {
-      const res = await patchSenior(id, patchData, atom.imgFile);
+
+    if (!validate(patchData)) {
+      alert('입력값을 확인해주세요');
+      return;
     }
+
+    let res;
+
+    if (imgFile) {
+      res = await patchSenior(id, patchData, imgFile);
+    } else {
+      res = await patchSenior(id, patchData, atom?.imgFile);
+    }
+
+    // 성공 시
   };
 
   // 삭제하기 문구 눌렀을 때
@@ -104,8 +101,17 @@ const EditSeniorInfo = () => {
   };
 
   // 삭제하기 모달에서 '예' 눌렀을 때
-  const onDeactivate = () => {
+  const onDeactivate = async () => {
     setModal2Yn(true);
+    const res = await deleteSenior(id);
+    console.log(res);
+    if (res.status === 204) {
+      nav(-1);
+      setModal2Yn(true);
+    } else {
+      setModal2Yn(true);
+      alert('삭제를 실패했습니다.');
+    }
   };
 
   const [modal1Yn, setModal1Yn] = useState(false);
@@ -121,46 +127,68 @@ const EditSeniorInfo = () => {
       <Header title="어르신 정보 수정하기" />
       <Wrapper>
         <Title>
-          <p>{atom.name} 어르신</p>
+          <p>{atom?.name} 어르신</p>
         </Title>
-        <ImgUpload edit setEditedImg={setImgFile} url={atom.profileImg} />
-        <NameAndGender type={'info'} target={'senior'} error={error.name} />
-        <BirthDate type={'info'} target={'senior'} error={error.birthDate} />
+        <ImgUpload edit setEditedImg={setImgFile} url={atom?.profileImg} />
+        <Div>
+          <FixedWrapper>
+            <Key>이름</Key>
+            <Val>{atom?.name}</Val>
+          </FixedWrapper>
+          <FixedWrapper>
+            <Key>성별</Key>
+            <Val>{atom?.gender === 'M' ? '남' : '여'}성</Val>
+          </FixedWrapper>
+        </Div>
+        <FixedWrapper>
+          <Key>생년월일</Key>
+          <Val>{translateDate(atom?.birthDate)}</Val>
+        </FixedWrapper>
         <CaringGrade
           setCaringGrade={(input) =>
             setAtom((prev) => ({ ...prev, careLevel: input }))
           }
           error={error.careLevel}
-          data={atom.careLevel}
+          data={atom?.careLevel}
         />
-        <Height
-          setHeight={(input) => setAtom((prev) => ({ ...prev, height: input }))}
-          data={atom.height}
-        />
-        <Weight
-          setWeight={(input) => setAtom((prev) => ({ ...prev, weight: input }))}
-          error={error.weight}
-          data={atom.weight}
-        />
-        <Dementia
-          dementia={dementiaSymptoms}
-          setDementia={setDementiaSymptoms}
-          error={error.dementiaSymptoms}
-        />
+        <FixedWrapper>
+          <Key>어르신 키</Key>
+          <Val>{atom.height}cm</Val>
+        </FixedWrapper>
+        <FixedWrapper>
+          <Key>어르신 몸무게</Key>
+          <Val>{atom.weight}kg</Val>
+        </FixedWrapper>
+        <div>
+          <Key>치매 증상</Key>
+          {atom?.dementiaSymptoms.map((val, idx) => {
+            return <Val key={idx}>{val}</Val>;
+          })}
+        </div>
         <EtcDisease
           setEtcDisease={(input) =>
             setAtom((prev) => ({ ...prev, etcDisease: input }))
           }
-          data={atom.etcDisease}
+          data={atom?.etcDisease}
         />
-        <AddressInput type={'info'} target={'senior'} error={error.address} />
-        <Cohabitation
-          setCohabitation={(input) =>
-            setAtom((prev) => ({ ...prev, cohabitationStatus: input }))
-          }
-          error={error.cohabitationStatus}
-          data={atom.cohabitationStatus}
-        />
+        <Address>
+          <Label htmlFor="address">주소</Label>
+          <Input
+            className={`address ${error.address && 'error'}`}
+            type="text"
+            value={atom.address}
+            name="address"
+            onChange={(e) =>
+              setAtom((prev) => ({ ...prev, address: e.target.value }))
+            }
+          />
+        </Address>
+        <FixedWrapper>
+          <Key>동거인 여부</Key>
+          <Val>
+            {getKeyByValue(coHabitationOptions, atom?.cohabitationStatus)}
+          </Val>
+        </FixedWrapper>
       </Wrapper>
       <ButtonWrapper>
         <RoundButton text="취소" mt="40" onClick={() => nav(-1)} />
@@ -222,5 +250,23 @@ const ButtonWrapper = styled.div`
     text-decoration: underline;
     margin-bottom: 30px;
     cursor: pointer;
+  }
+`;
+
+const Address = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+`;
+
+const Label = styled.label`
+  ${LabelStyle}
+`;
+
+const Input = styled.input`
+  ${InputStyle}
+
+  .error {
+    border-color: var(--red);
   }
 `;
