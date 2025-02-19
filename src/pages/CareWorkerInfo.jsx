@@ -79,8 +79,8 @@ const CareWorkerInfo = () => {
           <Title mb="20">
             <p>근무 요건 등록</p>
           </Title>
-          <Schedule target={'careworker'} />
-          <Wage target={'careworker'} />
+          <Schedule />
+          <Wage />
           <Location />
           <Div>
             <p>케어 가능 항목(중복 선택 가능)</p>

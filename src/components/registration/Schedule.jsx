@@ -10,6 +10,7 @@ import { LabelStyle } from '../../util/common-style';
 import { CareworkerConditionsAtom } from '../../jotai/CareworkerInfo';
 import { getOptions } from '../../util/get-options';
 import { RecruitingInfoAtom } from '../../jotai/Recruiting';
+import { useMemo } from 'react';
 
 const weekdayOptions = getOptions('weekday');
 const weekdayMap = Object.assign({}, ...weekdayOptions);
@@ -17,43 +18,63 @@ const weekdayTypes = Object.keys(weekdayMap);
 
 const times = Array.from({ length: 13 }, (_, i) => `${9 + i}:00`);
 
-const Schedule = ({ recruiting, target }) => {
+const Schedule = ({ recruiting }) => {
+  const atom = useMemo(
+    () => (recruiting ? RecruitingInfoAtom : CareworkerConditionsAtom),
+    [recruiting]
+  );
   const [input, setInput] = useAtom(atom);
 
-  const atom = () => {
-    if (target === 'careworker') {
-      return CareworkerConditionsAtom;
-    }
-
-    if (target === 'recruit') {
-      return RecruitingInfoAtom;
-    }
-  };
-
   const addDropdown = () => {
-    if (input.scheduleDtoList.length < 20) {
-      setInput((prev) => ({
-        ...prev,
-        scheduleDtoList: [
-          ...prev.scheduleDtoList,
-          { day: '', startTime: '', endTime: '' },
-        ],
-      }));
+    if (recruiting) {
+      if (input?.seniorSchedules.length < 20) {
+        setInput((prev) => ({
+          ...prev,
+          seniorSchedules: [
+            ...prev.seniorSchedules,
+            { day: '', startTime: '', endTime: '' },
+          ],
+        }));
+      }
+    } else {
+      if (input?.scheduleDtoList.length < 20) {
+        setInput((prev) => ({
+          ...prev,
+          scheduleDtoList: [
+            ...prev.scheduleDtoList,
+            { day: '', startTime: '', endTime: '' },
+          ],
+        }));
+      }
     }
   };
 
   const updateSchedule = (index, field, value) => {
-    setInput((prev) => ({
-      ...prev,
-      scheduleDtoList: prev.scheduleDtoList.map((schedule, i) =>
-        i === index
-          ? {
-              ...schedule,
-              [field]: field === 'day' ? weekdayMap[value] ?? value : value,
-            }
-          : schedule
-      ),
-    }));
+    if (recruiting) {
+      setInput((prev) => ({
+        ...prev,
+        seniorSchedules: prev.seniorSchedules.map((schedule, i) =>
+          i === index
+            ? {
+                ...schedule,
+                [field]: field === 'day' ? weekdayMap[value] ?? value : value,
+              }
+            : schedule
+        ),
+      }));
+    } else {
+      setInput((prev) => ({
+        ...prev,
+        scheduleDtoList: prev.scheduleDtoList.map((schedule, i) =>
+          i === index
+            ? {
+                ...schedule,
+                [field]: field === 'day' ? weekdayMap[value] ?? value : value,
+              }
+            : schedule
+        ),
+      }));
+    }
   };
 
   const onChangeDiscuss = () => {
@@ -68,44 +89,48 @@ const Schedule = ({ recruiting, target }) => {
       <Wrapper>
         <Label>근무 일정</Label>
         {!recruiting && <Required />}
-        <Exp onClick={() => onChangeDiscuss()}>
-          <img src={input?.discuss ? darkCheck : lightCheck} />
-          <span className={input?.discuss && 'nego'}>협의가능</span>
-        </Exp>
+        {!recruiting && (
+          <Exp onClick={() => onChangeDiscuss()}>
+            <img src={input?.discuss ? darkCheck : lightCheck} />
+            <span className={input?.discuss && 'nego'}>협의가능</span>
+          </Exp>
+        )}
       </Wrapper>
-      {input.scheduleDtoList.map((schedule, index) => (
-        <DropdownWrapper key={index}>
-          <Dropdown
-            exp="요일"
-            width="30%"
-            green
-            options={weekdayTypes}
-            value={
-              Object.keys(weekdayOptions).find(
-                (key) => weekdayOptions[key] === schedule.day
-              ) || ''
-            }
-            onChange={(val) => updateSchedule(index, 'day', val)}
-          />
-          <Dropdown
-            exp="시작시간"
-            width="40%"
-            green
-            options={times}
-            value={schedule.startTime}
-            onChange={(val) => updateSchedule(index, 'startTime', val)}
-          />
-          <span>~</span>
-          <Dropdown
-            exp="종료시간"
-            width="40%"
-            green
-            options={times}
-            value={schedule.endTime}
-            onChange={(val) => updateSchedule(index, 'endTime', val)}
-          />
-        </DropdownWrapper>
-      ))}
+      {input[recruiting ? 'seniorSchedules' : 'scheduleDtoList']?.map(
+        (schedule, index) => (
+          <DropdownWrapper key={index}>
+            <Dropdown
+              exp="요일"
+              width="30%"
+              green
+              options={weekdayTypes}
+              value={
+                Object.keys(weekdayOptions).find(
+                  (key) => weekdayOptions[key] === schedule.day
+                ) || ''
+              }
+              onChange={(val) => updateSchedule(index, 'day', val)}
+            />
+            <Dropdown
+              exp="시작시간"
+              width="40%"
+              green
+              options={times}
+              value={schedule.startTime}
+              onChange={(val) => updateSchedule(index, 'startTime', val)}
+            />
+            <span>~</span>
+            <Dropdown
+              exp="종료시간"
+              width="40%"
+              green
+              options={times}
+              value={schedule.endTime}
+              onChange={(val) => updateSchedule(index, 'endTime', val)}
+            />
+          </DropdownWrapper>
+        )
+      )}
       <AddInput onClick={addDropdown} />
     </Container>
   );

@@ -6,22 +6,19 @@ import { LabelStyle } from '../../util/common-style';
 import { getOptions } from '../../util/get-options';
 import { CareworkerConditionsAtom } from '../../jotai/CareworkerInfo';
 import { RecruitingInfoAtom } from '../../jotai/Recruiting';
+import { useMemo } from 'react';
 
 const DailyAssistance = ({ target }) => {
   const options = getOptions('daily');
   const optionKeys = options.map((obj) => Object.keys(obj)[0]);
   const optionValues = options.map((obj) => Object.values(obj)[0]);
+
+  const atom = useMemo(
+    () =>
+      target === 'recruit' ? RecruitingInfoAtom : CareworkerConditionsAtom,
+    [target]
+  );
   const [input, setInput] = useAtom(atom);
-
-  const atom = () => {
-    if (target === 'careworker') {
-      return CareworkerConditionsAtom;
-    }
-
-    if (target === 'recruit') {
-      return RecruitingInfoAtom;
-    }
-  };
 
   const handleCheckboxChange = (value) => {
     setInput((prev) => {
@@ -48,7 +45,7 @@ const DailyAssistance = ({ target }) => {
             <input
               type="checkbox"
               id={val}
-              checked={input.services.DAILY_LIFE_SUPPORT.includes(
+              checked={input?.services.DAILY_LIFE_SUPPORT.includes(
                 optionValues[idx]
               )}
               onChange={() => handleCheckboxChange(optionValues[idx])}

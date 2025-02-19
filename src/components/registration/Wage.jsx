@@ -9,6 +9,7 @@ import { getMonthlyPay } from '../../util/get-monthly-wage';
 import { CareworkerConditionsAtom } from '../../jotai/CareworkerInfo';
 import { RecruitingInfoAtom } from '../../jotai/Recruiting';
 import { getOptions } from '../../util/get-options';
+import { useMemo } from 'react';
 
 // 한글 ↔ 영어 매핑
 const wageOptions = getOptions('wageType'); // [{ 시급: 'HOURLY' }, { 일급: 'DAILY' }, ... ]
@@ -19,18 +20,12 @@ const reverseWageMap = Object.fromEntries(
 
 const wageTypes = Object.keys(wageMap);
 
-const Wage = ({ recruiting, target }) => {
+const Wage = ({ recruiting }) => {
+  const atom = useMemo(
+    () => (recruiting ? RecruitingInfoAtom : CareworkerConditionsAtom),
+    [recruiting]
+  );
   const [input, setInput] = useAtom(atom);
-
-  const atom = () => {
-    if (target === 'careworker') {
-      return CareworkerConditionsAtom;
-    }
-
-    if (target === 'recruit') {
-      return RecruitingInfoAtom;
-    }
-  };
 
   // 한글 → 영어 변환하여 wageType 저장
   const updateWageType = (selected) => {
@@ -41,10 +36,18 @@ const Wage = ({ recruiting, target }) => {
   };
 
   const onChangeWage = (e) => {
-    setInput((prev) => ({
-      ...prev,
-      wage: e.target.value,
-    }));
+    if (recruiting) {
+      setInput((prev) => ({
+        ...prev,
+        wage: e.target.value,
+        amount: getMonthlyPay(prev.wageType, e.target.value),
+      }));
+    } else {
+      setInput((prev) => ({
+        ...prev,
+        wage: e.target.value,
+      }));
+    }
   };
 
   return (
@@ -56,19 +59,19 @@ const Wage = ({ recruiting, target }) => {
       <Wrapper>
         <Dropdown
           width="25%"
-          init={reverseWageMap[input.wageType] || '시급'}
+          init={reverseWageMap[input?.wageType] || '시급'}
           options={wageTypes}
           onChange={updateWageType}
         />
         <InputWrapper>
-          <Input value={input.wage} onChange={onChangeWage} />
+          <Input value={input?.wage} onChange={onChangeWage} />
           <Unit>원</Unit>
         </InputWrapper>
-        {input.wageType !== 'PER_TASK' && (
+        {input?.wageType !== 'PER_TASK' && (
           <MonthlyPay>
             <p>
               (월급:{' '}
-              {getMonthlyPay(input.wageType, input.wage).toLocaleString()} ₩)
+              {getMonthlyPay(input?.wageType, input?.wage).toLocaleString()} ₩)
             </p>
           </MonthlyPay>
         )}
