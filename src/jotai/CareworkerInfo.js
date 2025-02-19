@@ -1,4 +1,5 @@
 import { atom } from 'jotai';
+import { atomWithStorage } from 'jotai/utils';
 
 // 요양 보호사 희망 근무 조건
 export const CareworkerConditionsAtom = atom({
@@ -55,8 +56,12 @@ export const CareWorkerInfoAtom = atom({
   hasVehicle: false,
   address: '',
   zipcode: '',
-  detailedAddress: '',
+  detailAddress: '',
   password: '',
   confirmPassword: '',
   imgFile: '',
+});
+
+export const workerConditionIdAtom = atomWithStorage('workerConditionId', {
+  workerConditionId: -1,
 });

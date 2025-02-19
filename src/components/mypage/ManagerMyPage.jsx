@@ -35,9 +35,7 @@ const ManagerMyPage = () => {
     <div>
       <ManagerProfile />
       <ButtonDiv>
-        <button onClick={() => nav(`/editmanagerinfo/${1}`)}>
-          개인정보 수정하기
-        </button>
+        <button>개인정보 수정하기</button>
         <button onClick={() => nav(`/editcenterinfo/${1}`)}>
           센터정보 수정하기
         </button>

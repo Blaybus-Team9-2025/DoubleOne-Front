@@ -10,7 +10,7 @@ const MenuBoard = ({ type }) => {
   return (
     <Container className={type === 'manager' && 'manager'}>
       <Header>
-        <ProfileWrapper onClick={() => nav('/mypage')}>
+        <ProfileWrapper>
           <ProfileImg>
             <img src={logo} />
           </ProfileImg>

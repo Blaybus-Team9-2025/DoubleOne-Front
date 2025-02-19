@@ -35,7 +35,7 @@ const Email = ({ target, error }) => {
       verificationCode: code,
     });
 
-    if (!res?.status === 200) {
+    if (!res) {
       setMatchYn(false);
     } else {
       setMatchYn(true);
