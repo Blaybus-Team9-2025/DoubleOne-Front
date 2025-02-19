@@ -35,6 +35,7 @@ import DashStatus from './components/dashboard/status/DashStatus';
 import DashMatching from './components/dashboard/matching/DashMatching';
 import MatchingList from './pages/MatchingList';
 import ScrollToTop from './util/ScollToTop';
+import SeniorSelectList from './pages/SeniorSelectList';
 
 function App() {
   return (
@@ -48,10 +49,7 @@ function App() {
           <Route path="careworker" element={<WorkerMyPage />} />
         </Route>
         <Route path="/login" element={<Login />} />
-        <Route
-          path="/login/oauth2/code/kakao"
-          element={<KakaoAuthPage />}
-        />
+        <Route path="/login/oauth2/code/kakao" element={<KakaoAuthPage />} />
         <Route path="/signupselect/:type" element={<SignUpSelect />} />
         <Route path="/signup/:type/:target" element={<SignUp />} />
         <Route path="/contact/:id" element={<Contact />} />
@@ -72,6 +70,7 @@ function App() {
           <Route path="finish" element={<PwFinish />} />
         </Route>
         <Route path="/seniorinfo/:type" element={<SeniorInfo />} />
+        <Route path="/recruiting/select" element={<SeniorSelectList />} />
         <Route path="/recruiting/:order" element={<Recruiting />} />
         <Route path="/editcenterinfo/:id" element={<EditCenterInfo />} />
         <Route path="/editmanagerinfo/:id" element={<EditManagerInfo />} />

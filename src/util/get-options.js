@@ -32,16 +32,22 @@ export const getOptions = (type) => {
       ];
     case 'benefits':
       return [
-        '4대 보험',
-        '교통비 지원',
-        '퇴직 급여',
-        '경조사비',
-        '명절선물',
-        '식사(비) 지원',
-        '장기근속 장려금',
-        '정부지원금',
-        '중증가산수당',
-        '운전수당',
+        { '퇴직 급여': 'RETIREMENT_ALLOWANCE' },
+        { 명절선물: 'HOLIDAY_GIFT' },
+        { '장기근속 장려금': 'LONG_SERVICE_BONUS' },
+        { 중증가산수당: 'DISABILITY_BONUS' },
+        { '교통비 지원': 'TRANSPORT_SUPPORT' },
+        { 경조사비: 'CONDOLENCE_SUPPORT' },
+        { '식사(비) 지원': 'MEAL_SUPPORT' },
+        { 정부지원금: 'GOVERNMENT_AID' },
+        { 운전수당: 'DRIVING_ALLOWANCE' },
+      ];
+    case 'insurance':
+      return [
+        { 국민연금: 'NATIONAL_PENSION' },
+        { 건강보험: 'HEALTH_INSURANCE' },
+        { 고용보험: 'EMPLOYMENT_INSURANCE' },
+        { 산재보험: 'INDUSTRIAL_INSURANCE' },
       ];
     case 'dementia':
       return [
