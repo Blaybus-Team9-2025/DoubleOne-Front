@@ -71,10 +71,10 @@ export const getOptions = (type) => {
     case 'license':
       return [
         { '요양보호사(필수) 1급': 'CAREGIVER' },
-        { '사회복지사 1급': 'SOCIAL_WORKER' },
-        { '사회복지사 2급': 'SOCIAL_WORKER' },
-        { '간호지원사 1급': 'NURSE_ASSISTANT' },
-        { '간호지원사 2급': 'NURSE_ASSISTANT' },
+        { '사회복지사 1급': 'SOCIAL_WORKER_1' },
+        { '사회복지사 2급': 'SOCIAL_WORKER_2' },
+        { '간호지원사 1급': 'NURSE_ASSISTANT_1' },
+        { '간호지원사 2급': 'NURSE_ASSISTANT_2' },
       ];
     case 'caringGrade':
       return [
@@ -103,6 +103,15 @@ export const getOptions = (type) => {
         { 금: 'FRI' },
         { 토: 'SAT' },
         { 일: 'SUN' },
+      ];
+    case 'workType':
+      return [
+        { 방문요양: 'HOME_CARE' },
+        { 입주요양: 'LIVE_IN' },
+        { 방문목욕: 'BATH' },
+        { 주야간보호: 'DAY_CARE' },
+        { 요양원: 'FACILITY' },
+        { 병원동행: 'HOSPITAL' },
       ];
   }
 };

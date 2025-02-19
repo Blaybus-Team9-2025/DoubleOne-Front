@@ -6,20 +6,13 @@ import { LabelStyle } from '../../util/common-style';
 import { useAtom } from 'jotai';
 import { RecruitingInfoAtom } from '../../jotai/Recruiting';
 import { getKeyByValue } from '../../util/getKeyByValue';
-
-const options = [
-  { 방문요양: 'HOME_CARE' },
-  { 입주요양: 'LIVE_IN' },
-  { 방문목욕: 'BATH' },
-  { 주야간보호: 'DAY_CARE' },
-  { 요양원: 'FACILITY' },
-  { 병원동행: 'HOSPITAL' },
-];
+import { getOptions } from '../../util/get-options';
 
 const WorkType = () => {
   const [selectedIdx, setSelectedIdx] = useState(null);
   const [input, setInput] = useAtom(RecruitingInfoAtom);
 
+  const options = getOptions('workType');
   const optionKeys = options.map((obj) => Object.keys(obj)[0]);
 
   const handleChange = (idx) => {
