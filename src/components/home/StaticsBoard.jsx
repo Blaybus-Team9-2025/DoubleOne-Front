@@ -62,19 +62,19 @@ const StaticsBoard = () => {
         <p>이번 달 매칭</p>
         <GraphWrapper>
           <Graph>
-            <Bar height={getBarHeight(data.typeCountList.WATING)} />
+            <Bar height={60} />
             <p>대기중</p>
           </Graph>
           <Graph>
-            <Bar height={getBarHeight(data.typeCountList.IN_PROGRESS)} />
+            <Bar height={40} />
             <p>매칭중</p>
           </Graph>
           <Graph>
-            <Bar height={data.acceptanceRate} />
+            <Bar height={30} />
             <p>수락</p>
           </Graph>
           <Graph>
-            <Bar height={data.rejectionRate} />
+            <Bar height={10} />
             <p>거절</p>
           </Graph>
         </GraphWrapper>

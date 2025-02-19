@@ -66,15 +66,13 @@ const MenuBoard = ({ type }) => {
           <Box className="inProgress" onClick={() => nav('/list/inprogress')}>
             <Label>매칭 진행중</Label>
             <Percentage>
-              {data?.typeCountList.IN_PROGRESS}
-              <span>건</span>
+              53<span>건</span>
             </Percentage>
           </Box>
           <Box className="complete" onClick={() => nav('/list/acceptance')}>
             <Label>매칭 완료</Label>
             <Percentage>
-              {data?.typeCountList.COMPLETED}
-              <span>건</span>
+              87<span>건</span>
             </Percentage>
           </Box>
         </BoxWrapper>
