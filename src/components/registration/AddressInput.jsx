@@ -13,6 +13,7 @@ import {
   KakaoWorkerSignupAtom,
 } from '../../jotai/Signup';
 import { SeniorInfoAtom } from '../../jotai/SeniorInfo';
+import { CareWorkerInfoAtom } from '../../jotai/CareworkerInfo';
 
 const AddressInput = ({ required, type, target, error }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -26,6 +27,8 @@ const AddressInput = ({ required, type, target, error }) => {
       return KakaoWorkerSignupAtom;
     } else if (type === 'kakao' && target === 'manager') {
       return KakaoManagerSignupAtom;
+    } else if (type === 'edit' && target === 'worker') {
+      return CareWorkerInfoAtom;
     }
 
     if (type === 'info' && target === 'worker') {
@@ -34,6 +37,8 @@ const AddressInput = ({ required, type, target, error }) => {
   })();
 
   const [input, setInput] = useAtom(atom);
+
+  console.log(input);
 
   // 우편번호 찾기 팝업 시 뒷 배경 스크롤 방지
   useEffect(() => {
@@ -62,11 +67,10 @@ const AddressInput = ({ required, type, target, error }) => {
   };
 
   const handleComplete = (data) => {
-    const { address, zonecode } = data;
-
+    const { jibunAddress, zonecode } = data;
     setInput((prev) => ({
       ...prev,
-      address,
+      address: jibunAddress,
       zipcode: zonecode,
     }));
   };
@@ -108,14 +112,14 @@ const AddressInput = ({ required, type, target, error }) => {
           </ZoneCodeWrapper>
         </div>
         <Input
-          className={`address ${error && 'error'}`}
+          className={error && 'error'}
           type="text"
           value={input.address}
           name="address"
           onChange={onChangeInput}
         />
         <Input
-          className={`detailedAddress ${error && 'error'}`}
+          className={error && 'error'}
           type="text"
           value={input.detailAddress}
           onChange={onChangeInput}

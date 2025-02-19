@@ -55,5 +55,8 @@ export const CareWorkerInfoAtom = atom({
   hasVehicle: false,
   address: '',
   zipcode: '',
-  datailedAddress: '',
+  detailedAddress: '',
+  password: '',
+  confirmPassword: '',
+  imgFile: '',
 });
