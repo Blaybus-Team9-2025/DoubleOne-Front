@@ -1,8 +1,10 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useAtom } from 'jotai';
+
+import { CareworkerConditionsAtom } from '../../jotai/CareworkerInfo';
 
 const Introduction = () => {
-  const [text, setText] = useState('');
+  const [input, setInput] = useAtom(CareworkerConditionsAtom);
 
   return (
     <Container>
@@ -10,10 +12,15 @@ const Introduction = () => {
       <Wrapper>
         <InputText
           maxLength={1000}
-          value={text}
-          onChange={(e) => setText(e.target.value)}
+          value={input?.introduce}
+          onChange={(e) =>
+            setInput((prev) => ({
+              ...prev,
+              introduce: e.target.value,
+            }))
+          }
         />
-        <Exp>({text.length}/1000)</Exp>
+        <Exp>({input?.introduce.length}/1000)</Exp>
       </Wrapper>
     </Container>
   );

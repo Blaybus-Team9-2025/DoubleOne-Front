@@ -13,6 +13,7 @@ import {
   KakaoWorkerSignupAtom,
 } from '../../jotai/Signup';
 import { SeniorInfoAtom } from '../../jotai/SeniorInfo';
+import { CareworkerInfoAtom } from '../../jotai/CareworkerInfo';
 
 const years = Array.from(
   { length: 2025 - 1930 + 1 },

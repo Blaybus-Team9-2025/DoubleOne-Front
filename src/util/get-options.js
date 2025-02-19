@@ -80,5 +80,23 @@ export const getOptions = (type) => {
         { '5급': 'LEVEL_5' },
         { 인지지원등급: 'SUPPORT' },
       ];
+    case 'wageType':
+      return [
+        { 시급: 'HOURLY' },
+        { 일급: 'DAILY' },
+        { 월급: 'MONTHLY' },
+        { 연봉: 'YEARLY' },
+        { 건당: 'PER_TASK' },
+      ];
+    case 'weekday':
+      return [
+        { 월: 'MON' },
+        { 화: 'TUE' },
+        { 수: 'WED' },
+        { 목: 'THU' },
+        { 금: 'FRI' },
+        { 토: 'SAT' },
+        { 일: 'SUN' },
+      ];
   }
 };

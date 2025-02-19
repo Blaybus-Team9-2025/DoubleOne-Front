@@ -1,17 +1,40 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useAtom } from 'jotai';
 
 import Required from '../_common/Required';
 import Dropdown from './Dropdown';
 import { InputStyle } from '../../util/common-style';
 import { LabelStyle } from '../../util/common-style';
 import { getMonthlyPay } from '../../util/get-monthly-wage';
+import { CareworkerConditionsAtom } from '../../jotai/CareworkerInfo';
+import { getOptions } from '../../util/get-options';
 
-const units = ['시급', '일급', '월급', '연봉', '건당'];
+// 한글 ↔ 영어 매핑
+const wageOptions = getOptions('wageType'); // [{ 시급: 'HOURLY' }, { 일급: 'DAILY' }, ... ]
+const wageMap = Object.assign({}, ...wageOptions); // { "시급": "HOURLY", "일급": "DAILY", ... }
+const reverseWageMap = Object.fromEntries(
+  Object.entries(wageMap).map(([kor, eng]) => [eng, kor])
+);
+
+const wageTypes = Object.keys(wageMap);
 
 const Wage = ({ recruiting }) => {
-  const [unit, setUnit] = useState('시급');
-  const [wage, setWage] = useState('');
+  const [input, setInput] = useAtom(CareworkerConditionsAtom);
+
+  // 한글 → 영어 변환하여 wageType 저장
+  const updateWageType = (selected) => {
+    setInput((prev) => ({
+      ...prev,
+      wageType: wageMap[selected] || selected,
+    }));
+  };
+
+  const onChangeWage = (e) => {
+    setInput((prev) => ({
+      ...prev,
+      wage: e.target.value,
+    }));
+  };
 
   return (
     <Container>
@@ -20,14 +43,22 @@ const Wage = ({ recruiting }) => {
         {!recruiting && <Required />}
       </div>
       <Wrapper>
-        <Dropdown width="25%" init="시급" options={units} onChange={setUnit} />
+        <Dropdown
+          width="25%"
+          init={reverseWageMap[input.wageType] || '시급'}
+          options={wageTypes}
+          onChange={updateWageType}
+        />
         <InputWrapper>
-          <Input value={wage} onChange={(e) => setWage(e.target.value)} />
+          <Input value={input.wage} onChange={onChangeWage} />
           <Unit>원</Unit>
         </InputWrapper>
-        {unit !== '건당' && (
+        {input.wageType !== 'PER_TASK' && (
           <MonthlyPay>
-            <p>(월급: {getMonthlyPay(unit, wage).toLocaleString()} ₩)</p>
+            <p>
+              (월급:{' '}
+              {getMonthlyPay(input.wageType, input.wage).toLocaleString()} ₩)
+            </p>
           </MonthlyPay>
         )}
       </Wrapper>
@@ -38,6 +69,7 @@ const Wage = ({ recruiting }) => {
 
 export default Wage;
 
+// 스타일 정의
 const Container = styled.section`
   display: flex;
   flex-direction: column;

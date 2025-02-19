@@ -1,20 +1,49 @@
 import styled from 'styled-components';
+import { useAtom } from 'jotai';
 
 import { CheckboxStyle } from '../../util/common-style';
 import { LabelStyle } from '../../util/common-style';
 import { getOptions } from '../../util/get-options';
+import { CareworkerConditionsAtom } from '../../jotai/CareworkerInfo';
 
 const ToiletingAssistance = () => {
   const options = getOptions('toileting');
   const optionKeys = options.map((obj) => Object.keys(obj)[0]);
+  const optionValues = options.map((obj) => Object.values(obj)[0]);
+  const [input, setInput] = useAtom(CareworkerConditionsAtom);
+
+  const handleCheckboxChange = (value) => {
+    setInput((prev) => {
+      const updatedAssistance = prev.services.TOILETING_ASSISTANCE.includes(
+        value
+      )
+        ? prev.services.TOILETING_ASSISTANCE.filter((item) => item !== value) // 이미 선택된 항목 제거
+        : [...prev.services.TOILETING_ASSISTANCE, value]; // 선택되지 않은 항목 추가
+
+      return {
+        ...prev,
+        services: {
+          ...prev.services,
+          TOILETING_ASSISTANCE: updatedAssistance,
+        },
+      };
+    });
+  };
 
   return (
     <Container>
-      <Label>배변보조</Label>
+      <Label>배변 보조</Label>
       <Wrapper>
         {optionKeys.map((val, idx) => (
           <CheckboxWrapper key={idx}>
-            <Checkbox type="checkbox" id={val} />
+            <Checkbox
+              type="checkbox"
+              id={val}
+              checked={input.services.TOILETING_ASSISTANCE.includes(
+                optionValues[idx]
+              )}
+              onChange={() => handleCheckboxChange(optionValues[idx])}
+            />
             <Text htmlFor={val}>{val}</Text>
           </CheckboxWrapper>
         ))}

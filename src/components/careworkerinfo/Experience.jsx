@@ -1,25 +1,64 @@
 import styled from 'styled-components';
 import { useState } from 'react';
+import { useAtom } from 'jotai';
 
 import { InputStyle } from '../../util/common-style';
 import infoCircle from '../../assets/info-circle.png';
 import calendar from '../../assets/calendar.png';
 import AddInput from '../registration/AddInput';
+import { CareworkerConditionsAtom } from '../../jotai/CareworkerInfo';
 
 const Experience = () => {
   const [experiences, setExperiences] = useState([{ id: 0, currentYn: false }]);
   const [infoYn, setInfoYn] = useState(false);
+  const [input, setInput] = useAtom(CareworkerConditionsAtom);
 
+  console.log(input.workPeriods);
+
+  // 경력 입력 추가
   const addInput = () => {
-    setExperiences((prev) => [...prev, prev.length]);
+    setExperiences((prev) => [...prev, { id: prev.length, currentYn: false }]);
   };
 
-  const toggleCheckbox = (id) => {
-    setExperiences((prev) =>
-      prev.map((exp) =>
-        exp.id === id ? { ...exp, currentYn: !exp.currentYn } : exp
-      )
-    );
+  // 체크박스 상태 변경 (현재 이 업무로 근무중)
+  const toggleCheckbox = (index) => {
+    setInput((prev) => {
+      const updatedWorkPeriods = prev.workPeriods.map((workPeriod, i) =>
+        i === index
+          ? {
+              ...workPeriod,
+              current: !workPeriod.current,
+              // 현재 이 업무로 근무중이면 종료일 리셋
+              endDate: !workPeriod.current ? '' : workPeriod.endDate,
+            }
+          : workPeriod
+      );
+
+      return {
+        ...prev,
+        workPeriods: updatedWorkPeriods,
+      };
+    });
+  };
+
+  const handleInputChange = (index, field, value) => {
+    setInput((prev) => {
+      const updatedWorkPeriods = prev.workPeriods.map((workPeriod, i) =>
+        i === index
+          ? { ...workPeriod, [field]: value } // 수정된 경력 항목 업데이트
+          : workPeriod
+      );
+
+      // 새로운 경력 항목 추가
+      if (index === prev.workPeriods.length) {
+        updatedWorkPeriods.push({ [field]: value, current: false });
+      }
+
+      return {
+        ...prev,
+        workPeriods: updatedWorkPeriods,
+      };
+    });
   };
 
   return (
@@ -31,15 +70,25 @@ const Experience = () => {
           <span className="info">매칭에 필수적으로 활용되는 정보입니다.</span>
         )}
       </LabelWrapper>
-      {experiences.map(({ id, currentYn }) => (
+      {experiences.map(({ id, currentYn }, index) => (
         <Wrapper key={id}>
-          <Input placeholder="직함" />
-          <Input placeholder="기관 또는 단체" />
+          <Input
+            placeholder="직함"
+            value={input.workPeriods[index]?.title || ''}
+            onChange={(e) => handleInputChange(index, 'title', e.target.value)} // 직함 변경
+          />
+          <Input
+            placeholder="기관 또는 단체"
+            value={input.workPeriods[index]?.organization || ''}
+            onChange={(e) =>
+              handleInputChange(index, 'organization', e.target.value)
+            }
+          />
           <Check>
             <input
               type="checkbox"
-              checked={currentYn}
-              onChange={() => toggleCheckbox(id)}
+              checked={input.workPeriods[index]?.current || false}
+              onChange={() => toggleCheckbox(index)} // 체크박스 상태 변경
             />
             <p>현재 이 업무로 근무중</p>
           </Check>
@@ -49,13 +98,21 @@ const Experience = () => {
               placeholder="시작일"
               required
               aria-required="true"
+              value={input.workPeriods[index]?.startDate || ''}
+              onChange={
+                (e) => handleInputChange(index, 'startDate', e.target.value) // 시작일 변경
+              }
             />
             <input
               type="date"
               placeholder="종료일"
               required
               aria-required="true"
-              disabled={currentYn}
+              disabled={input.workPeriods[index]?.current}
+              value={input.workPeriods[index]?.endDate || ''}
+              onChange={
+                (e) => handleInputChange(index, 'endDate', e.target.value) // 종료일 변경
+              }
             />
           </InputWrapper>
         </Wrapper>
