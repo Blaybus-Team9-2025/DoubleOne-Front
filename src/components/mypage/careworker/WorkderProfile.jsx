@@ -1,17 +1,18 @@
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import logo from '../../../assets/logo.png';
 
-const WorkerProfile = () => {
+const WorkerProfile = ({ name, profile }) => {
   const nav = useNavigate();
 
   return (
     <Div>
       <ImgDiv>
-        <img />
+        <img src={profile || logo} className={profile || 'logo'} />
       </ImgDiv>
       <NameDiv>
         <div className="name">
-          <p>김얼리</p>
+          <p>{name}</p>
           <p>요양보호사님</p>
         </div>
         <button onClick={() => nav(`/editcareworkerinfo/${1}`)}>
@@ -35,10 +36,16 @@ const ImgDiv = styled.div`
   border-radius: 15px;
   flex-shrink: 0;
   box-shadow: var(--shadow);
+  display: flex;
+  justify-content: center;
+  align-items: center;
   img {
     width: 100%;
     object-fit: cover;
     border: none;
+    &.logo {
+      width: 50%;
+    }
   }
 `;
 

@@ -3,12 +3,17 @@ import Header from '../components/_common/Header';
 import Profile from '../components/careworkerdetail/Profile';
 import Slick from '../components/careworkerdetail/Slick';
 import SquareButton from '../components/_common/SquareButton';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getWorkerDetail, getWorkerInfo } from '../api/worker';
 import { workerConditionInfoType, workerInfoType } from '../util/dataTypes';
 import { getKeyByValue } from '../util/getKeyByValue';
 import { getOptions } from '../util/get-options';
+import { useAtomValue } from 'jotai';
+import { IdAtom } from '../jotai/Id';
+import { postMatching } from '../api/matching';
+// import { connectWebSocket, createChatRoom } from '../api/chat';
+import { LoginAtom } from '../jotai/Login';
 
 const CareWorkerDetail = () => {
   const { seniorId, workerId, workerConditionId } = useParams();
@@ -16,6 +21,9 @@ const CareWorkerDetail = () => {
     workerConditionInfoType
   );
   const [workerData, setWorkerData] = useState(workerInfoType);
+  const { seniorConditionId } = useAtomValue(IdAtom);
+  const { memberId } = useAtomValue(LoginAtom);
+  const nav = useNavigate();
 
   useEffect(() => {
     const getData = async () => {
@@ -41,11 +49,35 @@ const CareWorkerDetail = () => {
 
   const licenseOptions = getOptions('license');
 
+  const sendMatching = async () => {
+    const res = await postMatching(seniorConditionId, workerConditionId);
+    console.log(res);
+    // 목록으로 이동
+    // nav(`/contact/${seniorId}/${workerId}/${workerConditionId}`);
+  };
+
+  // 채팅방 생성
+  // const createChat = async () => {
+  //   const res = await createChatRoom('채팅', memberId);
+  //   console.log(res);
+  // };
+
   const handleSuggestion = () => {
-    // 매칭 상태 변경 요청
     // 매칭 요청
-    // 채팅 연결
+    if (seniorConditionId > 0) {
+      sendMatching();
+    } else {
+      alert('잠시 후 시도해주세요');
+    }
+    // 매칭 상태 변경 요청
+    // 채팅 연결 (방 생성)
+    if (memberId > 0) {
+      // createChat();
+    } else {
+      alert('잠시 후 시도해주세요');
+    }
     // 채팅 화면으로 라우팅
+    // nav('/chat');
   };
 
   return (

@@ -10,30 +10,30 @@ const HistoryList = ({ data }) => {
       <ItemListDiv>
         <Item>
           <Timeline>
-            <p>2024.03 ~ 재직중</p>
-            <p>1년 2개월</p>
+            <p>2004.02 ~ 2006.01</p>
+            <p>1년 11개월</p>
           </Timeline>
           {/* 이름 클릭 시 공고로 이동 */}
           <p className="name" onClick={() => nav('/')}>
-            김00님
+            김갑수님
           </p>
           <p>식사보조</p>
         </Item>
         <Item>
           <Timeline>
-            <p>2024.03 ~ 재직중</p>
-            <p>1년 2개월</p>
+            <p>2007.06 ~ 2017.05</p>
+            <p>10년</p>
           </Timeline>
-          <p className="name">김00님</p>
-          <p>식사보조</p>
+          <p className="name">박찬양님</p>
+          <p>생활보조</p>
         </Item>
         <Item>
           <Timeline>
-            <p>2024.03 ~ 재직중</p>
-            <p>1년 2개월</p>
+            <p>2020.01 ~ 재직중</p>
+            <p>5년 1개월</p>
           </Timeline>
-          <p className="name">김00님</p>
-          <p>식사보조</p>
+          <p className="name">이순자님</p>
+          <p>방문요양</p>
         </Item>
       </ItemListDiv>
     </Div>
