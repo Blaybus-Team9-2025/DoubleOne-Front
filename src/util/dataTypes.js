@@ -57,3 +57,34 @@ export const managerType = {
   centerInfo: null,
   centerMessage: null,
 };
+
+// 매칭된 요양사 확인
+export const contactListType = {
+  seniorName: '',
+  seniorAddress: '',
+  age: 0,
+  profileImg: '',
+  workers: [
+    {
+      workerId: 0,
+      workerName: '',
+      workerRegions: [
+        {
+          city: '',
+          district: '',
+          neighborhood: '',
+        },
+      ],
+      workPeriods: [
+        {
+          title: '',
+          organization: '',
+          startDate: '',
+          endDate: '',
+          current: false,
+        },
+      ],
+      requestMatching: false,
+    },
+  ],
+};

@@ -37,9 +37,9 @@ const ManagerMatchingList = () => {
     }
   }, [managerId]);
 
-  const handleClick = (id, url) => {
-    setIdData({ id: id });
-    nav(url);
+  const handleClick = (seniorConditionId, seniorId) => {
+    setIdData({ seniorConditionId: seniorConditionId, seniorId: seniorId });
+    nav(`/contact/${seniorId}`);
   };
 
   return (
@@ -54,9 +54,7 @@ const ManagerMatchingList = () => {
               key={idx}
               bg="green"
               profile={item.profileImg}
-              onClick={() =>
-                handleClick(item.seniorConditionId, `/contact/${item.seniorId}`)
-              }
+              onClick={() => handleClick(item.seniorConditionId, item.seniorId)}
             >
               <p>{item.name}</p>
               <p>{item.address}</p>

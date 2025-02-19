@@ -1,69 +1,41 @@
 import styled from 'styled-components';
 import ContactItem from './ContactItem';
+import { calculateTotalExperience } from '../../util/calculateDate';
 
-const mock = [
-  {
-    isChatting: true,
-    workerId: 1,
-    name: '김얼리',
-    addr: '서울시 관악구 대학동',
-    desc: '서울복지센터 7년 근무',
-  },
-  {
-    isChatting: true,
-    workerId: 2,
-    name: '김얼리',
-    addr: '서울시 관악구 대학동',
-    desc: '서울복지센터 7년 근무',
-  },
-  {
-    isChatting: true,
-    workerId: 3,
-    name: '김얼리',
-    addr: '서울시 관악구 대학동',
-    desc: '서울복지센터 7년 근무',
-  },
-  {
-    isChatting: false,
-    workerId: 4,
-    name: '김얼리',
-    addr: '서울시 관악구 대학동',
-    desc: '서울복지센터 7년 근무',
-  },
-  {
-    isChatting: false,
-    workerId: 5,
-    name: '김얼리',
-    addr: '서울시 관악구 대학동',
-    desc: '서울복지센터 7년 근무',
-  },
-  {
-    isChatting: false,
-    workerId: 6,
-    name: '김얼리',
-    addr: '서울시 관악구 대학동',
-    desc: '서울복지센터 7년 근무',
-  },
-];
-
-const ContactList = ({ id }) => {
+const ContactList = ({ id, data }) => {
   return (
     <ListDiv>
       <Title>요양보호사를 선택해주세요</Title>
       <ItemWrapper>
-        {mock.map((item) => {
-          return (
-            <ContactItem
-              key={item.workerId}
-              isChatting={item.isChatting}
-              name={item.name}
-              managerId={id}
-              workerId={item.workerId}
-              desc={item.desc}
-              addr={item.addr}
-            />
-          );
-        })}
+        {data.length > 0 ? (
+          data.map((item, idx) => {
+            const filteredDateList = item.workPeriods?.map(
+              ({ startDate, endDate }) => ({
+                startDate: startDate,
+                endDate: endDate,
+              })
+            );
+            const totalMonths = calculateTotalExperience(filteredDateList);
+            const years = Math.floor(totalMonths / 12);
+            const months = totalMonths % 12;
+            const desc = `총 경력 ${years}년 ${months}개월`;
+            const addr = `${item.workerRegions[0].city} ${item.workerRegions[0].district} ${item.workerRegions[0].neighborhood}`;
+
+            return (
+              <ContactItem
+                key={idx}
+                isChatting={item.requestMatching}
+                name={item.workerName}
+                managerId={id}
+                workerId={item.workerId}
+                desc={desc}
+                addr={addr}
+              />
+            );
+          })
+        ) : (
+          <Alarm>아직 매칭된 요양보호사가 없어요</Alarm>
+        )}
       </ItemWrapper>
     </ListDiv>
   );
@@ -86,6 +58,14 @@ const ItemWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 8px;
+`;
+
+const Alarm = styled.p`
+  width: 100%;
+  font-size: 16px;
+  color: gray;
+  text-align: center;
+  margin: 20px 0;
 `;
 
 export default ContactList;
